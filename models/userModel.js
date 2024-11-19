@@ -36,7 +36,6 @@ const authSchema = new mongoose.Schema(
 
   //Pre-save middleware to hash the password
 authSchema.pre("save", async function (next) {
-    console.log("pre save");
     const user = this;
   
     if (user.isModified("password")) {

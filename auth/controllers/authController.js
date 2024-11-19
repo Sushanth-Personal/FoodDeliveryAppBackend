@@ -1,5 +1,6 @@
 const jwt = require("jsonwebtoken");
 const User = require("../../models/userModel");
+const Cart = require("../../models/cartModel");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -40,13 +41,10 @@ const registerUser = async (req, res) => {
     // Save the user to the database
     await user.save();
 
-    // Generate JWT (you would need a function to do this)
-    const accessToken = generateAccessToken(user); // This should be a function to generate the token
-
     // Send response with tokens
     res
       .status(200)
-      .json({ message: "Success", user, accessToken });
+      .json({ message: "Success" });
   } catch (error) {
     res.status(400).json({ message: "Error", error: error.message });
   }
@@ -67,16 +65,22 @@ const loginUser = async (req, res) => {
     // Generate the access token
     const accessToken = generateAccessToken(user._id);
 
-    // Fetch the complete user data along with the cart
-    // Use populate to retrieve the cart data if it's a reference to the Cart model
+    // Fetch the user data, including the cart and restaurantId (no need for full cart details)
     const fullUser = await User.findById(user._id)
-      .populate('cart')  // Populating cart data if it's a reference
+      .populate({
+        path: 'cart',  // Populate the cart data
+        select: 'restaurantId items',  // Only fetch restaurantId and items from the cart
+        populate: {
+          path: 'items.productId',  // Populate productId for each cart item
+          select: 'productName price productImageSmall',  // Only fetch necessary fields for product
+        },
+      })
       .exec();
 
     // Make sure to remove sensitive fields like password and __v before sending the response
-    const userData = fullUser.toObject(); // Convert Mongoose document to plain object
-    delete userData.password; // Remove password field
-    delete userData.__v; // Optionally remove Mongoose version key
+    const userData = fullUser.toObject();  // Convert Mongoose document to plain object
+    delete userData.password;  // Remove password field
+    delete userData.__v;  // Optionally remove Mongoose version key
 
     // Send the response with the complete user data, including cart data, and access token
     res.status(200).json({
@@ -85,55 +89,15 @@ const loginUser = async (req, res) => {
       accessToken,     // Send access token
     });
   } catch (error) {
-    console.error("Login error:", error.message); // Log the error
-    res.status(500).json({ error: "Server error during login" }); // Handle server error
+    console.error("Login error:", error.message);  // Log the error
+    res.status(500).json({ error: "Server error during login" });  // Handle server error
   }
 };
 
 
-
-const checkAccessToken = async (req, res) => {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1]; // Extract token from 'Authorization: Bearer <token>'
-
-  if (!token) return res.sendStatus(401); // Unauthorized
-
-  try {
-    // Verify access token
-    const decoded = jwt.verify(
-      token,
-      process.env.ACCESS_TOKEN_SECRET
-    );
-
-    // Check if the token has expired
-    const now = Math.floor(Date.now() / 1000); // Current time in seconds
-    if (decoded.exp < now) {
-      return res.sendStatus(403); // Forbidden, token expired
-    }
-
-    const user = await User.findById(decoded.id);
-
-    if (!user) {
-      return res.sendStatus(403); // Forbidden if the user is not found
-    }
-
-    // Generate a new access token if needed
-    const accessToken = jwt.sign(
-      { id: user._id },
-      process.env.ACCESS_TOKEN_SECRET,
-      { expiresIn: "15m" }
-    );
-
-    res.json({ accessToken });
-  } catch (error) {
-    return res.sendStatus(403); // Forbidden on any verification error
-  }
-};
 
 
 module.exports = {
   registerUser,
   loginUser,
-  checkRefreshToken,
-  checkAccessToken,
 };
