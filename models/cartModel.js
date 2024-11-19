@@ -1,11 +1,16 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const User = require("./userModel");
+const Restaurant = require("./restaurantModel");
 
 const cartSchema = mongoose.Scheme({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
+  },
+  restaurantId:{
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "Restaurant",
   },
   items: [
     {
