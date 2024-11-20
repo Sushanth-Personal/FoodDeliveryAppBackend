@@ -1,0 +1,179 @@
+.login {
+  display: flex;
+  flex-direction: column;
+}
+
+.upperSection {
+  padding: 32px;
+  border: 2px solid blue;
+}
+
+.loginContent {
+  display: flex;
+  justify-content: space-between;
+}
+.loginSection {
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.loginForm {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  margin: 24% 20%;
+  width: 100%;
+
+}
+
+.loginForm img {
+  align-self: center;
+  margin-bottom: 3rem;
+}
+h1 {
+  font-size: 2.25rem;
+  font-weight: 600;
+  color: #0c1421;
+  margin: 0;
+  margin-bottom: 3rem;
+}
+
+h2 {
+  font-size: 1.25rem;
+  font-weight: 400;
+  color: #313957;
+  margin: 0;
+  margin-bottom: 3rem;
+  width: 100%;
+}
+.formGroup {
+  display: flex;
+  flex-direction: column;
+  font-size: 1rem;
+  font-weight: 400;
+}
+
+.emailGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  align-items: flex-start;
+  margin-bottom: 1.5rem;
+  align-self: flex-start;
+  width: 100%;
+}
+
+.passwordGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+  margin-bottom: 1.5rem;
+}
+
+.formGroup label {
+  color: #0c1421;
+}
+
+.formGroup input {
+  padding: 1rem 1.2rem;
+  border: 1px solid #0c1421;
+  border-radius: 100px;
+  color: #8897ad;
+  outline: none;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.loginImage {
+  flex: 1;
+}
+
+.loginImage img {
+  max-width: 100%;
+  height: auto;
+}
+
+.formGroup h4 {
+  margin: 0;
+  text-align: end;
+  color: #fc8a06;
+}
+.loginForm button {
+  margin-top: 2rem;
+  width: 100%;
+  border: none;
+  border-radius: 100px;
+  color: white;
+  background-color: #fc8a06;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 1.25rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 1rem 0;
+}
+.loginForm h3 {
+  text-align: center;
+  font-size: 1.125rem;
+  margin-top: 3rem;
+}
+.loginForm h3 a {
+  color: #fc8a06;
+}
+@media screen and (max-width: 1300px) {
+  h1 {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  .loginForm {
+    margin: 7% 5%;
+  }
+  .loginForm img {
+    margin-bottom: 1.5rem;
+  }
+  h2 {
+    margin: 0;
+    margin-bottom: 1rem;
+  }
+  .loginForm button {
+    margin: 0;
+    margin-top: 1rem;
+  }
+
+  .loginContent {
+    align-items: flex-start;
+  }
+
+  .loginSection {
+    align-self: center;
+  }
+}
+
+
+@media screen and (max-height: 1080px) and (min-width: 1100px) {
+    .loginSection {
+      align-self:flex-start;
+    }
+
+    .loginForm{
+        margin:5% 10%;
+    }
+
+    .loginForm img{
+        margin-bottom: 1.5rem;
+    }
+
+    h1{
+        margin-bottom:1.5rem;
+    }
+
+    h2{
+        margin-bottom:1.5rem;
+    }
+
+    .loginForm h3{
+        margin-top: 1.5rem;
+    }
+}
