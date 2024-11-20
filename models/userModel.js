@@ -29,6 +29,9 @@ const authSchema = new mongoose.Schema(
         type:String,
         required:true
       },
+      userImageSmall: {
+        type: String,
+      },
       cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cart' }]
     },
     { timestamps: true }
