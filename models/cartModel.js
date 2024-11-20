@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const User = require("./userModel");
 const Restaurant = require("./restaurantModel");
 
-const cartSchema = mongoose.Scheme({
+const cartSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
     ref: "User",
