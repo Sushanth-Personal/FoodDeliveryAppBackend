@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const Routes = require('./routes/route');
 const ConnectDB = require('./config/db');
 const authRoutes = require('./auth/routes/authRoutes');
 const authenticateToken = require('./auth/middleware/authMiddleware');
@@ -16,7 +17,9 @@ app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
 app.use('/api', authenticateToken);  
+app.use('/api', Routes);
 app.use('/auth', authRoutes);
+app.use('/', Routes);
 
 //To create a health checking ping at a set interval to keep the hosting site active
 // app.get('/health', (req, res) => {

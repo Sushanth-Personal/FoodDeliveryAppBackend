@@ -1,6 +1,11 @@
 const express = require("express");
 const mongoose = require("mongoose");
-
+const Image = require("../models/imageModel");
+const Cart = require("../models/cartModel");
+const User = require("../models/userModel");
+const Review = require("../models/reviewModel");
+const Restaurant = require("../models/restaurantModel");
+const Product = require("../models/productModel");
 const getCart = async (req, res) => {
   const { userId, restaurantId } = req.params;
 
@@ -129,8 +134,95 @@ const getReview = async (req, res) => {
   }
 };
 
+const getImage = async (req, res) => {  
+  try {
+    const { imageId,page,container,altText } = req.query;
+    if(imageId){
+      try{
+        const image = await Image.findOne({ imageId });
+        if (!image) {
+          return res.status(404).json({ error: "Image not found." });
+        }
+        res.status(200).json(image);
+      }catch(error){
+        console.error("Error fetching image:", error.message);
+        res
+          .status(500)
+          .json({ error: "An error occurred while fetching image by imageId." });
+      }
+    }
+    else if(altText){
+      try{
+        const image = await Image.findOne({ altText });
+        if (!image) {
+          return res.status(404).json({ error: "Image not found." });
+        }
+        res.status(200).json(image);
+      }catch(error){
+        console.error("Error fetching image:", error.message);
+        res
+          .status(500)
+          .json({ error: "An error occurred while fetching image by altText." });
+      }
+    }
+    else if(container){
+      try{
+        const image = await Image.find({ container });
+        if (!image) {
+          return res.status(404).json({ error: "Image not found." });
+        }
+        res.status(200).json(image);
+      }catch(error){
+        console.error("Error fetching image:", error.message);
+        res
+          .status(500)
+          .json({ error: "An error occurred while fetching image by container." });
+      }
+    }else if(page){
+      try{
+        const image = await Image.find({ page });
+        if (!image) {
+          return res.status(404).json({ error: "Image not found." });
+        }
+        res.status(200).json(image);
+      }catch(error){
+        console.error("Error fetching image:", error.message);
+        res
+          .status(500)
+          .json({ error: "An error occurred while fetching image by page." });
+      }
+    }
+
+  
+  }catch(error){
+    console.error("Error fetching image:", error.message);
+    res
+      .status(500)
+      .json({ error: "An error occurred while fetching image." });
+  }
+}
+
+const postImage = async (req, res) => {
+  // Handle the image upload logic here
+  const {imageId,imageURL, altText, page, container} = req.body;
+  if(!imageURL || !altText || !page){
+    return res.status(400).json({ error: "Missing required fields." });
+  }
+  try {
+    const newImage = new Image({ imageId,imageURL, altText, page,container });
+    await newImage.save();
+    res.status(201).json(newImage);
+  } catch (error) {
+    console.error("Error saving image:", error.message);
+    res.status(500).json({ error: "An error occurred while saving the image." });
+  }
+};
+
+
 module.exports = {
   getCart,
   getUser,
   getReview,
+  getImage,
+  postImage,
 };
