@@ -21,15 +21,24 @@ self.addEventListener('install', (event) => {
 self.addEventListener('fetch', (event) => {
   event.respondWith(
     caches.match(event.request).then((cachedResponse) => {
-      // Return cached response if available, else fetch from the network
-      return cachedResponse || fetch(event.request).then((response) => {
-        // Clone the response and cache it for future use
-        const clonedResponse = response.clone();
-        caches.open(CACHE_NAME).then((cache) => {
-          cache.put(event.request, clonedResponse);
-        });
-        return response;
+      if (cachedResponse) {
+        // Serve from cache if available
+        return cachedResponse;
+      }
+
+      return fetch(event.request).then((networkResponse) => {
+        // Cache the response if it's an image
+        if (event.request.destination === 'image') {
+          const clonedResponse = networkResponse.clone();
+          caches.open(CACHE_NAME).then((cache) => {
+            cache.put(event.request, clonedResponse);
+          });
+        }
+        return networkResponse;
       });
+    }).catch(() => {
+      // Fallback logic for offline or failed requests can be added here
+      console.error('Fetch failed for:', event.request.url);
     })
   );
 });
