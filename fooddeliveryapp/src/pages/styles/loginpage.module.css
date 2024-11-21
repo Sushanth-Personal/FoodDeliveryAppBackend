@@ -1,11 +1,12 @@
 .login {
   display: flex;
   flex-direction: column;
+  width: 100%;
+  /* overflow: hidden; */
 }
 
 .upperSection {
   padding: 32px;
-  border: 2px solid blue;
 }
 
 .loginContent {
@@ -122,6 +123,8 @@ h2 {
 .loginForm h3 a {
   color: #fc8a06;
 }
+
+
 @media screen and (max-width: 1300px) {
   h1 {
     margin: 0;
@@ -176,4 +179,25 @@ h2 {
     .loginForm h3{
         margin-top: 1.5rem;
     }
+}
+
+
+@media screen and (max-width: 950px) {
+  .loginImage {
+    display: none;
+  }
+  .loginForm {
+    margin: 10% 5%;
+  }
+}
+
+@media screen and (max-width: 550px) {
+ 
+  .loginForm {
+    margin: 10% 5%;
+  }
+
+  .login{
+    overflow: hidden;
+  }
 }

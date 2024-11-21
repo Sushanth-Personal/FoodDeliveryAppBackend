@@ -1,4 +1,5 @@
 import styles from "./styles/LoginPage.module.css";
+import FooterComponent from "../components/FooterComponent";
 import { useState } from "react";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
@@ -57,7 +58,9 @@ const LoginPage = () => {
           </div>
         </div>
       </div>
-      <div className={styles.footer}></div>
+    <footer>
+      <FooterComponent/>
+    </footer>
     </section>
     
   );
