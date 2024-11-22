@@ -1,43 +1,29 @@
 import styles from "./styles/LoginPage.module.css";
 import FooterComponent from "../components/FooterComponent";
-import { useState, useEffect } from "react";
-import {getImageByPage} from "../api/imageAPI";
-import {displayImage} from "../utility/imageProcess";
+import { useState} from "react";
+import  useImage from "../customHook/useImage";
+import { displayImage } from "../utility/imageProcess";
 const LoginPage = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [imageURLs, setImageURLs] = useState([]);
-
-  useEffect(() => {
-    const fetchImages = async () => {
-      try {
-        const images = await getImageByPage("login");
-        setImageURLs(images);
-        console.log(images);
   
-        // Prefetch images to trigger service worker caching
-        images.forEach((image) => {
-          fetch(image.imageURL).catch((error) => {
-            console.error('Error prefetching image:', image.imageURL, error);
-          });
-        });
-      } catch (error) {
-        console.error("Error fetching images:", error);
-      }
-    };
-  
-    fetchImages();
-  }, []);
-  
+  // Use the custom hook to fetch image URLs
+  const imageURLs = useImage("page", "login");
 
   return (
-    
     <section className={styles.login}>
       <div className={styles.upperSection}>
         <div className={styles.loginContent}>
           <div className={styles.loginSection}>
             <div className={styles.loginForm}>
-              <img id="login-loginForm-logo-1" src={displayImage(imageURLs, "login-loginForm-logo-1")} alt="logo" />
+              <img
+                id="login-loginForm-logo-1"
+                src={displayImage(
+                  imageURLs,
+                  "login-loginForm-logo-1"
+                )}
+                alt="logo"
+              />
               <h1>Welcome Back 👋</h1>
               <h2>
                 Today is a new day. It's your day. You shape it. Sign
@@ -57,7 +43,7 @@ const LoginPage = () => {
                   />
                 </div>
 
-                <div className = {styles.passwordGroup}>
+                <div className={styles.passwordGroup}>
                   <label htmlFor="password">Password</label>
                   <input
                     type="password"
@@ -79,15 +65,21 @@ const LoginPage = () => {
             </div>
           </div>
           <div className={styles.loginImage}>
-            <img src={displayImage(imageURLs, "login-loginImage-loginImage-1")} alt="loginImage" id ="login-loginImage-loginImage-1" />
+            <img
+              src={displayImage(
+                imageURLs,
+                "login-loginImage-loginImage-1"
+              )}
+              alt="loginImage"
+              id="login-loginImage-loginImage-1"
+            />
           </div>
         </div>
       </div>
-    <footer>
-      <FooterComponent/>
-    </footer>
+      <footer>
+        <FooterComponent />
+      </footer>
     </section>
-    
   );
 };
 
