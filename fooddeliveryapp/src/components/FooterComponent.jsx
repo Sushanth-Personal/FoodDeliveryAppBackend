@@ -1,20 +1,32 @@
 import styles from "./styles/footer.module.css";
-
+import useImage from "../customHook/useImage";
+import { displayImage } from "../utility/imageProcess";
 const FooterComponent = () => {
+  // Use the custom hook to fetch image URLs
+  const imageURLs = useImage("page", "footer");
+
   return (
     <section className={styles.footer}>
       <div className={styles.upperSection}>
         <div className={styles.footerContent}>
           <div className={styles.downloadSection}>
             <img
+              id="footer-downloadSection-logo-1"
               className={styles.logo}
-              src="./footerLogo.png"
+              src={displayImage(
+                imageURLs,
+                "footer-downloadSection-logo-1"
+              )}
               alt="logo"
             />
             <img
+              id="footer-downloadSection-appstore-1"
               className={styles.appstore}
-              src="./appStore.png"
-              alt="appstore image"
+              src={displayImage(
+                imageURLs,
+                "footer-downloadSection-appstore-1"
+              )}
+              alt="appstore"
             />
             <h4>
               Company # 490039-445, Registered with House of
@@ -32,10 +44,38 @@ const FooterComponent = () => {
               <a href="">email policy</a>
             </h4>
             <div className={styles.socialMedia}>
-              <img src="./Facebook.png" alt="facebook" />
-              <img src="./Instagram.png" alt="instagram" />
-              <img src="./TikTok.png" alt="tiktok" />
-              <img src="./Snapchat.png" alt="snapchat" />
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "footer-socialMedia-facebook-1"
+                )}
+                alt="facebook"
+                id="footer-socialMedia-facebook-1"
+              />
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "footer-socialMedia-instagram-1"
+                )}
+                alt="instagram"
+                id="footer-socialMedia-instagram-1"
+              />
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "footer-socialMedia-tiktok-1"
+                )}
+                alt="tiktok"
+                id="footer-socialMedia-tiktok-1"
+              />
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "footer-socialMedia-snapchat-1"
+                )}
+                alt="snapchat"
+                id="footer-socialMedia-snapchat-1"
+              />
             </div>
           </div>
           <div className={styles.legalPages}>
@@ -80,15 +120,15 @@ const FooterComponent = () => {
       </div>
       <div className={styles.bottomSection}>
         <div className={styles.copyright}>
-        Order.uk Copyright 2024, All Rights Reserved.
+          Order.uk Copyright 2024, All Rights Reserved.
         </div>
         <div className={styles.terms}>
-        <ul >
-          <li>Privacy Policy</li>
-          <li>Terms</li>
-          <li>Pricing</li>
-          <li>Do not sell or share my personal information</li>
-        </ul>                        
+          <ul>
+            <li>Privacy Policy</li>
+            <li>Terms</li>
+            <li>Pricing</li>
+            <li>Do not sell or share my personal information</li>
+          </ul>
         </div>
       </div>
     </section>
