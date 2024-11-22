@@ -1,8 +1,8 @@
-.error{
+.error {
   color: red;
 }
 
-.login {
+.register {
   display: flex;
   flex-direction: column;
   width: 100%;
@@ -13,26 +13,25 @@
   padding: 32px;
 }
 
-.loginContent {
+.registerContent {
   display: flex;
   justify-content: space-between;
 }
-.loginSection {
+.registerSection {
   flex: 1;
   display: flex;
   align-items: center;
 }
 
-.loginForm {
+.registerForm {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin: 24% 20%;
+  margin: 10% 20%;
   width: 100%;
-
 }
 
-.loginForm img {
+.registerForm img {
   align-self: center;
   margin-bottom: 3rem;
 }
@@ -59,19 +58,11 @@ h2 {
   font-weight: 400;
 }
 
-.emailGroup {
+.inputGroup {
   display: flex;
   flex-direction: column;
   gap: 0.5rem;
-  margin-bottom: 1.5rem;
-  height: 113px;
-}
-
-.passwordGroup {
-  display: flex;
-  flex-direction: column;
-  gap: 0.5rem;
-  margin-bottom: 1.5rem;
+  margin-bottom: 0.2rem;
   height: 113px;
 }
 
@@ -89,15 +80,11 @@ h2 {
   box-sizing: border-box;
 }
 
-.formGroup a{
-  cursor: pointer;
-}
-
-.loginImage {
+.registerImage {
   flex: 1;
 }
 
-.loginImage img {
+.registerImage img {
   max-width: 100%;
   height: auto;
 }
@@ -107,7 +94,11 @@ h2 {
   text-align: end;
   color: #fc8a06;
 }
-.loginForm button {
+
+.formGroup a {
+  cursor: pointer;
+}
+.registerForm button {
   margin-top: 2rem;
   width: 100%;
   border: none;
@@ -122,96 +113,98 @@ h2 {
   cursor: pointer;
   padding: 1rem 0;
 }
-.loginForm h3 {
+.registerForm h3 {
   text-align: center;
   font-size: 1.125rem;
   margin-top: 3rem;
 }
-.loginForm h3 a {
+.registerForm h3 a {
   color: #fc8a06;
 }
-
 
 @media screen and (max-width: 1300px) {
   h1 {
     margin: 0;
     margin-bottom: 1rem;
   }
-  .loginForm {
+  .registerForm {
     margin: 7% 5%;
   }
-  .loginForm img {
+  .registerForm img {
     margin-bottom: 1.5rem;
   }
   h2 {
     margin: 0;
     margin-bottom: 1rem;
   }
-  .loginForm button {
+  .registerForm button {
     margin: 0;
     margin-top: 1rem;
   }
 
-  .loginContent {
+  .registerContent {
     align-items: flex-start;
   }
 
-  .loginSection {
+  .registerSection {
     align-self: center;
   }
 }
 
-
 @media screen and (max-height: 1080px) and (min-width: 1100px) {
-    .loginSection {
-      align-self:flex-start;
-    }
+  .registerSection {
+    align-self: flex-start;
+  }
 
-    .loginForm{
-        margin:10% 20%;
-    }
+  .registerForm {
+    margin: 5% 10%;
+  }
 
-    .loginForm img{
-        margin-bottom: 1.5rem;
-    }
+  .registerForm img {
+    margin-bottom: 1.5rem;
+  }
 
-    h1{
-        margin-bottom:1.5rem;
-    }
+  h1 {
+    margin-bottom: 1.5rem;
+  }
 
-    h2{
-        margin-bottom:1.5rem;
-    }
+  h2 {
+    margin-bottom: 1.5rem;
+  }
 
-    .loginForm h3{
-        margin-top: 1.5rem;
-    }
+  .registerForm h3 {
+    margin-top: 1.5rem;
+  }
 }
 
-
 @media screen and (max-width: 950px) {
-  .loginImage {
+  .registerImage {
     display: none;
   }
-  .loginForm {
+  .registerForm {
     margin: 10% 5%;
   }
 }
 
 @media screen and (max-width: 550px) {
- 
-  .loginForm {
+  .registerForm {
     margin: 10% 5%;
   }
 
-  .login{
+  .register {
     overflow: hidden;
   }
 }
 
 @media screen and (min-width: 2000px) {
-  .loginImage img {
-   object-fit: cover;
-   width: 80%;
+  .registerImage img {
+    object-fit: cover;
+    width: 80%;
+  }
+  .registerForm {
+    margin: 10% 20%;
+  }
+  .registerSection {
+    align-items: flex-start;
   }
 }

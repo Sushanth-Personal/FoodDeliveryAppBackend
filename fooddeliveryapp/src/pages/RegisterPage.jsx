@@ -1,23 +1,23 @@
-import styles from "./styles/LoginPage.module.css";
+import styles from "./styles/registerPage.module.css";
 import FooterComponent from "../components/FooterComponent";
 import { useState } from "react";
 import useImage from "../customHook/useImage";
 import { displayImage } from "../utility/imageProcess";
 import { useNavigate } from "react-router-dom";
-import {  validateEmail, validatePassword } from "../errorHandler/inputError";
-const LoginPage = () => {
-  //hooks
+import { validatePhoneNumber, validateEmail, validatePassword } from "../errorHandler/inputError"; // Import validation functions
+
+const RegisterPage = () => {
+  const navigate = useNavigate();
+
   const [userData, setUserData] = useState({
-       email: "",
+    userName: "",
+    phoneNumber: "",
+    email: "",
     password: "",
   });
 
-  // Use the custom hook to fetch image URLs
-  const imageURLs = useImage("page", "login");
-
-  const navigate = useNavigate(); // useNavigate hook
-
   const [errors, setErrors] = useState({
+    phoneNumber: "",
     email: "",
     password: "",
   });
@@ -30,7 +30,24 @@ const LoginPage = () => {
     });
   };
 
-  const handlePasswordBlur= (e) => {
+  // Handle phone number validation
+  const handlePhoneChange = (e) => {
+    const { value } = e.target;
+    const { value: cleanedPhone, error } = validatePhoneNumber(value);
+    
+    setUserData({
+      ...userData,
+      phoneNumber: cleanedPhone,
+    });
+    
+    setErrors({
+      ...errors,
+      phoneNumber: error,
+    });
+  };
+
+  // Handle password change
+const handlePasswordBlur= (e) => {
     const { value } = e.target;
     const { value: updatedPassword, error } = validatePassword(value);
   
@@ -59,14 +76,17 @@ const LoginPage = () => {
     });
   };
 
+  // Use the custom hook to fetch image URLs
+  const imageURLs = useImage("page", "login");
+
   return (
-    <section className={styles.login}>
+    <section className={styles.register}>
       <div className={styles.upperSection}>
-        <div className={styles.loginContent}>
-          <div className={styles.loginSection}>
-            <div className={styles.loginForm}>
+        <div className={styles.registerContent}>
+          <div className={styles.registerSection}>
+            <div className={styles.registerForm}>
               <img
-                id="login-loginForm-logo-1"
+                id="register-registerForm-logo-1"
                 src={displayImage(
                   imageURLs,
                   "login-loginForm-logo-1"
@@ -79,10 +99,37 @@ const LoginPage = () => {
                 in to start ordering.
               </h2>
               <div className={styles.formGroup}>
-                <div className={styles.emailGroup}>
-                  <label htmlFor="email"> Email</label>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="userName">Name</label>
+                  <input
+                    type="text"
+                    id="userName"
+                    name="userName"
+                    placeholder="eg. John A"
+                    value={userData.userName}
+                    onChange={handleChange}
+                  />
+                </div>
+
+                <div className={styles.inputGroup}>
+                  <label htmlFor="phoneNumber">Phone</label>
+                  <input
+                    type="tel"
+                    id="phoneNumber"
+                    name="phoneNumber"
+                    placeholder="Enter 10 digit phone number"
+                    value={userData.phoneNumber}
+                    onChange={handlePhoneChange}
+                  />
+                  {errors.phoneNumber && (
+                    <div className={styles.error}>{errors.phoneNumber}</div>
+                  )}
+                </div>
+                <div className={styles.inputGroup}>
+                  <label htmlFor="email">Email</label>
                   <input
                     type="email"
+                    name="email"
                     id="email"
                     placeholder="Example@email.com"
                     value={userData.email}
@@ -94,12 +141,13 @@ const LoginPage = () => {
                   )}
                 </div>
 
-                <div className={styles.passwordGroup}>
+                <div className={styles.inputGroup}>
                   <label htmlFor="password">Password</label>
                   <input
                     type="password"
                     value={userData.password}
                     id="password"
+                    name="password"
                     placeholder="At least 8 characters"
                     onChange={handleChange}
                     onBlur={handlePasswordBlur}
@@ -111,19 +159,19 @@ const LoginPage = () => {
                 <h4>Forgot Password?</h4>
                 <button>Sign in</button>
                 <h3>
-                  Don't you have an account?
-                  <a href="#" onClick={() => navigate("/register")}> Sign up</a>
+                  Already have an account?
+                  <a href="#" onClick={() => navigate("/login")}>Sign in</a>
                 </h3>
               </div>
             </div>
           </div>
-          <div className={styles.loginImage}>
+          <div className={styles.registerImage}>
             <img
               src={displayImage(
                 imageURLs,
                 "login-loginImage-loginImage-1"
               )}
-              alt="loginImage"
+              alt="registerImage"
               id="login-loginImage-loginImage-1"
             />
           </div>
@@ -136,4 +184,4 @@ const LoginPage = () => {
   );
 };
 
-export default LoginPage;
+export default RegisterPage;
