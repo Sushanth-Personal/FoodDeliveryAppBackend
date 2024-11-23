@@ -1,5 +1,5 @@
-import styles from "./styles/LoginPage.module.css";
-import FooterComponent from "../components/FooterComponent";
+import styles from "./styles/loginpage.module.css";
+import FooterComponent from "../components/FooterComponent/FooterComponent";
 import { useState } from "react";
 import useImage from "../customHook/useImage";
 import { displayImage } from "../utility/imageProcess";

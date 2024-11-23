@@ -1,0 +1,14 @@
+html{
+    font-size: 62.5%;
+}
+.homePage{
+    padding:0 10rem;
+}
+
+
+@media screen and (max-width: 1250px) {
+    html{
+        font-size: 62.5%;
+    }
+
+}

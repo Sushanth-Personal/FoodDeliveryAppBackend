@@ -1,6 +1,6 @@
-import styles from "./styles/footer.module.css";
-import useImage from "../customHook/useImage";
-import { displayImage } from "../utility/imageProcess";
+import styles from "./footer.module.css";
+import useImage from "../../customHook/useImage";
+import { displayImage } from "../../utility/imageProcess";
 const FooterComponent = () => {
   // Use the custom hook to fetch image URLs
   const imageURLs = useImage("page", "footer");

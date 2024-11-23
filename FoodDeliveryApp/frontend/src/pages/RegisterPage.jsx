@@ -1,5 +1,5 @@
-import styles from "./styles/registerPage.module.css";
-import FooterComponent from "../components/FooterComponent";
+import styles from "./styles/registerpage.module.css";
+import FooterComponent from "../components/FooterComponent/FooterComponent";
 import { useState } from "react";
 import useImage from "../customHook/useImage";
 import { displayImage } from "../utility/imageProcess";

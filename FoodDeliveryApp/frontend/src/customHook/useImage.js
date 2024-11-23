@@ -1,5 +1,10 @@
 import { useState, useEffect } from "react";
-import { getImageByPage, getImageByContainer, getImageByAltText, getImageById} from "../api/imageAPI";
+import {
+  getImageByPage,
+  getImageByContainer,
+  getImageByAltText,
+  getImageById,
+} from "../api/imageAPI";
 
 const useImage = (type, value) => {
   const [imageURLs, setImageURLs] = useState([]); // State to store image URLs
@@ -27,17 +32,32 @@ const useImage = (type, value) => {
             images = [];
             break;
         }
-
         setImageURLs(images);
-
-        // Prefetch images to trigger service worker caching
-        images.forEach((image) => {
-          if (image?.imageURL) {
-            fetch(image.imageURL).catch((error) => {
-              console.error("Error prefetching image:", image.imageURL, error);
+        // Ensure `images` is always an array
+        if (!Array.isArray(images)) {
+          if (images?.imageURL) {
+            fetch(images.imageURL).catch((error) => {
+              console.error(
+                "Error prefetching image:",
+                images.imageURL,
+                error
+              );
             });
           }
-        });
+        } else {
+          // Prefetch images to trigger service worker caching
+          images.forEach((image) => {
+            if (image?.imageURL) {
+              fetch(image.imageURL).catch((error) => {
+                console.error(
+                  "Error prefetching image:",
+                  image.imageURL,
+                  error
+                );
+              });
+            }
+          });
+        }
       } catch (error) {
         console.error("Error fetching images:", error);
       }
