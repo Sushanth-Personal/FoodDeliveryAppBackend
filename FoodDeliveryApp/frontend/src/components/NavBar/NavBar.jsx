@@ -36,12 +36,6 @@ const NavBar = () => {
             Login/Signup</button>
       </div>
       </div>
-      
-      {/* <div className = {styles.menu}>
-        <button>
-            <img src="./Menu.png" alt="menu" id="navbar-menu-menu-1" />
-        </button>
-      </div> */}
     </div>
   );
 };
