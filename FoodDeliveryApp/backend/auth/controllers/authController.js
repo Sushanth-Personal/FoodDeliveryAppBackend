@@ -15,7 +15,7 @@ const generateAccessToken = (id) => {
 
 const registerUser = async (req, res) => {
 
-  const { userName, password, email, gender, country} = req.body;
+  const { userName, contact, email, password} = req.body;
 
   try {
     // Check if username already exists
@@ -34,9 +34,9 @@ const registerUser = async (req, res) => {
         .status(400)
         .json({ message: "Email already exists" });
     }
-
+  
     // Create new user if no existing user or email found
-    const user = new User({ userName, password, email, gender, country });
+    const user = new User({  userName, contact, email, password });
 
     // Save the user to the database
     await user.save();
@@ -46,6 +46,7 @@ const registerUser = async (req, res) => {
       .status(200)
       .json({ message: "Success" });
   } catch (error) {
+    console.error("Error registering user:", error.message);
     res.status(400).json({ message: "Error", error: error.message });
   }
 };

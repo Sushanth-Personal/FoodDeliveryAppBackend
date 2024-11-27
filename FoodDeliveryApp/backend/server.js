@@ -16,8 +16,8 @@ ConnectDB();
 app.use(cors());
 app.use(express.json());
 app.use(morgan("dev"));
-app.use('/api', authenticateToken);  
-app.use('/api', Routes);
+app.use('/protected', authenticateToken);  
+app.use('/protected',Routes);
 app.use('/auth', authRoutes);
 app.use('/', Routes);
 
