@@ -17,9 +17,12 @@ const authSchema = new mongoose.Schema(
         unique: true, // Ensure each email is unique
         match: /.+\@.+\..+/, // Basic email format validation
       },
+      contact:{
+        type:String,
+        required:true
+      },
       gender:{
         type:String,
-        required:true,
       },
       password: {
         type: String,
@@ -27,7 +30,6 @@ const authSchema = new mongoose.Schema(
       },
       country:{
         type:String,
-        required:true
       },
       userImageSmall: {
         type: String,
