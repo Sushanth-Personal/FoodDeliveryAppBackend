@@ -1,6 +1,7 @@
 import styles from "./navbar.module.css";
 import useImage from "../../customHook/useImage";
-import { displayImage } from "../../utility/imageProcess"
+import { displayImage } from "../../utility/imageProcess";
+
 
 const NavBar = () => {
   const imageURLs = useImage("page", "navbar");

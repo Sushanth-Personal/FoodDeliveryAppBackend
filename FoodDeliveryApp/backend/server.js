@@ -21,6 +21,7 @@ app.use('/protected',Routes);
 app.use('/auth', authRoutes);
 app.use('/', Routes);
 
+
 //To create a health checking ping at a set interval to keep the hosting site active
 // app.get('/health', (req, res) => {
 //   res.status(200).json({ message: "Healthy" });

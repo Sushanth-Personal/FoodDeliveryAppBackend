@@ -4,23 +4,37 @@ import useImage from "../../../../customHook/useImage";
 import useRestaurant from "../../../../customHook/useRestaurant";
 import { displayImage } from "../../../../utility/ImageProcess";
 import useDragToScroll from "../../../../customHook/useDragToScroll"; // Import the custom hook
-
+import { useUserContext } from "../../../../Contexts/UserContext";
+import Cart from "../../../../components/Cart/Cart";
+import useCart from "../../../../customHook/useCart";
+import {handleAddToCart} from "../../../../utility/handleAddToCart";
 const ProductDisplay = ({ restaurantId, restaurantName }) => {
-
   // State variables
   const [product, setProduct] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Burgers");
+  const { isCartClicked,cartItems} = useUserContext();
 
   // Custom hooks
-  const imageURLs = useImage("page", restaurantName);
+  const { addToCart } = useCart();
+  const restURLs = useImage("page", restaurantName);
+  const imageURLs = useImage("page", "productdisplay");
   const { data, loading } = useRestaurant(restaurantId);
-  const { listRef, handleMouseDown, handleMouseUp, handleMouseMove, handleMouseLeave } = useDragToScroll(); // Use the custom hook
+  const {
+    listRef,
+    handleMouseDown,
+    handleMouseUp,
+    handleMouseMove,
+    handleMouseLeave,
+  } = useDragToScroll(); // Use the custom hook
 
   // SideEffects
   useEffect(() => {
     console.log("data", data);
   }, [data, loading]);
 
+  useEffect(() => {
+    console.log("addedToCartCountProduct", cartItems);
+  },[cartItems])
   // Functions
   const handleChange = (e) => {
     setProduct(e.target.value);
@@ -36,13 +50,25 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
+  
 
+  const handleAddToCartClick = (product) => {
+    addToCart(product); // Add product to cart using the custom hook
+  };
+  
   return (
     <section className={styles.productDisplay}>
       <div className={styles.searchNavBar}>
         <h1>All Offers from McDonald’s East London</h1>
         <div className={styles.searchBox}>
-          <img src="/search.png" alt="" />
+          <img
+            id="productdisplay-searchbox-searchicon-1"
+            src={displayImage(
+              imageURLs,
+              "productdisplay-searchbox-searchicon-1"
+            )}
+            alt=""
+          />
           <input
             type="text"
             placeholder="Search from menu..."
@@ -64,11 +90,17 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
         >
           {data && data.menu && data.menu.length > 0 ? (
             [
-              ...new Set(data.menu.map((item) => item.productCategory)),
+              ...new Set(
+                data.menu.map((item) => item.productCategory)
+              ),
             ].map((category, index) => (
-              <li 
+              <li
                 key={index}
-                className={selectedCategory === category ? styles.selectedCategory : ""}
+                className={
+                  selectedCategory === category
+                    ? styles.selectedCategory
+                    : ""
+                }
                 onClick={() => handleCategoryClick(category)}
               >
                 {category}
@@ -86,9 +118,14 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
           <div className={styles.tilesContainer}>
             {data && data.menu ? (
               data.menu
-                .filter((item) => item.productCategory === selectedCategory)
+                .filter(
+                  (item) => item.productCategory === selectedCategory
+                )
                 .map((product) => (
-                  <div className={styles.productTile} key={product._id}>
+                  <div
+                    className={styles.productTile}
+                    key={product._id}
+                  >
                     <div className={styles.content}>
                       <div className={styles.leftContent}>
                         <h1>{product.productName}</h1>
@@ -98,11 +135,26 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                       <div className={styles.rightContent}>
                         <img
                           className={styles.productImage}
-                          src={displayImage(imageURLs, product.productImageId)} // Adjust based on your logic for image fetching
+                          src={displayImage(
+                            restURLs,
+                            product.productImageId
+                          )}
                           alt={product.productName}
                         />
-                        <img className={styles.plus} src="/Plus.png" alt="Add" />
-                        <img className={styles.addButton} src="/addButton.png" alt="Add to cart" />
+                        <img
+                          role="button"
+                          onClick={() => handleAddToCartClick(product)} // Pass product as argument
+                          className={styles.plus}
+                          src="/Plus.png"
+                          alt="Add"
+                        />
+                        <img
+                          role="button"
+                          onClick={() => handleAddToCart(product)} // Pass product as argument
+                          className={styles.addButton}
+                          src="/addButton.png"
+                          alt="Add to cart"
+                        />
                       </div>
                     </div>
                   </div>
@@ -112,7 +164,11 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
             )}
           </div>
         </div>
-        <div className={styles.checkout}></div>
+        {isCartClicked && (
+          <div className={styles.cart}>
+            <Cart />
+          </div>
+        )}
       </div>
     </section>
   );

@@ -1,12 +1,19 @@
 import styles from "./restaurantbanner.module.css";
+import useImage from "../../../../customHook/useImage";
+import { displayImage } from "../../../../utility/ImageProcess";
 
 const RestaurantBanner = () => {
+  const imageURLs = useImage("page", "restaurantbanner");
+
   return (
     <section className={styles.restaurantBanner}>
       <div className={styles.backgroundLayer}>
-        <img 
-        id="restaurantbanner-backgroundlayer-mcdonaldsbanner-1"
-        src="/mcdonaldsBackground.png" alt="mcdonaldsbanner" />
+        <img
+          id="restaurantbanner-backgroundlayer-mcdonaldsbackground-1"
+          src={displayImage(imageURLs, "restaurantbanner-backgroundlayer-mcdonaldsbackground-1")}
+          alt="mcdonaldsbackground"
+        />
+      
       </div>
 
       <div className={styles.topLayer}>
@@ -17,11 +24,19 @@ const RestaurantBanner = () => {
               <h1>McDonald’s East London</h1>
               <div className={styles.line3}>
                 <div className={styles.button}>
-                  <img src="/ordercompleted.png" alt="" />
+                  <img
+                    id="restaurantbanner-button-ordercompleted-1"
+                    src={displayImage(imageURLs,"restaurantbanner-button-ordercompleted-1")}
+                    alt="ordercompleted"
+                  />
                   <p>Minimum Order: 12 GBP</p>
                 </div>
                 <div className={styles.button}>
-                  <img src="/motocross.png" alt="" />
+                  <img
+                    id="restaurantbanner-button-motocross-1"
+                    src={displayImage(imageURLs,"restaurantbanner-button-motocross-1")}
+                    alt="motocross"
+                  />
                   <p>Delivery in 20-25 Minutes</p>
                 </div>
                 <div></div>
@@ -29,20 +44,26 @@ const RestaurantBanner = () => {
             </div>
             <div className={styles.rightContent}>
               <img
+                id="restaurantbanner-rightcontent-mcdonaldsbanner-1"
                 className={styles.banner}
-                src="/mcdonaldsBanner.png"
-                alt=""
+                src={displayImage(imageURLs, "restaurantbanner-rightcontent-mcdonaldsbanner-1")}
+                alt="mcdonaldsBanner"
               />
               <img
+                id="restaurantbanner-rightcontent-rating-1"
                 className={styles.rating}
-                src="/rating.png"
-                alt=""
+                src={displayImage(imageURLs, "restaurantbanner-rightcontent-rating-1")}
+                alt="rating"
               />
             </div>
           </div>
         </div>
         <div className={styles.timing}>
-          <img src="/Clock.png" alt="" />
+          <img
+            id="restaurantbanner-timing-clock-1"
+            src={displayImage(imageURLs, "restaurantbanner-timing-clock-1")}
+            alt="Clock"
+          />
           <p>Open until 3:00 AM</p>
         </div>
       </div>

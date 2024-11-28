@@ -5,9 +5,13 @@ import useImage from "../customHook/useImage";
 import { displayImage } from "../utility/imageProcess";
 import { useNavigate } from "react-router-dom";
 import {  validateEmail, validatePassword } from "../errorHandler/inputError";
-import {loginUser} from "../api/imageAPI";
-import {useEffect} from "react";
+import {loginUser} from "../api/api";
+import { useUserContext } from "../Contexts/UserContext";
 const LoginPage = () => {
+
+  //context
+
+  const {setUserId} = useUserContext();
   //hooks
   const [userData, setUserData] = useState({
        email: "",
@@ -58,6 +62,8 @@ const LoginPage = () => {
 
       if (response.message === "Success") {
         const lastRoute = sessionStorage.getItem("lastRoute");
+        localStorage.setItem("userId", response.user._id);
+        setUserId(response.user._id);
       if (lastRoute) {
         console.log("navigating to last route:", lastRoute);
         navigate(lastRoute);
