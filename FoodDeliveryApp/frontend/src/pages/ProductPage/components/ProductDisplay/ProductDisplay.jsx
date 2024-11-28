@@ -27,14 +27,6 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
     handleMouseLeave,
   } = useDragToScroll(); // Use the custom hook
 
-  // SideEffects
-  useEffect(() => {
-    console.log("data", data);
-  }, [data, loading]);
-
-  useEffect(() => {
-    console.log("addedToCartCountProduct", cartItems);
-  },[cartItems])
   // Functions
   const handleChange = (e) => {
     setProduct(e.target.value);
