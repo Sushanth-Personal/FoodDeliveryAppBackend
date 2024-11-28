@@ -9,7 +9,8 @@ const {
   addMenuItems,
   addRestaurant,
   getMenu,
-  addToCart
+  addToCart,
+  deleteFromCart
 } = require("../controllers/mainController.js");
 
 router.get("/cart/:userId", getCart);
@@ -21,6 +22,7 @@ router.post("/menu/:restaurantId", addMenuItems);
 router.post("/restaurant", addRestaurant);
 router.get("/menu/:restaurantId",getMenu);
 router.post("/cart/:userId", addToCart);
+router.delete("/cart/:userId", deleteFromCart);
 
 
 module.exports = router;

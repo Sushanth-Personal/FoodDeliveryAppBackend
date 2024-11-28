@@ -1,16 +1,19 @@
-import {useEffect} from "react";
 import useCart from "../../customHook/useCart";
 import styles from "./cart.module.css";
-import {useUserContext} from "../../Contexts/UserContext";
+import { useUserContext } from "../../Contexts/UserContext";
+
 const Cart = () => {
-  const { cartData, loading, error } = useCart();
-  const {cartItems} = useUserContext();
- 
+  const { loading, error } = useCart();
+  const { cartItems } = useUserContext();
+  const { deleteFromCart } = useCart();
 
   if (loading) return <p>Loading cart data...</p>;
   if (error) return <p>Error: {error}</p>;
 
-
+  const handleDelete = async (item) => {
+    console.log("productid",item);
+    deleteFromCart(item);
+  };
 
   return (
     <section className={styles.cart}>
@@ -31,12 +34,16 @@ const Cart = () => {
             ) : (
               cartItems.map((item) => (
                 <li key={item._id}>
-                  <div className={styles.quantity}>{item.quantity}x</div>
+                  <div className={styles.quantity}>
+                    {item.quantity}x
+                  </div>
                   <div className={styles.content}>
                     <p>₹{item.price}</p>
                     <h1>{item.productName}</h1>
                   </div>
                   <img
+                    role="button"
+                    onClick={() => handleDelete(item)}
                     className={styles.remove}
                     src="/Remove.png"
                     alt="Remove Item"

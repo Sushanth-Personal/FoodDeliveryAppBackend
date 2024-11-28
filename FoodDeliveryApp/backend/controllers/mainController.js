@@ -347,6 +347,42 @@ const addToCart = async (req, res) => {
   }
 };
 
+const deleteFromCart = async (req, res) => {
+  const { userId } = req.params;
+  const { productId } = req.query;
+
+  const userIdObject = mongoose.Types.ObjectId.isValid(userId)
+    ? new mongoose.Types.ObjectId(userId)
+    : null;
+
+  const productIdObject = mongoose.Types.ObjectId.isValid(productId)
+    ? new mongoose.Types.ObjectId(productId)
+    : null;
+
+  if (!userIdObject || !productIdObject) {
+    return res.status(400).json({ message: "Invalid userId or productId format" });
+  }
+
+  try {
+    // Find the cart item to delete
+    const cartItem = await Cart.findOneAndDelete({ userId: userIdObject, productId: productIdObject });
+
+    if (!cartItem) {
+      return res.status(404).json({ message: "Cart item not found" });
+    }
+
+    // Fetch the updated cart for the user
+    const updatedCart = await Cart.find({ userId: userIdObject });
+
+    return res.status(200).json({
+      message: "Product removed from cart",
+      cartItems: updatedCart, // Send the entire updated cart
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error removing product from cart", error });
+  }
+};
 
 
 
@@ -360,5 +396,6 @@ module.exports = {
   addMenuItems,
   addRestaurant,
   getMenu,
-  addToCart
+  addToCart,
+  deleteFromCart
 };
