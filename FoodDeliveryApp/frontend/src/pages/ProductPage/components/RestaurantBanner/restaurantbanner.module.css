@@ -1,0 +1,155 @@
+.restaurantBanner{
+    height: 506px;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.timing{
+    height: 61px;
+    width: 335px;
+    background-color: #FC8A06;
+    border-radius: 0px 12px 12px 0px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.timing p{
+    color:white;
+    font-size: 1.6rem;
+    font-weight: 600;
+    line-height: 66px;
+    margin-left: 13px;
+}
+
+.timing img{
+  width: 29px;
+  height: 29px;
+}
+
+.backgroundLayer{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 477px;
+    z-index: 0;
+}
+
+.topLayer{
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 506px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    z-index: 5;
+}
+
+.backgroundLayer img{
+    width: 100%;
+    height: 477px;
+}
+
+.upperContent{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex:1;
+    padding:57px 62px 0px 57px;
+}
+
+.content{
+    display: flex;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.content .description{
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+}
+
+.description h4{
+    color: #FFFFFF;
+    margin-bottom: 0px;
+    font-weight: 400;
+    font-size: 2rem;
+    line-height: 66px;
+
+  
+}
+
+.description h1{
+    color: #FFFFFF;
+    margin-bottom: 30px;
+    font-weight: 600;
+    font-size: 5.4rem;
+    line-height: 66px;
+    
+
+  
+}
+
+.description .line3{
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    margin-bottom: 57px;
+}
+
+.description .line3 .button{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: transparent;
+    width: 330px;
+    height: 63px;
+    margin-right: 16px;
+    border:1px solid white;
+    border-radius: 120px;
+}
+
+.line3 .button p{
+    color: #FFFFFF;
+    margin-bottom: 0px;
+    font-weight: 400;
+    font-size: 1.8rem;
+    line-height: 66px;
+    margin-left: 17px;
+
+}
+
+
+.rightContent{
+    width:637px;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    position: relative;
+}
+
+.rightContent .banner{
+    position: absolute;
+    top: 0px;
+    right: 0px;
+
+    border-radius: 12px;
+    align-self: flex-end;
+}
+
+.rightContent .rating{
+    align-self: flex-start;
+    position: absolute;
+    bottom: 0px;
+    left: 0px;
+}
+
