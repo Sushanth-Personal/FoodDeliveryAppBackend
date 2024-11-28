@@ -7,11 +7,17 @@ import useScreenType from "../../customHook/useScreenType";
 import RestaurantBanner from "./components/RestaurantBanner/RestaurantBanner";
 import { useSearchParams } from "react-router-dom";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";  
+import {useUserContext} from "../../Contexts/UserContext";
 const ProductPage = () => {
   const screenType = useScreenType();
   const [searchParams] = useSearchParams();
   const restaurantId = searchParams.get("id");
   const restaurantName = searchParams.get("restaurantName");
+  const {userId,setUserId} = useUserContext();
+
+  if(!userId){
+    setUserId(localStorage.getItem("userId"));
+  }
 
   // const restaurantName = searchParams.get("restaurantName");
   return (

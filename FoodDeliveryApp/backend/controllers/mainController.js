@@ -7,56 +7,35 @@ const Review = require("../models/reviewModel");
 const Restaurant = require("../models/restaurantModel");
 const Product = require("../models/productModel");
 const getCart = async (req, res) => {
-  const { userId, restaurantId } = req.params;
+  const { userId } = req.params;
 
   try {
-    // Validate input (ensure `userId` and `restaurantId` are valid ObjectId formats if applicable)
-    if (!userId || !restaurantId) {
-      return res
-        .status(400)
-        .json({ error: "User ID and Restaurant ID are required." });
+    // Convert userId to Mongoose ObjectId if not already
+    const objectId = mongoose.Types.ObjectId.isValid(userId)
+      ? new mongoose.Types.ObjectId(userId)
+      : null;
+
+    if (!objectId) {
+      return res.status(400).json({ message: "Invalid userId format" });
     }
 
-    // Fetch the cart for the given user and restaurant
-    const cart = await Cart.findOne({
-      userId,
-      restaurantId,
-    }).populate({
-      path: "items.productId", // Populate product details
-      select: "productName price productImageSmall", // Include specific fields
+    // Fetch all cart items for the given userId
+    const cartItems = await Cart.find({ userId: objectId });
+
+    if (cartItems.length === 0) {
+      return res.status(404).json({ message: "No cart items found for this user" });
+    }
+
+    res.status(200).json({
+      message: "Cart details fetched successfully",
+      cartItems,
     });
-
-    // If no cart is found, return a 404 error
-    if (!cart) {
-      return res
-        .status(404)
-        .json({
-          error: "Cart not found for the given user and restaurant.",
-        });
-    }
-
-    // Respond with the cart data
-    res.status(200).json(cart);
   } catch (error) {
-    // Log the error for debugging purposes
-    console.error("Error fetching cart:", error.message);
-
-    // Differentiate between validation errors and server errors if needed
-    if (error.name === "CastError") {
-      return res
-        .status(400)
-        .json({ error: "Invalid User ID or Restaurant ID format." });
-    }
-
-    // Handle unexpected server errors
-    res
-      .status(500)
-      .json({
-        error:
-          "An unexpected error occurred while fetching the cart.",
-      });
+    console.error(error);
+    res.status(500).json({ message: "Error fetching cart details", error });
   }
 };
+
 
 const getUser = async (req, res) => {
   const { userId } = req.params;
@@ -201,30 +180,38 @@ const getImage = async (req, res) => {
       .json({ error: "An error occurred while fetching image." });
   }
 }
-
 const postImage = async (req, res) => {
-  // Handle the image upload logic here
-  const {imageId,imageURL, altText, page, container} = req.body;
-  if(!imageURL || !altText || !page){
-    return res.status(400).json({ error: "Missing required fields." });
+  const images = req.body;
+
+  if (!Array.isArray(images)) {
+    return res.status(400).json({ error: "Request body must be an array of images." });
   }
+
   try {
-    const newImage = new Image({ imageId,imageURL, altText, page,container });
-    await newImage.save();
-    res.status(201).json(newImage);
+    const savedImages = [];
+
+    for (const image of images) {
+      const { imageId, imageURL, altText, page, container } = image;
+      if (!imageURL || !altText || !page) {
+        return res.status(400).json({ error: "Missing required fields in one or more images." });
+      }
+
+      const newImage = new Image({ imageId, imageURL, altText, page, container });
+      await newImage.save();
+      savedImages.push(newImage);
+    }
+
+    res.status(201).json(savedImages);
   } catch (error) {
-    console.error("Error saving image:", error.message);
-    res.status(500).json({ error: "An error occurred while saving the image." });
+    console.error("Error saving images:", error.message);
+    res.status(500).json({ error: "An error occurred while saving the images." });
   }
 };
+
 
 const addMenuItems = async (req, res) => {
   const { restaurantId } = req.params; // Get restaurantId from the URL parameter
   const products = req.body; // Get the array of products from the request body
-
-  // Log the received data for debugging
-  console.log("Restaurant ID:", restaurantId);
-  console.log("Products:", products);
 
   try {
     // Ensure each product has the correct restaurantId
@@ -306,6 +293,63 @@ const getMenu = async (req, res) => {
 };
 
 
+const addToCart = async (req, res) => {
+  const { userId } = req.params;
+  const { productId } = req.query;
+  
+  const userIdObject = mongoose.Types.ObjectId.isValid(userId)
+    ? new mongoose.Types.ObjectId(userId)
+    : null;
+
+  const productIdObject = mongoose.Types.ObjectId.isValid(productId)
+    ? new mongoose.Types.ObjectId(productId)
+    : null;
+
+  if (!userIdObject || !productIdObject) {
+    return res.status(400).json({ message: "Invalid userId or productId format" });
+  }
+
+  try {
+    const product = await Product.findOne({ _id: productIdObject });
+
+    if (!product) {
+      return res.status(404).json({ message: "Product not found" });
+    }
+
+    let cartItem = await Cart.findOne({ userId: userIdObject, productId: productIdObject });
+
+    if (cartItem) {
+      cartItem.quantity += 1;
+      await cartItem.save();
+    } else {
+      cartItem = new Cart({
+        userId: userIdObject,
+        restaurantId: product.restaurantId,
+        productId: productIdObject,
+        productName: product.productName,
+        price: product.productPrice,
+        quantity: 1,
+      });
+
+      await cartItem.save();
+    }
+
+    // Fetch the updated cart for the user
+    const updatedCart = await Cart.find({ userId: userIdObject });
+
+    return res.status(200).json({
+      message: cartItem ? "Product quantity updated" : "Product added to cart",
+      cartItems: updatedCart, // Send the entire updated cart
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ message: "Error adding product to cart", error });
+  }
+};
+
+
+
+
 
 module.exports = {
   getCart,
@@ -315,5 +359,6 @@ module.exports = {
   postImage,
   addMenuItems,
   addRestaurant,
-  getMenu
+  getMenu,
+  addToCart
 };

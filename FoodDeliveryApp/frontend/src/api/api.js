@@ -67,11 +67,11 @@ export const loginUser = async (email, password) => {
       email,
       password,
     });
-
-    const { userData, accessToken } = response.data;
+    console.log(response.data);
+    const { user, accessToken } = response.data;
     localStorage.setItem("accessToken", accessToken);
-
-    return { message: "Success", userData, accessToken };
+    
+    return { message: "Success", user, accessToken };
   } catch (error) {
     console.error(
       "Error logging in:",
@@ -129,6 +129,7 @@ const getImageByAltText = async (altText) => {
     console.error("Error fetching image:", error);
   }
 };
+
 
 const getImageByPage = async (page, security) => {
   try {

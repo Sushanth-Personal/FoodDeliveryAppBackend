@@ -9,7 +9,7 @@ import {
   validateEmail,
   validatePassword,
 } from "../errorHandler/inputError"; // Import validation functions
-import { registerUser } from "../api/imageAPI";
+import { registerUser } from "../api/api";
 
 const RegisterPage = () => {
   const navigate = useNavigate();
