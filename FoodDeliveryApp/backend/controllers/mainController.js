@@ -218,6 +218,94 @@ const postImage = async (req, res) => {
   }
 };
 
+const addMenuItems = async (req, res) => {
+  const { restaurantId } = req.params; // Get restaurantId from the URL parameter
+  const products = req.body; // Get the array of products from the request body
+
+  // Log the received data for debugging
+  console.log("Restaurant ID:", restaurantId);
+  console.log("Products:", products);
+
+  try {
+    // Ensure each product has the correct restaurantId
+    const validatedProducts = products.map((product) => ({
+      ...product,
+      restaurantId: product.restaurantId || restaurantId, // Use provided or fallback to URL parameter
+    }));
+
+    // Insert the validated products into the database
+    const savedProducts = await Product.insertMany(validatedProducts);
+
+    // Respond with the saved products
+    res.status(201).json(savedProducts);
+  } catch (err) {
+    // Handle potential errors
+    res.status(500).json({ error: err.message });
+  }
+};
+
+const addRestaurant = async (req,res) => {
+  const { restaurantName } = req.body;
+
+  // Validate required fields
+  if (!restaurantName) {
+    return res.status(400).json({ message: "Restaurant name and banner image are required." });
+  }
+
+  try {
+    // Create a new restaurant instance
+    const newRestaurant = new Restaurant({
+      restaurantName
+    });
+
+    // Save the restaurant to the database
+    const savedRestaurant = await newRestaurant.save();
+
+    res.status(201).json({
+      message: "Restaurant added successfully.",
+      data: savedRestaurant,
+    });
+  } catch (error) {
+    console.error("Error adding restaurant:", error);
+    res.status(500).json({ message: "Internal server error." });
+  }
+
+}
+
+const getMenu = async (req, res) => {
+  const { restaurantId } = req.params;
+
+  try {
+    // Step 1: Find all products for the given restaurantId
+    const products = await Product.find({ restaurantId });
+
+    if (!products || products.length === 0) {
+      return res.status(404).json({ message: "No products found for this restaurant." });
+    }
+
+    // Step 2: Fetch the corresponding image for each product
+    const productsWithImages = await Promise.all(
+      products.map(async (product) => {
+        const image = await Image.findOne({ imageId: product.productImageId }); // Fetch the image using productImageId
+        return {
+          ...product.toObject(), // Convert Mongoose document to plain object
+          productImage: image ? image.imageURL : null, // Include the image URL if found
+        };
+      })
+    );
+
+    // Step 3: Return the products with image details
+    return res.status(200).json({
+      restaurantId,
+      menu: productsWithImages, // Products enriched with image details
+    });
+  } catch (error) {
+    console.error("Error fetching menu for restaurant:", error);
+    return res.status(500).json({ message: "Server error." });
+  }
+};
+
+
 
 module.exports = {
   getCart,
@@ -225,4 +313,7 @@ module.exports = {
   getReview,
   getImage,
   postImage,
+  addMenuItems,
+  addRestaurant,
+  getMenu
 };

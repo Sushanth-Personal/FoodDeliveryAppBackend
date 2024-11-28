@@ -1,11 +1,17 @@
 import styles from "./popularrestaurants.module.css";
+import {useNavigate} from 'react-router-dom';
 const PopularRestaurants = () => {
+  const navigate = useNavigate();
+
   return (
     <section className={styles.popularRestaurants}>
       <div className={styles.heading}>Popular Restaurants</div>
       <div className={styles.content}>
         <ul>
-          <li>
+          <li
+          role="button"
+          onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}
+          >
             <img
               id="popularrestaurants-content-tile-1"
               src="./tile1.png"

@@ -4,7 +4,7 @@ const Cart = require("../../models/cartModel");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const jwtExpiresIn = "15m";
+const jwtExpiresIn = "150m";
 
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {

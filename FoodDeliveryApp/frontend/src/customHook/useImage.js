@@ -17,6 +17,7 @@ const useImage = (type, value, security) => {
         let images = [];
         switch (type) {
           case "page":
+            console.log("page", value);
             images = await getImageByPage(value, security);
             break;
           case "container":
