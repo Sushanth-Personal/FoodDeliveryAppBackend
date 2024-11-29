@@ -1,9 +1,14 @@
-
+.productPage{
+    display: flex;
+    flex-direction: column;
+    justify-content:flex-start;
+}
 
 .restaurantBannerContainer{
     margin-bottom: 53px;
     margin-right: 100px;
     margin-left: 100px;
+
 }
 
 header{
@@ -21,6 +26,6 @@ nav{
 
 .productDisplayContainer{
     margin-bottom: 53px;
-    height: 100%;
 
 }
+

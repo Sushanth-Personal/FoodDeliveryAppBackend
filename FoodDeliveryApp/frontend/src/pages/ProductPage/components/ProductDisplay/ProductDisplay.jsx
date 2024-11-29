@@ -1,24 +1,26 @@
 import styles from "./productdisplay.module.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import useImage from "../../../../customHook/useImage";
 import useRestaurant from "../../../../customHook/useRestaurant";
-import { displayImage } from "../../../../utility/ImageProcess";
+import { displayImage } from "../../../../utility/imageProcess";
 import useDragToScroll from "../../../../customHook/useDragToScroll"; // Import the custom hook
 import { useUserContext } from "../../../../Contexts/UserContext";
 import Cart from "../../../../components/Cart/Cart";
 import useCart from "../../../../customHook/useCart";
-import {handleAddToCart} from "../../../../utility/handleAddToCart";
+import { handleAddToCart } from "../../../../utility/handleAddToCart";
+import PropTypes from "prop-types"; // Import PropTypes
+
 const ProductDisplay = ({ restaurantId, restaurantName }) => {
   // State variables
   const [product, setProduct] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Burgers");
-  const { isCartClicked,cartItems} = useUserContext();
+  const { isCartClicked ,setIsCartClicked } = useUserContext();
 
   // Custom hooks
   const { addToCart } = useCart();
   const restURLs = useImage("page", restaurantName);
   const imageURLs = useImage("page", "productdisplay");
-  const { data, loading } = useRestaurant(restaurantId);
+  const { data} = useRestaurant(restaurantId);
   const {
     listRef,
     handleMouseDown,
@@ -26,6 +28,9 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
     handleMouseMove,
     handleMouseLeave,
   } = useDragToScroll(); // Use the custom hook
+
+  // Refs
+  const filterDisplaySectionRef = useRef(null); // Reference for filterDisplaySection
 
   // Functions
   const handleChange = (e) => {
@@ -42,12 +47,19 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
   const handleCategoryClick = (category) => {
     setSelectedCategory(category);
   };
-  
 
   const handleAddToCartClick = (product) => {
+    setIsCartClicked(true);
     addToCart(product); // Add product to cart using the custom hook
   };
-  
+
+  // Scroll to filterDisplaySection when cart is clicked
+  useEffect(() => {
+    if (isCartClicked && filterDisplaySectionRef.current) {
+      filterDisplaySectionRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [isCartClicked]);
+
   return (
     <section className={styles.productDisplay}>
       <div className={styles.searchNavBar}>
@@ -104,20 +116,15 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
         </ul>
       </div>
 
-      <div className={styles.filterDisplaySection}>
+      <div ref={filterDisplaySectionRef} className={styles.filterDisplaySection}>
         <div className={styles.productFilter}>
           <h1>{selectedCategory}</h1>
           <div className={styles.tilesContainer}>
             {data && data.menu ? (
               data.menu
-                .filter(
-                  (item) => item.productCategory === selectedCategory
-                )
+                .filter((item) => item.productCategory === selectedCategory)
                 .map((product) => (
-                  <div
-                    className={styles.productTile}
-                    key={product._id}
-                  >
+                  <div className={styles.productTile} key={product._id}>
                     <div className={styles.content}>
                       <div className={styles.leftContent}>
                         <h1>{product.productName}</h1>
@@ -161,9 +168,16 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
             <Cart />
           </div>
         )}
+   
       </div>
     </section>
   );
+};
+
+// PropTypes validation
+ProductDisplay.propTypes = {
+  restaurantId: PropTypes.string.isRequired,
+  restaurantName: PropTypes.string.isRequired,
 };
 
 export default ProductDisplay;
