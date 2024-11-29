@@ -9,6 +9,7 @@ import { useSearchParams } from "react-router-dom";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";  
 import Information from "./components/Information/Information";
 import {useUserContext} from "../../Contexts/UserContext";
+import Map from "./components/MapComponent/Map";
 const ProductPage = () => {
   const screenType = useScreenType();
   const [searchParams] = useSearchParams();
@@ -46,6 +47,7 @@ const ProductPage = () => {
         <div className = {styles.informationContainer}>
           <Information/>
         </div>
+        <div className = {styles.mapContainer}><Map/></div>
         <footer>
           <FooterComponent />
         </footer>
