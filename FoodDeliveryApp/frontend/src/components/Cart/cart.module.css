@@ -138,6 +138,7 @@
 .cartItems .remove {
   justify-self: flex-end;
   margin-left: 29px;
+  cursor: pointer;
 }
 
 .summary {
@@ -310,7 +311,7 @@
   padding-left: 20px;
 }
 
-.checkoutContainer img{
+.checkout img{
   margin-right: 70px;
 }
 

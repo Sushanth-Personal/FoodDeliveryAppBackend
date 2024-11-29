@@ -5,7 +5,6 @@ const User = require("./userModel"); // Reference to the User schema
 const reviewSchema = mongoose.Schema({
   restaurantId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Restaurant",  // Reference to the Restaurant model
     required: true, // Every review must be tied to a restaurant
   },
   userId: {

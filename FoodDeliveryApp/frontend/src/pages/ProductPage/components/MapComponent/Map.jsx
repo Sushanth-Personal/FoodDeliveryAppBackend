@@ -2,6 +2,8 @@ import styles from "./map.module.css";
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
+import { displayImage } from "../../../../utility/imageProcess";
+import useImage from "../../../../customHook/useImage";
 
 // Custom Icon
 const customIcon = L.icon({
@@ -10,6 +12,9 @@ const customIcon = L.icon({
 });
 
 const Map = () => {
+
+  const imageURLs = useImage("page", "map");
+
   const position = [-32.97981455399372, 27.901114506360578]; // Replace with actual McDonald's lat/lng if available.
 
   return (
@@ -18,7 +23,10 @@ const Map = () => {
         <h1>McDonald’s
         </h1>
         <h2>South London</h2>
-        <img src="/content.png" alt="content" />
+        <img 
+        id="map-information-content-1"
+        src={displayImage(imageURLs, "map-information-content-1")}
+        alt="content" />
       </div>
       <MapContainer className = {styles.map}
         center={position}
