@@ -7,6 +7,7 @@ import useScreenType from "../../customHook/useScreenType";
 import RestaurantBanner from "./components/RestaurantBanner/RestaurantBanner";
 import { useSearchParams } from "react-router-dom";
 import ProductDisplay from "./components/ProductDisplay/ProductDisplay";  
+import Information from "./components/Information/Information";
 import {useUserContext} from "../../Contexts/UserContext";
 const ProductPage = () => {
   const screenType = useScreenType();
@@ -41,6 +42,9 @@ const ProductPage = () => {
           <ProductDisplay 
           restaurantId={restaurantId}
           restaurantName={restaurantName} />
+        </div>
+        <div className = {styles.informationContainer}>
+          <Information/>
         </div>
         <footer>
           <FooterComponent />
