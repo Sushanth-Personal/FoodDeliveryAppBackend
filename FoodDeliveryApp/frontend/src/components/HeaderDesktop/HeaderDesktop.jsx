@@ -3,6 +3,7 @@ import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
 import {useUserContext} from "../../Contexts/UserContext";
 import {useCallback} from "react";
+
 const HeaderDesktop = () => {
   const imageURLs = useImage("page", "headerdesktop");
   const {isCartClicked,setIsCartClicked} = useUserContext();
