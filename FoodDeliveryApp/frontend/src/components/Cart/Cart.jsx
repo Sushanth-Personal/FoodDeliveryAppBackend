@@ -3,6 +3,8 @@ import styles from "./cart.module.css";
 import { useUserContext } from "../../Contexts/UserContext";
 import { useRef } from "react";
 import useDragToScroll from "../../customHook/useDragToScroll";
+import { displayImage } from "../../utility/imageProcess";
+import useImage from "../../customHook/useImage";
 const Cart = () => {
   const { loading, error } = useCart();
   const { cartItems } = useUserContext();
@@ -14,6 +16,9 @@ const Cart = () => {
     handleMouseMove,
     handleMouseLeave,
   } = useDragToScroll();
+  //custom hook
+  const imageURLs = useImage("page", "cart");
+
   const cartRef = useRef(null);
 
   if (loading) return <p>Loading cart data...</p>;
@@ -27,13 +32,21 @@ const Cart = () => {
   return (
     <section ref={cartRef} className={styles.cart}>
       <div className={styles.copyLink}>
-        <img src="/share.png" alt="Share Cart" />
+        <img
+          id="cart-copylink-sharecart-1"
+          src={displayImage(imageURLs, "cart-copylink-sharecart-1")}
+          alt="sharecart"
+        />
         <p>Share this cart with your friends</p>
         <button>Copy link</button>
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.header}>
-          <img src="/basket.png" alt="Basket Icon" />
+          <img
+            id="cart-header-basketicon-1"
+            src={displayImage(imageURLs, "cart-header-basketicon-1")}
+            alt="Basket Icon"
+          />
           <p>My Basket</p>
         </div>
         <div className={styles.cartItems}>
@@ -60,7 +73,11 @@ const Cart = () => {
                     role="button"
                     onClick={() => handleDelete(item)}
                     className={styles.remove}
-                    src="/Remove.png"
+                    id="cart-item-remove-1"
+                    src={displayImage(
+                      imageURLs,
+                      "cart-item-remove-1"
+                    )}
                     alt="Remove Item"
                   />
                 </li>
@@ -89,7 +106,7 @@ const Cart = () => {
             <p>Choose your free item..</p>
             <img
               id="cart-total-downarrow-1"
-              src="/down.png"
+              src={displayImage(imageURLs, "cart-total-downarrow-1")}
               alt="downarrow"
             />
           </div>
@@ -97,7 +114,7 @@ const Cart = () => {
             <p>Apply Coupon Code here</p>
             <img
               id="cart-total-rightarrow-1"
-              src="/right.png"
+              src={displayImage(imageURLs, "cart-total-rightarrow-1")}
               alt="rightarrow"
             />
           </div>
@@ -105,20 +122,41 @@ const Cart = () => {
         <div className={styles.checkoutContainer}>
           <div className={styles.deliveryContainer}>
             <div className={styles.deliver}>
-              <img src="/scooter.png" alt="scooter" />
+              <img
+                id="cart-delivery-scooter-1"
+                src={displayImage(
+                  imageURLs,
+                  "cart-delivery-scooter-1"
+                )}
+                alt="scooter"
+              />
               <h1>Delivery</h1>
               <p>Starts at 17:50</p>
             </div>
             <div className={styles.collection}>
-            <img src="/store.png" alt="store" />
+              <img
+                id="cart-collection-store-1"
+                src={displayImage(
+                  imageURLs,
+                  "cart-collection-store-1"
+                )}
+                alt="store"
+              />
               <h1>Collection</h1>
               <p>Starts at 16:50</p>
             </div>
           </div>
-          <button className = {styles.checkout}>
-            <img src="/rightcheckout.png" alt="rightarrow" />
+          <button className={styles.checkout}>
+            <img
+              id="cart-checkout-rightarrow-1"
+              src={displayImage(
+                imageURLs,
+                "cart-checkout-rightarrow-1"
+              )}
+              alt="rightarrow"
+            />
             Checkout!
-            </button>
+          </button>
         </div>
       </div>
     </section>

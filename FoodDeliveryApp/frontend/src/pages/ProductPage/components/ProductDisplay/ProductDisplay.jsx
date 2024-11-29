@@ -71,7 +71,7 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
               imageURLs,
               "productdisplay-searchbox-searchicon-1"
             )}
-            alt=""
+            alt="searchicon"
           />
           <input
             type="text"
@@ -141,18 +141,23 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                           alt={product.productName}
                         />
                         <img
+                          id="productdisplay-producttile-plus-1"
                           role="button"
                           onClick={() => handleAddToCartClick(product)} // Pass product as argument
                           className={styles.plus}
-                          src="/Plus.png"
-                          alt="Add"
+                          src={displayImage(
+                            imageURLs,
+                            "productdisplay-producttile-plus-1"
+                          )}
+                          alt="plus"
                         />
                         <img
+                          id="productdisplay-producttile-addbutton-1"
                           role="button"
                           onClick={() => handleAddToCart(product)} // Pass product as argument
                           className={styles.addButton}
-                          src="/addButton.png"
-                          alt="Add to cart"
+                          src={displayImage(imageURLs,"productdisplay-producttile-addbutton-1")}
+                          alt="addbutton"
                         />
                       </div>
                     </div>

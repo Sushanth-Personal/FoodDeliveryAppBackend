@@ -10,6 +10,7 @@ import ProductDisplay from "./components/ProductDisplay/ProductDisplay";
 import Information from "./components/Information/Information";
 import {useUserContext} from "../../Contexts/UserContext";
 import Map from "./components/MapComponent/Map";
+import CustomerReviews from "./components/CustomerReviews/CustomerReviews";
 const ProductPage = () => {
   const screenType = useScreenType();
   const [searchParams] = useSearchParams();
@@ -48,6 +49,7 @@ const ProductPage = () => {
           <Information/>
         </div>
         <div className = {styles.mapContainer}><Map/></div>
+        <div className = {styles.reviewContainer}><CustomerReviews/></div>
         <footer>
           <FooterComponent />
         </footer>
