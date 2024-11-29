@@ -13,7 +13,7 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [cartItems, setCartItems] = useState([
    ]);
-
+const [lastRoute, setLastRoute] = useState(null);
   const value = useMemo(
     () => ({
       isCartClicked,
@@ -21,7 +21,9 @@ export const UserProvider = ({ children }) => {
       userId,
       setUserId,
       cartItems,
-      setCartItems
+      setCartItems,
+      lastRoute,
+      setLastRoute
     }),
     [
       isCartClicked,
@@ -29,7 +31,9 @@ export const UserProvider = ({ children }) => {
       userId,
       setUserId,
       cartItems,
-      setCartItems
+      setCartItems,
+      lastRoute,
+      setLastRoute
     ]
   );
 

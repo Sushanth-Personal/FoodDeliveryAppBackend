@@ -10,14 +10,15 @@ import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import ExclusiveDeals from "./components/ExclusiveDeals/ExclusiveDeals";
 import PopularCategory from "./components/PopularCategory/PopularCategory";
 import DownloadApp from "./components/DownloadApp/DownloadApp";
-import PopularRestaurant from "./components/PopularRestaurants/PopularRestaurants";
+import PopularRestaurant from "../../components/PopularRestaurants/PopularRestaurants";
+import {useUserContext} from "../../Contexts/UserContext";
 const HomePage = () => {
   // const navigate = useNavigate();
-
+const {lastRoute, setLastRoute} = useUserContext();
   const screenType = useScreenType();
   useEffect(
     ()=>{
-      sessionStorage.setItem("lastRoute", "/");
+      setLastRoute("/");
     },
   []);
   return (

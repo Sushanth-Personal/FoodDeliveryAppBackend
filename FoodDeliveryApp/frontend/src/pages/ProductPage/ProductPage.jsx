@@ -11,16 +11,22 @@ import Information from "./components/Information/Information";
 import {useUserContext} from "../../Contexts/UserContext";
 import Map from "./components/MapComponent/Map";
 import CustomerReviews from "./components/CustomerReviews/CustomerReviews";
+import PopularRestaurants from "../../components/PopularRestaurants/PopularRestaurants";
+import { useEffect } from "react";
 const ProductPage = () => {
   const screenType = useScreenType();
   const [searchParams] = useSearchParams();
   const restaurantId = searchParams.get("id");
   const restaurantName = searchParams.get("restaurantName");
-  const {userId,setUserId} = useUserContext();
+  const {userId,setUserId,setLastRoute} = useUserContext();
 
   if(!userId){
     setUserId(localStorage.getItem("userId"));
   }
+
+  useEffect(() => {
+    setLastRoute("/product");
+  }, []);
 
   // const restaurantName = searchParams.get("restaurantName");
   return (
@@ -50,6 +56,7 @@ const ProductPage = () => {
         </div>
         <div className = {styles.mapContainer}><Map/></div>
         <div className = {styles.reviewContainer}><CustomerReviews/></div>
+        <div className = {styles.popularRestaurantsContainer}><PopularRestaurants/></div>
         <footer>
           <FooterComponent />
         </footer>

@@ -1,13 +1,27 @@
 import styles from "./popularrestaurants.module.css";
 import {useNavigate} from 'react-router-dom';
-import useImage from "../../../../customHook/useImage";
-import {displayImage} from "../../../../utility/ImageProcess";
+import useImage from "../../customHook/useImage";
+import {displayImage} from "../../utility/ImageProcess";
+import { useEffect, useState } from "react";
+import {useUserContext} from "../../Contexts/UserContext";
 const PopularRestaurants = () => {
   const navigate = useNavigate();
   const imageURLs = useImage("page", "popularrestaurants");
+  const [heading, setHeading] = useState("Popular Restaurants");
+  const {lastRoute} = useUserContext();
+
+  useEffect(() => {
+    if(lastRoute === "/product"){
+      setHeading("Similar Restaurants");
+    }
+    if(lastRoute === "/"){
+      setHeading("Popular Restaurants");
+    }
+  }, [lastRoute]);
+
   return (
     <section className={styles.popularRestaurants}>
-      <div className={styles.heading}>Popular Restaurants</div>
+      <div className={styles.heading}>{heading}</div>
       <div className={styles.content}>
         <ul>
           <li
