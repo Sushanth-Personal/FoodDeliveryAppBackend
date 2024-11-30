@@ -32,6 +32,10 @@
   align-items: center;
   margin-left: 10px;
   box-sizing: border-box;
+  border-radius: 100px;
+  background-color: white;
+  color:#FC8A06;
+  border:none;
 }
 .mainContainer {
   width: 367px;

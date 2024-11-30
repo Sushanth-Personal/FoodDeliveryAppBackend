@@ -3,8 +3,10 @@ import { useState, useEffect } from "react";
 import useCart from "../../../customHook/useCart";
 import { getImageByProductIdArray } from "../../../api/api";
 import useImage from "../../../customHook/useImage";
+import {useUserContext} from "../../../Contexts/UserContext";
 
 const OrderSummary = () => {
+  const {setIsAddressChangeClicked} = useUserContext();
   const { cartData: cartItems, loading, error } = useCart();
   const [productImageURLs, setProductImageURLs] = useState({});
   const placeholder = useImage(
@@ -76,7 +78,10 @@ const OrderSummary = () => {
         </div>
 
         <div className={styles.rightContent}>
-          <div className={styles.address}>
+          <div 
+          role="button"
+          onClick={() => setIsAddressChangeClicked(true)}
+          className={styles.address}>
             <div>
               <img
                 className={styles.locationImage}

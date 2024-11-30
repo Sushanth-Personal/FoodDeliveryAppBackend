@@ -6,11 +6,13 @@ import useDragToScroll from "../../customHook/useDragToScroll";
 import { displayImage } from "../../utility/imageProcess";
 import useImage from "../../customHook/useImage";
 import { useNavigate } from "react-router-dom";
+import { useState } from "react";
 const Cart = () => {
   const navigate = useNavigate();
   const { loading, error, deleteFromCart } = useCart();
-  const { cartItems, cartTotal,userId, setUserId } = useUserContext();
-
+  const { cartItems, cartTotal, userId, setUserId, baseURL } =
+    useUserContext();
+  const [link, setLink] = useState("");
   const {
     listRef,
     handleMouseDown,
@@ -19,7 +21,7 @@ const Cart = () => {
     handleMouseLeave,
   } = useDragToScroll();
   //custom hook
-  const imageURLs = useImage("page", "cart");
+  const imageURLs = useImage("page", "cart","protected");
 
   const cartRef = useRef(null);
 
@@ -28,15 +30,19 @@ const Cart = () => {
   }, [cartTotal]);
 
   useEffect(() => {
-    if(!userId){
-     const id= localStorage.getItem("userId");
-     if(!id){
-      navigate("/login");
-     }else{
-      setUserId(id);
-     }
+    if (!userId) {
+      const id = localStorage.getItem("userId");
+      if (!id) {
+        navigate("/login");
+      } else {
+        setUserId(id);
+        setLink(baseURL + "checkout/" + id);
+      }
     }
-  },[userId])
+    
+    setLink(baseURL + "checkout/" + userId);
+
+  }, [userId]);
 
   if (loading) return <p>Loading cart data...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -44,6 +50,18 @@ const Cart = () => {
   const handleDelete = async (item) => {
     console.log("productid", item);
     deleteFromCart(item);
+  };
+
+   // Function to copy link to clipboard
+   const copyLinkToClipboard = () => {
+    navigator.clipboard.writeText(link).then(
+      () => {
+        alert("Link copied to clipboard!");
+      },
+      (err) => {
+        console.error("Error copying link: ", err);
+      }
+    );
   };
 
   return (
@@ -55,7 +73,7 @@ const Cart = () => {
           alt="sharecart"
         />
         <p>Share this cart with your friends</p>
-        <button>Copy link</button>
+        <button onClick={copyLinkToClipboard}>Copy link</button>
       </div>
       <div className={styles.mainContainer}>
         <div className={styles.header}>

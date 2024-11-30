@@ -7,9 +7,10 @@ import OrderSummary from "./components/OrderSummary";
 import { useParams } from "react-router-dom";
 import ErrorPage from "../ErrorPage/ErrorPage"; // Import the ErrorPage component
 import { useUserContext } from "../../Contexts/UserContext";
+import AddressChange from "./components/AddressChange/AddressChange";
 const CheckoutPage = () => {
   const { userId } = useParams();
-  const { setUserId } = useUserContext();
+  const { setUserId, isAddressChangeClicked } = useUserContext();
 
   // If userId is not present, redirect to ErrorPage
   if (!userId) {
@@ -27,12 +28,21 @@ const CheckoutPage = () => {
       <div className={styles.navBarContainer}>
         <NavBar />
       </div>
-      <div className={styles.orderSummaryContainer}>
-        <OrderSummary />
-      </div>
-      <div className={styles.popularRestaurantsContainer}>
-        <PopularRestaurant />
-      </div>
+      {!isAddressChangeClicked && (
+        <>
+          <div className={styles.orderSummaryContainer}>
+            <OrderSummary />
+          </div>
+          <div className={styles.popularRestaurantsContainer}>
+            <PopularRestaurant />
+          </div>
+        </>
+      )}
+      {isAddressChangeClicked && (
+        <div className={styles.addressChangeContainer}>
+          <AddressChange />
+        </div>
+      )}
 
       <footer>
         <FooterComponent />

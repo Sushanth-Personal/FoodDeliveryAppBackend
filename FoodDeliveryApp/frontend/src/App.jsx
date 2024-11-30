@@ -25,6 +25,7 @@ function App() {
         <Route path="/error" element={<ErrorPage />} />
         {/* Optionally, set a default route if needed */}
         <Route path="/" element={<HomePage />} />{" "}
+        <Route path="*" element={<ErrorPage />} />
         {/* Default to HomePage if no route matches */}
       </Routes>
     </Router>
