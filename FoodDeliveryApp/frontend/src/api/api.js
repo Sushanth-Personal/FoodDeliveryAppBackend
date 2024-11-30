@@ -112,6 +112,24 @@ const getImageById = async (imageId) => {
   }
 };
 
+const getImageByProductIdArray = async (array) => {
+  try {
+    console.log("array", array);
+    
+    // Join the array into a single comma-separated string
+    const params = new URLSearchParams();
+    params.append('productIdArray', array.join(',')); // Joining the array into a single string
+
+    // Make the GET request with the query parameter
+    const response = await api.get(`/image?${params.toString()}`);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching image:", error);
+  }
+};
+
+
+
 const getImageByContainer = async (container) => {
   try {
     const response = await api.get(`/image/?container=${container}`);
@@ -151,4 +169,5 @@ export {
   getImageByContainer,
   getImageByAltText,
   getImageByPage,
+  getImageByProductIdArray
 };

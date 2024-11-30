@@ -35,7 +35,7 @@
 }
 .mainContainer {
   width: 367px;
-  height: 1212px;
+  max-height: 1212px;
   border: 1px solid rgba(0, 0, 0, 0.11);
   margin-right: 100px;
   margin-bottom: 100px;
@@ -309,9 +309,21 @@
   font-size: 2.4rem;
   font-weight: 600;
   padding-left: 20px;
+  position: relative;
 }
 
-.checkout img{
+.checkout .rightarrow{
   margin-right: 70px;
 }
 
+.toolTip{
+  position:absolute;
+  left:0px;
+  top:50px;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+
+.checkout:hover .toolTip{
+  opacity: 1;
+}

@@ -8,7 +8,7 @@ const Restaurant = require("../models/restaurantModel");
 const Product = require("../models/productModel");
 const getCart = async (req, res) => {
   const { userId } = req.params;
-
+  
   try {
     // Convert userId to Mongoose ObjectId if not already
     const objectId = mongoose.Types.ObjectId.isValid(userId)
@@ -22,8 +22,8 @@ const getCart = async (req, res) => {
     // Fetch all cart items for the given userId
     const cartItems = await Cart.find({ userId: objectId });
 
-    if (cartItems.length === 0) {
-      return res.status(404).json({ message: "No cart items found for this user" });
+    if (!cartItems) {
+      return res.status(404).json({ message: "Cart not found" });
     }
 
     res.status(200).json({
@@ -113,73 +113,101 @@ const getReview = async (req, res) => {
   }
 };
 
-const getImage = async (req, res) => {  
+
+const getImage = async (req, res) => {
   try {
-    const { imageId,page,container,altText } = req.query;
-    if(imageId){
-      try{
+    const { imageId, page, container, altText, productIdArray } = req.query;
+    let productIds = [];
+
+    // If productIdArray is passed as a comma-separated string in the query
+    if (productIdArray) {
+      productIds = productIdArray.split(',').map(id => new mongoose.Types.ObjectId(id));
+    }
+
+    // Fetch images for the given productIds
+    if (productIds.length > 0) {
+      try {
+        // Fetch productImageId(s) from the Product model based on productIds
+        const products = await Product.find({ _id: { $in: productIds } });
+
+        // Check if we got the products, if not return an error
+        if (products.length === 0) {
+          return res.status(404).json({ error: "No products found for the given product IDs." });
+        }
+
+        // Extract productImageIds from the products
+        const productImageIds = products.map(product => product.productImageId);
+        console.log(productImageIds);
+        // Now, query the Image model to find the images using productImageIds
+        const images = await Image.find({ imageId: { $in: productImageIds } });
+        console.log(images);
+        // If no images are found, return a 404 error
+        if (images.length === 0) {
+          return res.status(404).json({ error: "No images found for the given product image IDs." });
+        }
+
+        return res.status(200).json(images.map(image => image.imageURL));
+      } catch (error) {
+        console.error("Error fetching images by product IDs:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching images." });
+      }
+    }
+
+    // Handle other cases (e.g., imageId, altText, container, page) if no productIdArray
+    if (imageId) {
+      try {
         const image = await Image.findOne({ imageId });
         if (!image) {
           return res.status(404).json({ error: "Image not found." });
         }
-        res.status(200).json(image);
-      }catch(error){
-        console.error("Error fetching image:", error.message);
-        res
-          .status(500)
-          .json({ error: "An error occurred while fetching image by imageId." });
+        return res.status(200).json(image);
+      } catch (error) {
+        console.error("Error fetching image by imageId:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching image by imageId." });
       }
-    }
-    else if(altText){
-      try{
+    } else if (altText) {
+      try {
         const image = await Image.findOne({ altText });
         if (!image) {
           return res.status(404).json({ error: "Image not found." });
         }
-        res.status(200).json(image);
-      }catch(error){
-        console.error("Error fetching image:", error.message);
-        res
-          .status(500)
-          .json({ error: "An error occurred while fetching image by altText." });
+        return res.status(200).json(image);
+      } catch (error) {
+        console.error("Error fetching image by altText:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching image by altText." });
       }
-    }
-    else if(container){
-      try{
+    } else if (container) {
+      try {
         const image = await Image.find({ container });
         if (!image) {
           return res.status(404).json({ error: "Image not found." });
         }
-        res.status(200).json(image);
-      }catch(error){
-        console.error("Error fetching image:", error.message);
-        res
-          .status(500)
-          .json({ error: "An error occurred while fetching image by container." });
+        return res.status(200).json(image);
+      } catch (error) {
+        console.error("Error fetching image by container:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching image by container." });
       }
-    }else if(page){
-      try{
+    } else if (page) {
+      try {
         const image = await Image.find({ page });
         if (!image) {
           return res.status(404).json({ error: "Image not found." });
         }
-        res.status(200).json(image);
-      }catch(error){
-        console.error("Error fetching image:", error.message);
-        res
-          .status(500)
-          .json({ error: "An error occurred while fetching image by page." });
+        return res.status(200).json(image);
+      } catch (error) {
+        console.error("Error fetching image by page:", error.message);
+        return res.status(500).json({ error: "An error occurred while fetching image by page." });
       }
+    } else {
+      return res.status(400).json({ error: "Invalid request. No valid parameters provided." });
     }
-
-  
-  }catch(error){
-    console.error("Error fetching image:", error.message);
-    res
-      .status(500)
-      .json({ error: "An error occurred while fetching image." });
+  } catch (error) {
+    console.error("Error processing image request:", error.message);
+    return res.status(500).json({ error: "An error occurred while processing the image request." });
   }
-}
+};
+
+
 const postImage = async (req, res) => {
   const images = req.body;
 
@@ -365,7 +393,15 @@ const deleteFromCart = async (req, res) => {
 
   try {
     // Find the cart item to delete
-    const cartItem = await Cart.findOneAndDelete({ userId: userIdObject, productId: productIdObject });
+    const cartItem = await Cart.findOneAndUpdate(
+      { userId: userIdObject, productId: productIdObject, quantity: { $gt: 0 } },
+      { $inc: { quantity: -1 } },
+      { new: true }
+    );
+    
+    if (cartItem.quantity === 0) {
+      await Cart.deleteOne({ _id: cartItem._id });
+    }
 
     if (!cartItem) {
       return res.status(404).json({ message: "Cart item not found" });

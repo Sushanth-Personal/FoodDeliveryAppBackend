@@ -1,14 +1,16 @@
 import useCart from "../../customHook/useCart";
 import styles from "./cart.module.css";
 import { useUserContext } from "../../Contexts/UserContext";
-import { useRef } from "react";
+import { useRef, useEffect } from "react";
 import useDragToScroll from "../../customHook/useDragToScroll";
 import { displayImage } from "../../utility/imageProcess";
 import useImage from "../../customHook/useImage";
+import { useNavigate } from "react-router-dom";
 const Cart = () => {
-  const { loading, error } = useCart();
-  const { cartItems } = useUserContext();
-  const { deleteFromCart } = useCart();
+  const navigate = useNavigate();
+  const { loading, error, deleteFromCart } = useCart();
+  const { cartItems, cartTotal,userId, setUserId } = useUserContext();
+
   const {
     listRef,
     handleMouseDown,
@@ -20,6 +22,21 @@ const Cart = () => {
   const imageURLs = useImage("page", "cart");
 
   const cartRef = useRef(null);
+
+  useEffect(() => {
+    console.log(cartTotal);
+  }, [cartTotal]);
+
+  useEffect(() => {
+    if(!userId){
+     const id= localStorage.getItem("userId");
+     if(!id){
+      navigate("/login");
+     }else{
+      setUserId(id);
+     }
+    }
+  },[userId])
 
   if (loading) return <p>Loading cart data...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -62,24 +79,28 @@ const Cart = () => {
             ) : (
               cartItems.map((item) => (
                 <li key={item._id}>
-                  <div className={styles.quantity}>
-                    {item.quantity}x
-                  </div>
-                  <div className={styles.content}>
-                    <p>₹{item.price}</p>
-                    <h1>{item.productName}</h1>
-                  </div>
-                  <img
-                    role="button"
-                    onClick={() => handleDelete(item)}
-                    className={styles.remove}
-                    id="cart-item-remove-1"
-                    src={displayImage(
-                      imageURLs,
-                      "cart-item-remove-1"
-                    )}
-                    alt="Remove Item"
-                  />
+                  {item.quantity > 0 && (
+                    <>
+                      <div className={styles.quantity}>
+                        {item.quantity}x
+                      </div>
+                      <div className={styles.content}>
+                        <p>₹{item.price * item.quantity}</p>
+                        <h1>{item.productName}</h1>
+                      </div>
+                      <img
+                        role="button"
+                        onClick={() => handleDelete(item)}
+                        className={styles.remove}
+                        id="cart-item-remove-1"
+                        src={displayImage(
+                          imageURLs,
+                          "cart-item-remove-1"
+                        )}
+                        alt="Remove Item"
+                      />
+                    </>
+                  )}
                 </li>
               ))
             )}
@@ -92,7 +113,7 @@ const Cart = () => {
             <p>Delivery Fee:</p>
           </div>
           <div className={styles.values}>
-            <p>₹230.00</p>
+            <p>{cartTotal}</p>
             <p>-₹3.00</p>
             <p>₹3.00</p>
           </div>
@@ -100,7 +121,7 @@ const Cart = () => {
         <div className={styles.totalContainer}>
           <div className={styles.total}>
             <p>Total to pay</p>
-            <p className={styles.totalValue}>₹227.00</p>
+            <p className={styles.totalValue}>{`₹${cartTotal}`}</p>
           </div>
           <div className={styles.button}>
             <p>Choose your free item..</p>
@@ -146,17 +167,58 @@ const Cart = () => {
               <p>Starts at 16:50</p>
             </div>
           </div>
-          <button className={styles.checkout}>
-            <img
-              id="cart-checkout-rightarrow-1"
-              src={displayImage(
-                imageURLs,
-                "cart-checkout-rightarrow-1"
-              )}
-              alt="rightarrow"
-            />
-            Checkout!
-          </button>
+          {cartTotal > 20 && (
+            <button
+              onClick={() => navigate("/checkout/" + userId)}
+              className={styles.checkout}
+            >
+              <img
+                className={styles.rightarrow}
+                id="cart-checkout-rightarrow-1"
+                src={displayImage(
+                  imageURLs,
+                  "cart-checkout-rightarrow-1"
+                )}
+                alt="rightarrow"
+              />
+              <img
+                id="cart-checkout-tooltip-1"
+                className={styles.toolTip}
+                src={displayImage(
+                  imageURLs,
+                  "cart-checkout-tooltip-1"
+                )}
+                alt="tooltip"
+              />
+              Checkout!
+            </button>
+          )}
+          {cartTotal < 20 && (
+            <button
+              style={{ backgroundColor: "#FFB1B1" }}
+              className={styles.checkout}
+            >
+              <img
+                className={styles.rightarrow}
+                id="cart-checkout-rightarrow-1"
+                src={displayImage(
+                  imageURLs,
+                  "cart-checkout-rightarrow-1"
+                )}
+                alt="rightarrow"
+              />
+              <img
+                id="cart-checkout-tooltip-2"
+                className={styles.toolTip}
+                src={displayImage(
+                  imageURLs,
+                  "cart-checkout-tooltip-2"
+                )}
+                alt="tooltip"
+              />
+              Checkout!
+            </button>
+          )}
         </div>
       </div>
     </section>

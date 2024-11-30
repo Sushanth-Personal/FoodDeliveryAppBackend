@@ -9,6 +9,8 @@ import LoginPage from "./pages/LoginPage"; // Assume you have a LoginPage compon
 import HomePage from "./pages/HomePage/HomePage"; // Assume you have a HomePage component
 import RegisterPage from "./pages/RegisterPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
+import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
+import ErrorPage from "./pages/ErrorPage/ErrorPage";
 function App() {
   return (
     <Router>
@@ -18,6 +20,9 @@ function App() {
         <Route path="/register" element={<RegisterPage />} />
         <Route path="/home" element={<HomePage />} />
         <Route path="/product" element={<ProductPage />} />
+        <Route path="/checkout/:userId" element={<CheckoutPage />} />
+        <Route path="/checkout/" element={<CheckoutPage />} />
+        <Route path="/error" element={<ErrorPage />} />
         {/* Optionally, set a default route if needed */}
         <Route path="/" element={<HomePage />} />{" "}
         {/* Default to HomePage if no route matches */}

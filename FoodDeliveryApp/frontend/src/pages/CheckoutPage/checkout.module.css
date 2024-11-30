@@ -1,0 +1,26 @@
+.headerDesktopContainer{
+    margin-bottom: 38px;
+    margin-left: 100px; 
+    margin-right: 100px;
+}
+
+.navBarContainer{
+    margin-bottom: 61px;
+    margin-left: 100px; 
+    margin-right: 100px;
+}
+
+.popularRestaurantsContainer{
+    margin-bottom: 102px;
+    display: flex;
+    justify-content: center;
+}
+
+.orderSummaryContainer{
+    margin-bottom: 109px;
+    margin-left: 137px; 
+    margin-right: 100px;
+}
+
+
+

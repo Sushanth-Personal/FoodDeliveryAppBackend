@@ -48,7 +48,7 @@
   
   .cardsViewPort {
     display: flex;
-    width: 97vw;
+    width: 100%;
     height: 274px;
     overflow-x: scroll;
     scrollbar-width: none; /* Hides scrollbar for Firefox */
@@ -85,6 +85,13 @@
     cursor: grab;
     user-select: non;
   }
+
+  .cardsViewPort .content{
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    height: 100%;
+  }
   
   .cardsViewPort .content .review {
     font-size: 1.6rem;
@@ -92,6 +99,7 @@
     line-height: 24px;
     color: rgba(0, 0, 0, 1);
     width: 447px;
+    margin-top: 40px;
   }
   
   .cardsViewPort .content .header {
@@ -103,7 +111,11 @@
     display: flex;
     align-items: center;
   }
-  
+  .userDetails img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+  }
   .userInfo {
     border-left: 1px solid #fc8a06;
     padding-left: 10px;

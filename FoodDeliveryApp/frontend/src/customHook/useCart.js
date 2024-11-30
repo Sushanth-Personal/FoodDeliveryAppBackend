@@ -2,16 +2,19 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../Contexts/UserContext";
 
 const useCart = () => {
-  const { userId, setCartItems } = useUserContext();
+  const { userId, setCartItems, setCartTotal } = useUserContext();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
+
+    console.log("UseCart useEffect", userId);
     if (!userId) return;
 
     const fetchCartData = async () => {
       try {
+        
         setLoading(true);
         setError(null);
         const response = await fetch(`http://localhost:5000/cart/${userId}`);
@@ -19,6 +22,9 @@ const useCart = () => {
           throw new Error(`Error fetching cart data: ${response.statusText}`);
         }
         const data = await response.json();
+        let sumTotal = data.cartItems.reduce((total, item) => total + item.price*item.quantity, 0);
+        sumTotal = parseFloat(sumTotal.toFixed(2));
+        setCartTotal(sumTotal);
         setCartData(data.cartItems || []);
       } catch (err) {
         setError(err.message);
@@ -51,7 +57,11 @@ const useCart = () => {
       }
 
       const data = await response.json();
+      let sumTotal = data.cartItems.reduce((total, item) => total + item.price*item.quantity, 0);
+      sumTotal = parseFloat(sumTotal.toFixed(2));
+      setCartTotal(sumTotal);
       setCartData(data.cartItems);
+
     } catch (err) {
       setError(err.message);
     }
@@ -72,6 +82,9 @@ const useCart = () => {
       }
 
       const data = await response.json();
+      let sumTotal = data.cartItems.reduce((total, item) => total + item.price*item.quantity, 0);
+      sumTotal = parseFloat(sumTotal.toFixed(2));
+      setCartTotal(sumTotal);
       setCartData(data.cartItems);
     } catch (err) {
       setError(err.message);

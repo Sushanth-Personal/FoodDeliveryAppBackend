@@ -1,0 +1,63 @@
+/* Container for the error page */
+.errorPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    text-align: center;
+    color: #333;
+    font-family: 'Arial', sans-serif;
+    padding: 20px;
+  }
+  
+  /* Heading style */
+  .errorPage h1 {
+    font-size: 3rem;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: #e74c3c; /* Red color for emphasis */
+  }
+  
+  /* Paragraph style */
+  .errorPage p {
+    font-size: 1.2rem;
+    margin-bottom: 30px;
+    line-height: 1.5;
+  }
+  
+  /* Button link style */
+  .homeButton {
+    display: inline-block;
+    background-color: #3498db; /* Blue for a friendly feel */
+    color: #fff;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 5px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+  }
+  
+  .homeButton:hover {
+    background-color: #2980b9; /* Darker blue on hover */
+    transform: scale(1.05); /* Slight scale-up on hover */
+  }
+  
+  /* Responsive design for smaller screens */
+  @media (max-width: 768px) {
+    .errorPage h1 {
+      font-size: 2.5rem;
+    }
+  
+    .errorPage p {
+      font-size: 1rem;
+    }
+  
+    .homeButton {
+      font-size: 0.9rem;
+      padding: 8px 16px;
+    }
+  }
+  
