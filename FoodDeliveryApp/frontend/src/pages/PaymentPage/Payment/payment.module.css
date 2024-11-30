@@ -1,0 +1,142 @@
+.payment {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+
+header {
+  all: unset;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  margin-bottom: 31px;
+}
+
+header img {
+  width: 39px;
+  height: 39px;
+  margin-right: 4.5px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3.2rem;
+  font-weight: 600;
+  line-height: 48px;
+}
+
+.mainContent {
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.leftContent {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items: flex-start;
+  width: 100%;
+  margin-right: 27px;
+}
+.cardType {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 1px solid #ffe8ce;
+  border-radius: 100px;
+  padding-left: 10px;
+  padding-right: 16px;
+  width: 100%;
+  height: 64px;
+}
+
+.iconBackground {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 1px solid #2d3748;
+  background-color: #ffe8ce;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.cardType h1 {
+  all: unset;
+  font-size: 1.8rem;
+  font-weight: 500;
+  color: black;
+}
+
+.cardType p {
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: #83858a;
+}
+
+.cardType .content {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: flex-start;
+  margin-left: 12px;
+}
+
+.cardType .leftCardContent {
+  display: flex;
+  align-items: center;
+}
+
+.rightContent {
+  flex: 1;
+  width: 100%;
+}
+
+.proceedContainer{
+    display: flex;
+    flex-direction: column;
+    height: 131px;
+    padding:12px;
+    border:1px solid black;
+    border-radius: 12px;
+}
+
+.proceedContainer .firstRow{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid black;
+    padding-bottom: 16px;
+}
+
+.proceedContainer .firstRow h2{
+    all:unset;
+    font-size: 2rem;
+    font-weight: 400;
+    line-height: 32px;
+    color: #83858A;
+    margin: 0;
+}
+
+.proceedContainer .firstRow p{
+    font-size: 2rem;
+    font-weight: 700;
+    line-height: 32px;
+    color:black;
+}
+
+.proceedContainer button{
+    width: 100%;
+    height: 43px;
+    border-radius: 100px;
+    border: none;
+    color: white;
+    background-color: #FC8A06;
+    cursor: pointer;
+    font-size: 1.6rem;
+    font-weight: 600;
+    margin-top: 16px;
+}

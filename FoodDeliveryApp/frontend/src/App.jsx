@@ -11,6 +11,7 @@ import RegisterPage from "./pages/RegisterPage";
 import ProductPage from "./pages/ProductPage/ProductPage";
 import CheckoutPage from "./pages/CheckoutPage/CheckoutPage";
 import ErrorPage from "./pages/ErrorPage/ErrorPage";
+import PaymentPage from "./pages/PaymentPage/PaymentPage";
 function App() {
   return (
     <Router>
@@ -26,7 +27,8 @@ function App() {
         {/* Optionally, set a default route if needed */}
         <Route path="/" element={<HomePage />} />{" "}
         <Route path="*" element={<ErrorPage />} />
-        {/* Default to HomePage if no route matches */}
+        <Route path="/payment" element={<PaymentPage />} />
+       
       </Routes>
     </Router>
   );
