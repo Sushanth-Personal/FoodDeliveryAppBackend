@@ -3,16 +3,16 @@ import { useState, useEffect } from "react";
 import useCart from "../../../customHook/useCart";
 import { getImageByProductIdArray } from "../../../api/api";
 import useImage from "../../../customHook/useImage";
-import {useUserContext} from "../../../Contexts/UserContext";
+import { useUserContext } from "../../../Contexts/UserContext";
+import { useNavigate } from "react-router-dom";
 
 const OrderSummary = () => {
-  const {setIsAddressChangeClicked} = useUserContext();
+  const navigate = useNavigate();
+  const { setIsAddressChangeClicked, setTotalSum ,totalSum} = useUserContext();
   const { cartData: cartItems, loading, error } = useCart();
   const [productImageURLs, setProductImageURLs] = useState({});
-  const placeholder = useImage(
-    "id",
-    "popularrestaurants-content-mcdonalds-1"
-  );
+ 
+  const placeholder = useImage("id", "popularrestaurants-content-mcdonalds-1");
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -31,6 +31,19 @@ const OrderSummary = () => {
     };
 
     fetchImages();
+  }, [cartItems]);
+
+  useEffect(() => {
+    // Calculate the total sum (items + tax)
+    const itemsTotal = cartItems.reduce(
+      (sum, item) => sum + item.price * item.quantity,
+      0
+    );
+    const salesTax = itemsTotal * 0.1; // Assuming 10% sales tax
+    const total = itemsTotal + salesTax;
+
+    // Update the state with the total sum
+    setTotalSum(total);
   }, [cartItems]);
 
   if (loading) return <p>Loading...</p>;
@@ -55,9 +68,7 @@ const OrderSummary = () => {
                 {console.log("item", item)}
                 <div className={styles.item}>
                   <img
-                    src={
-                      productImageURLs[index] || placeholder.imageURL
-                    }
+                    src={productImageURLs[index] || placeholder.imageURL}
                     alt={item.productName}
                   />
                   <h1>
@@ -78,10 +89,11 @@ const OrderSummary = () => {
         </div>
 
         <div className={styles.rightContent}>
-          <div 
-          role="button"
-          onClick={() => setIsAddressChangeClicked(true)}
-          className={styles.address}>
+          <div
+            role="button"
+            onClick={() => setIsAddressChangeClicked(true)}
+            className={styles.address}
+          >
             <div>
               <img
                 className={styles.locationImage}
@@ -131,17 +143,12 @@ const OrderSummary = () => {
           <span className={styles.subTotal}>
             <h1>Subtotal ({cartItems.length} items)</h1>
             <p className={styles.amount}>
-              ₹
-              {cartItems
-                .reduce(
-                  (sum, item) =>
-                    sum + item.price * item.quantity * 1.1,
-                  0
-                )
-                .toFixed(2)}
+              ₹{totalSum.toFixed(2)} {/* Displaying the total sum */}
             </p>
           </span>
-          <button>Choose Payment Method</button>
+          <button onClick={() => navigate("/payment")}>
+            Choose Payment Method
+          </button>
         </div>
       </div>
     </section>

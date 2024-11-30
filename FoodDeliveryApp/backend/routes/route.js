@@ -23,6 +23,6 @@ router.post("/restaurant", addRestaurant);
 router.get("/menu/:restaurantId",getMenu);
 router.post("/cart/:userId", addToCart);
 router.delete("/cart/:userId", deleteFromCart);
-
+router.get("/",(req, res) => res.send("Authenticated"));
 
 module.exports = router;

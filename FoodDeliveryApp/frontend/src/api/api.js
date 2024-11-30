@@ -10,7 +10,7 @@ const api = axios.create({
 api.interceptors.request.use((config) => {
   if (config.url.includes("/protected")) {
     const accessToken = localStorage.getItem("accessToken");
-
+    console.log("accessToken Checking", accessToken);
     if (!accessToken) {
       window.location.href = "/login";
       return Promise.reject("No access token found");
@@ -41,7 +41,22 @@ api.interceptors.request.use((config) => {
 
 // Interceptor for handling wrong access token
 api.interceptors.response.use(
-  (response) => response,
+  (response) => {
+    // Check if the response has the access token
+    const accessToken = localStorage.getItem("accessToken");
+    if (accessToken) {
+      try {
+        // Decode the access token to extract userId
+        const decodedToken = jwtDecode(accessToken);
+        const userId = decodedToken.id; // Replace with the actual key in the decoded token
+        // Store the userId (e.g., in localStorage or state)
+        localStorage.setItem('userId', userId); // Or use any other method for storage
+      } catch (error) {
+        console.error("Error decoding token:", error);
+      }
+    }
+    return response;
+  },
   (error) => {
     if (
       error.response &&
@@ -55,6 +70,17 @@ api.interceptors.response.use(
     return Promise.reject(error);
   }
 );
+
+export const checkAuthentication = async () => {
+  try {
+    const response = await api.get("/protected/");
+    console.log("checkAuthentication" , response);
+    return response.data;
+  } catch (error) {
+    console.error("Error checking authentication:", error);
+    return false;
+  }
+};
 
 export const loginUser = async (email, password) => {
   // Check if identifier and password are provided

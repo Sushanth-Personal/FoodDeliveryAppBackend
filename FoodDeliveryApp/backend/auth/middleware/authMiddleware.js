@@ -3,7 +3,7 @@ const jwt = require("jsonwebtoken");
 const authenticateToken = async (req, res, next) => {
   const authHeader = req.headers["authorization"];
   const token = authHeader && authHeader.split(" ")[1];
-
+  console.log("reached here", token);
   // Check for missing token
   if (!token) {
     return res.status(401).json({ message: "Unauthorized: No valid access token" });

@@ -62,8 +62,7 @@ const LoginPage = () => {
 
       if (response.message === "Success") {
         const lastRoute = sessionStorage.getItem("lastRoute");
-        localStorage.setItem("userId", response.user._id);
-        setUserId(response.user._id);
+
       if (lastRoute) {
         console.log("navigating to last route:", lastRoute);
         navigate(lastRoute);
