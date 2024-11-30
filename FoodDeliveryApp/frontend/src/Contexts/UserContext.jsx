@@ -11,10 +11,11 @@ const UserContext = createContext({
 export const UserProvider = ({ children }) => {
   const [isCartClicked, setIsCartClicked] = useState(false);
   const [userId, setUserId] = useState(null);
-  const [cartItems, setCartItems] = useState([
-   ]);
-   const [cartTotal, setCartTotal] = useState(0);
-const [lastRoute, setLastRoute] = useState(null);
+  const [cartItems, setCartItems] = useState([]);
+  const [cartTotal, setCartTotal] = useState(0);
+  const [lastRoute, setLastRoute] = useState(null);
+  const [baseURL, setBaseURL] = useState("http://localhost:5173/");
+  const [isAddressChangeClicked, setIsAddressChangeClicked] = useState(false);
   const value = useMemo(
     () => ({
       isCartClicked,
@@ -26,7 +27,11 @@ const [lastRoute, setLastRoute] = useState(null);
       lastRoute,
       setLastRoute,
       cartTotal,
-      setCartTotal
+      setCartTotal,
+      baseURL,
+      setBaseURL,
+      isAddressChangeClicked,
+      setIsAddressChangeClicked
     }),
     [
       isCartClicked,
@@ -38,7 +43,11 @@ const [lastRoute, setLastRoute] = useState(null);
       lastRoute,
       setLastRoute,
       cartTotal,
-      setCartTotal
+      setCartTotal,
+      baseURL,
+      setBaseURL,
+      isAddressChangeClicked,
+      setIsAddressChangeClicked
     ]
   );
 
