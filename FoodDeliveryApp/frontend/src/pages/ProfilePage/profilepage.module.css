@@ -1,0 +1,205 @@
+.profilePage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin-left: 100px; 
+    margin-right: 100px;
+}
+
+.headerDesktopContainer{
+    margin-bottom:53px;
+}
+
+.navBarContainer{
+    margin-bottom: 53px;
+}
+
+header {
+    all: unset;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 31px;
+  }
+  
+  header img {
+    width: 39px;
+    height: 39px;
+    margin-right: 4.5px;
+  }
+  
+  header h1 {
+    margin: 0;
+    font-size: 3.2rem;
+    font-weight: 600;
+    line-height: 48px;
+  }
+
+ 
+  .userProfile{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    padding-bottom: 44px;
+    border-bottom:1px solid black;
+    margin-bottom: 27px;
+    
+  }
+
+  .userHeading{
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 32px;
+  }
+
+  .userHeading button{
+    width:87px;
+    height: 41px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-color: #FC8A06;
+    border-radius: 7.5px;
+    color:white;
+    border:none;
+  }
+
+  .userHeading div{
+    display: flex;
+    align-items: center;
+  }
+
+  .userHeading img{
+    width:94px;
+    height: 94px;
+    border-radius: 50%;
+    margin-right: 16px;
+  }
+
+  .userHeading h1{
+    all:unset;
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 48px;
+    margin: 0;
+
+  }
+
+  .userDetailsContainer{
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+    margin-right: 37px;
+  }
+
+  .userDetailsContainer  label{
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 22px;
+    margin-bottom: 12px;
+  }
+
+  .userDetailsContainer input{
+    width: 100%;
+    height: 48px;
+    border-radius: 7.5px;
+    margin-bottom: 16px;
+    padding:13px 0px 13px 23px;
+    font-size: 1.5rem;
+    font-weight: 400;
+    line-height: 22px;
+    border:none;
+    background-color: #f9f9f9;
+  }
+  .userDetailsContainer input:disabled {
+    background-color: #f1f1f1;
+    cursor: not-allowed;
+  }
+  
+.row{
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+  }
+
+  .paymentMethods{
+    display:flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+  }
+
+  .paymentMethods header{
+    all:unset;
+    font-size: 2.4rem;
+    font-weight: 500;
+    line-height: 36px;
+    margin: 0;
+    margin-bottom: 24px;
+  }
+
+  .paymentMethodsContainer{
+    display: flex;
+    justify-content: flex-start;
+    width: 100%;
+    flex-wrap: wrap;
+    margin-bottom: 174px;
+    gap:32px;
+  }
+
+  .paymentMethod {
+    display: flex;
+    justify-content: space-between;
+    border:0.5px solid rgba(0, 0, 0, 0.5);
+    align-items: center;
+    width: 312px;
+    height: 74px;
+    border-radius: 12px;
+    padding:12px;   
+  }
+
+  .paymentMethod h1{
+    all:unset;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-left: 24px;
+  }
+.paymentMethod div{
+    display: flex;
+    align-items: center;
+}
+  .paymentMethod p{
+    font-size: 1.5rem;  
+    font-weight: 400;
+
+  }
+
+
+  .addCard {
+    display: flex;
+    justify-content: space-between;
+    border:0.5px solid rgba(0, 0, 0, 0.5);
+    align-items: center;
+    width: 234px;
+    height: 74px;
+    border-radius: 12px;
+    padding:12px;   
+  }
+
+  .addCard h1{
+    all:unset;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    font-size: 2rem;
+    font-weight: 400;
+    margin-left: 24px;
+  }

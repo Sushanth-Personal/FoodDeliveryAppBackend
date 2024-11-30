@@ -4,26 +4,24 @@ import { useState } from "react";
 import useImage from "../customHook/useImage";
 import { displayImage } from "../utility/imageProcess";
 import { useNavigate } from "react-router-dom";
-import {  validateEmail, validatePassword } from "../errorHandler/inputError";
-import {loginUser} from "../api/api";
+import { validateEmail, validatePassword } from "../errorHandler/inputError";
+import { loginUser } from "../api/api"; // Assuming you have a fetchUserData API method
 import { useUserContext } from "../Contexts/UserContext";
+
 const LoginPage = () => {
 
-  //context
+  // context
+  const { setUserData } = useUserContext();
 
-  const {setUserId} = useUserContext();
-  //hooks
-  const [userData, setUserData] = useState({
-       email: "",
+  // hooks
+  const [userData, setUserDataState] = useState({
+    email: "",
     password: "",
   });
 
-
-  // Use the custom hook to fetch image URLs
   const imageURLs = useImage("page", "login");
 
-  const navigate = useNavigate(); // useNavigate hook
-
+  const navigate = useNavigate();
 
   const [errors, setErrors] = useState({
     email: "",
@@ -32,51 +30,66 @@ const LoginPage = () => {
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setUserData({
+    setUserDataState({
       ...userData,
-      [name]: value, // Update the field dynamically based on its name
+      [name]: value, 
     });
   };
-  
+
   const handleEmailBlur = () => {
-    const { error } = validateEmail(userData.email); // Validate email without overwriting the input value
-  
+    const { error } = validateEmail(userData.email);
     setErrors({
       ...errors,
-      email: error, // Set only the error message
+      email: error,
     });
   };
-  
+
   const handlePasswordBlur = () => {
-    const { error } = validatePassword(userData.password); // Validate password without overwriting the input value
-  
+    const { error } = validatePassword(userData.password);
     setErrors({
       ...errors,
-      password: error, // Set only the error message
+      password: error,
     });
   };
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
       const response = await loginUser(userData.email, userData.password);
 
       if (response.message === "Success") {
-        const lastRoute = sessionStorage.getItem("lastRoute");
+        // After login success, fetch user data from backend
+        const userId = response.user._id; // Assuming userId is returned from the login response
+        
 
-      if (lastRoute) {
-        console.log("navigating to last route:", lastRoute);
-        navigate(lastRoute);
-      }else{
-        navigate("/");
-      }
-      } else {
+       
+          const completeUserData = {
+            ...response.user, 
+            userId:userId, // Add userId to the user data
+          };
+
+          // Set complete user data in context
+          setUserData(completeUserData);
+
+          // Optionally store user data in localStorage or sessionStorage if needed
+          localStorage.setItem("userId", userId);
+          localStorage.setItem("userData", JSON.stringify(completeUserData));
+
+          // Navigate to the previous route if available, otherwise navigate to home
+          const lastRoute = sessionStorage.getItem("lastRoute");
+          if (lastRoute) {
+            navigate(lastRoute);
+          } else {
+            navigate("/");
+          }
+        }
+      else {
         console.error("Login failed:", response.message);
       }
-  }catch (error) {
+    } catch (error) {
       console.error("Error logging in:", error);
     }
   };
-    
 
   return (
     <section className={styles.login}>
@@ -86,16 +99,12 @@ const LoginPage = () => {
             <div className={styles.loginForm}>
               <img
                 id="login-loginForm-logo-1"
-                src={displayImage(
-                  imageURLs,
-                  "login-loginForm-logo-1"
-                )}
+                src={displayImage(imageURLs, "login-loginForm-logo-1")}
                 alt="logo"
               />
               <h1>Welcome Back 👋</h1>
               <h2>
-                Today is a new day. It's your day. You shape it. Sign
-                in to start ordering.
+                Today is a new day. It's your day. You shape it. Sign in to start ordering.
               </h2>
               <div className={styles.formGroup}>
                 <div className={styles.emailGroup}>
@@ -109,9 +118,7 @@ const LoginPage = () => {
                     onChange={handleChange}
                     onBlur={handleEmailBlur}
                   />
-                  {errors.email && (
-                    <div className={styles.error}>{errors.email}</div>
-                  )}
+                  {errors.email && <div className={styles.error}>{errors.email}</div>}
                 </div>
 
                 <div className={styles.passwordGroup}>
@@ -125,9 +132,7 @@ const LoginPage = () => {
                     onChange={handleChange}
                     onBlur={handlePasswordBlur}
                   />
-                  {errors.password && (
-                    <div className={styles.error}>{errors.password}</div>
-                  )}
+                  {errors.password && <div className={styles.error}>{errors.password}</div>}
                 </div>
                 <h4>Forgot Password?</h4>
                 <button onClick={handleSubmit}>Sign in</button>
@@ -140,10 +145,7 @@ const LoginPage = () => {
           </div>
           <div className={styles.loginImage}>
             <img
-              src={displayImage(
-                imageURLs,
-                "login-loginImage-loginImage-1"
-              )}
+              src={displayImage(imageURLs, "login-loginImage-loginImage-1")}
               alt="loginImage"
               id="login-loginImage-loginImage-1"
             />

@@ -129,6 +129,15 @@ export const registerUser = async (
   }
 };
 
+export const fetchUserData = async (userId) => {
+  try {
+    const response = await api.get(`/protected/user/${userId}`);
+    console.log("fetchUserresponse", response);
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching user data:", error);
+  }
+}
 const getImageById = async (imageId) => {
   try {
     const response = await api.get(`/image/?imageId=${imageId}`);
@@ -154,7 +163,14 @@ const getImageByProductIdArray = async (array) => {
   }
 };
 
-
+const editUserData = async (userData) => {
+  try {
+    const response = await api.put(`/protected/user/${userData._id}`, userData);
+    return response.data;
+  } catch (error) {
+    console.error("Error editing user data:", error);
+  }
+};
 
 const getImageByContainer = async (container) => {
   try {
@@ -195,5 +211,6 @@ export {
   getImageByContainer,
   getImageByAltText,
   getImageByPage,
-  getImageByProductIdArray
+  getImageByProductIdArray,
+  editUserData
 };

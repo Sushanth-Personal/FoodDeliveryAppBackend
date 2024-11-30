@@ -30,11 +30,8 @@ const authSchema = new mongoose.Schema(
       },
       country:{
         type:String,
+        default:"India"
       },
-      userImageSmall: {
-        type: String,
-      },
-      cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Cart' }]
     },
     { timestamps: true }
   );

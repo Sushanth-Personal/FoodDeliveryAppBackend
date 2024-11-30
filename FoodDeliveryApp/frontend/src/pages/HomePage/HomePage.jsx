@@ -12,15 +12,30 @@ import PopularCategory from "./components/PopularCategory/PopularCategory";
 import DownloadApp from "./components/DownloadApp/DownloadApp";
 import PopularRestaurant from "../../components/PopularRestaurants/PopularRestaurants";
 import {useUserContext} from "../../Contexts/UserContext";
+import {checkAuthentication} from "../../api/api";
+import {useNavigate} from "react-router-dom";
 const HomePage = () => {
-  // const navigate = useNavigate();
-const {lastRoute, setLastRoute} = useUserContext();
+  const navigate = useNavigate();
+const {setUserId,setLastRoute, setIsLoggedIn} = useUserContext();
   const screenType = useScreenType();
   useEffect(
     ()=>{
       setLastRoute("/");
     },
   []);
+
+  useEffect(() => {
+    checkAuthentication().then((response) => {
+      if (!response) {
+        navigate("/login");
+      }else{
+        setUserId(localStorage.getItem("userId"));
+        setIsLoggedIn(true);
+      }
+    })
+  },[]);
+
+
   return (
     <section className={styles.homePage}>
       <div className={styles.content}>
