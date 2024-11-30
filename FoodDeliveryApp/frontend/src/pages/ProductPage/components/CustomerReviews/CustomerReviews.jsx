@@ -1,9 +1,11 @@
 import { useRef } from "react";
 import styles from "./customerreviews.module.css";
-
+import { displayImage } from "../../../../utility/imageProcess";
+import useImage from "../../../../customHook/useImage";
 const CustomerReviews = () => {
   const cardsViewPortRef = useRef(null);
 
+  const imageURLs = useImage("page", "customerreviews");
   const scrollLeft = () => {
     if (cardsViewPortRef.current) {
       cardsViewPortRef.current.scrollBy({
@@ -24,21 +26,28 @@ const CustomerReviews = () => {
 
   return (
     <section className={styles.customerReviews}>
-      <img className = {styles.ratingImage} src="/rating.png" alt="" />
+      <img
+      className = {styles.ratingImage}
+        id="customerreviews-ratingimage-rating-1"
+        src={displayImage(imageURLs, "customerreviews-ratingimage-rating-1")}
+        alt="rating"
+      />
       <div className={styles.mainContainer}>
         <div className={styles.mainContent}>
           <div className={styles.header}>
             <h1>Customer Reviews</h1>
             <div>
               <img
+                id="customerreviews-pagingbutton-leftbutton-1"
                 className={styles.pagingButton}
-                src="/leftbutton.png"
+                src={displayImage(imageURLs, "customerreviews-pagingbutton-leftbutton-1")}
                 alt="Scroll Left"
                 onClick={scrollLeft}
               />
               <img
+                id="customerreviews-pagingbutton-rightbutton-1"
                 className={styles.pagingButton}
-                src="/rightbutton.png"
+                src={displayImage(imageURLs, "customerreviews-pagingbutton-rightbutton-1")}
                 alt="Scroll Right"
                 onClick={scrollRight}
               />
@@ -94,7 +103,11 @@ const CustomerReviews = () => {
                   <div className={styles.content}>
                     <div className={styles.header}>
                       <div className={styles.userDetails}>
-                        <img src={`/user.png`} alt="User" />
+                        <img
+                          id={`customerreviews-userdetails-userimage-${index + 1}`}
+                          src={displayImage(imageURLs, `customerreviews-userdetails-userimage-${index + 1}`)}
+                          alt="User"
+                        />
                         <div className={styles.userInfo}>
                           <h2>{customer.name}</h2>
                           <p>{customer.location}</p>
@@ -102,12 +115,17 @@ const CustomerReviews = () => {
                       </div>
                       <div className={styles.rating}>
                         <img
+                          id="customerreviews-rating-stars-1"
                           className={styles.stars}
-                          src="/stars.png"
+                          src={displayImage(imageURLs, "customerreviews-rating-stars-1")}
                           alt="Rating Stars"
                         />
                         <div className={styles.timeDetails}>
-                          <img src="/timespan.png" alt="Time" />
+                          <img
+                            id="customerreviews-timedetails-timespan-1"
+                            src={displayImage(imageURLs, "customerreviews-timedetails-timespan-1")}
+                            alt="Time"
+                          />
                           <p>{customer.date}</p>
                         </div>
                       </div>

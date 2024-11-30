@@ -11,7 +11,7 @@ const PopularRestaurants = () => {
   const {lastRoute} = useUserContext();
 
   useEffect(() => {
-    if(lastRoute === "/product"){
+    if(lastRoute === "/product" || lastRoute === "/checkout"){
       setHeading("Similar Restaurants");
     }
     if(lastRoute === "/"){

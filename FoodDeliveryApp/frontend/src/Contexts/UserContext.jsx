@@ -13,6 +13,7 @@ export const UserProvider = ({ children }) => {
   const [userId, setUserId] = useState(null);
   const [cartItems, setCartItems] = useState([
    ]);
+   const [cartTotal, setCartTotal] = useState(0);
 const [lastRoute, setLastRoute] = useState(null);
   const value = useMemo(
     () => ({
@@ -23,7 +24,9 @@ const [lastRoute, setLastRoute] = useState(null);
       cartItems,
       setCartItems,
       lastRoute,
-      setLastRoute
+      setLastRoute,
+      cartTotal,
+      setCartTotal
     }),
     [
       isCartClicked,
@@ -33,7 +36,9 @@ const [lastRoute, setLastRoute] = useState(null);
       cartItems,
       setCartItems,
       lastRoute,
-      setLastRoute
+      setLastRoute,
+      cartTotal,
+      setCartTotal
     ]
   );
 
