@@ -17,6 +17,8 @@ export const UserProvider = ({ children }) => {
   const [baseURL, setBaseURL] = useState("http://localhost:5173/");
   const [isAddressChangeClicked, setIsAddressChangeClicked] = useState(false);
   const [totalSum, setTotalSum] = useState(0); // State to store the total sum
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userData, setUserData] = useState({});
   const value = useMemo(
     () => ({
       isCartClicked,
@@ -34,7 +36,11 @@ export const UserProvider = ({ children }) => {
       isAddressChangeClicked,
       setIsAddressChangeClicked,
       totalSum,
-      setTotalSum
+      setTotalSum,
+      isLoggedIn,
+      setIsLoggedIn,
+      userData,
+      setUserData
     }),
     [
       isCartClicked,
@@ -52,7 +58,11 @@ export const UserProvider = ({ children }) => {
       isAddressChangeClicked,
       setIsAddressChangeClicked,
       totalSum,
-      setTotalSum
+      setTotalSum,
+      isLoggedIn,
+      setIsLoggedIn,
+      userData,
+      setUserData
     ]
   );
 

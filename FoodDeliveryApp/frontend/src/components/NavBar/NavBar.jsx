@@ -1,9 +1,11 @@
 import styles from "./navbar.module.css";
 import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
-
-
+import { useNavigate } from "react-router-dom";
+import { useUserContext } from "../../Contexts/UserContext";
 const NavBar = () => {
+  const navigate = useNavigate();
+  const { isLoggedIn } = useUserContext();
   const imageURLs = useImage("page", "navbar");
 
   return (
@@ -18,25 +20,49 @@ const NavBar = () => {
       </div>
       <div className={styles.navTray}>
         <div>
-            <button className = {styles.homeButton}>Home</button>
+          <button className={styles.homeButton}>Home</button>
         </div>
         <div>
-            <button>Browse Menu</button>
+          <button>Browse Menu</button>
         </div>
         <div>
-            <button>Special Offers</button>
+          <button>Special Offers</button>
         </div>
         <div>
-            <button>Restaurants</button>
+          <button>Restaurants</button>
         </div>
         <div>
-            <button>Track Order</button>
+          <button>Track Order</button>
         </div>
         <div className={styles.loginSign}>
-        <button>
-            <img src={displayImage(imageURLs, "navbar-loginSign-maleuser-1")} alt="maleuser" id="navbar-loginSign-maleuser-1" />
-            Login/Signup</button>
-      </div>
+          {!isLoggedIn && (
+            <button onClick={() => navigate("/login")}>
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "navbar-loginSign-maleuser-1"
+                )}
+                alt="maleuser"
+                id="navbar-loginSign-maleuser-1"
+              />
+              Login/Signup
+            </button>
+          )}
+
+          {isLoggedIn && (
+            <button onClick={() => navigate("/profile")}>
+              <img
+                src={displayImage(
+                  imageURLs,
+                  "navbar-loginSign-maleuser-1"
+                )}
+                alt="maleuser"
+                id="navbar-loginSign-maleuser-1"
+              />
+              Profile
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );
