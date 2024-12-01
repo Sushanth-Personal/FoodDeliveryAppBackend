@@ -57,12 +57,14 @@ const ProductPage = () => {
           <RestaurantBanner restaurantId={restaurantId} />
         </div>
 
-        {/*
+       
         <div className={styles.productDisplayContainer}>
           <ProductDisplay 
           restaurantId={restaurantId}
           restaurantName={restaurantName} />
         </div>
+
+         {/*
         <div className = {styles.informationContainer}>
           <Information/>
         </div>
