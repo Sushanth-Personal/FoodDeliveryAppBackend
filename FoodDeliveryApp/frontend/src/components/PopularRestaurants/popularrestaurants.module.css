@@ -101,9 +101,15 @@
 }
   .popularRestaurants {
     padding-left: 14px;
+    height: auto;
   }
 
+  .content{
+   height: auto;
+  }
   .popularRestaurants .heading{
-    margin-left: 35px;
+    margin-left: 0px;
+    font-size:1.6rem;
+    margin-bottom: 29px;
   }
 }

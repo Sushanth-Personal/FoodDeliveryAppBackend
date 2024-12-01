@@ -10,7 +10,7 @@ const Advertisement = () => {
           alt="leftbackground"
         />
         <img
-          className={styles.gradient}
+          className={styles.leftGradient}
           src="/gradient.png"
           alt="gradient"
         />
@@ -28,7 +28,7 @@ const Advertisement = () => {
         className = {styles.rightBackground}
         src="/rightbackground.png" alt="rightbackground" />
         <img 
-        className = {styles.gradient}
+        className = {styles.rightGradient}
         src="/gradient.png" alt="gradient" />
          <div className={styles.caption}>
          Avail exclusive perks

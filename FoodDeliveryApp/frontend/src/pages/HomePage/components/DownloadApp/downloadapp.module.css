@@ -160,6 +160,7 @@
     border-radius: 12px;
     max-width: 1528px;
     box-sizing: border-box;
+    height: auto;
   }
   .mobileContainer{
     width: 100%;
@@ -244,3 +245,5 @@
   }
   
 }
+
+

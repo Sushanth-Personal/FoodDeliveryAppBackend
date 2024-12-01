@@ -1,49 +1,7 @@
-.productPage{
-    display: flex;
-    flex-direction: column;
-    justify-content:flex-start;
-}
+html {
+    font-size: 62.5%;
+  }
 
-.restaurantBannerContainer{
-    margin-bottom: 53px;
-    margin-right: 100px;
-    margin-left: 100px;
-
-}
-
-.content header{
- 
-    margin-bottom: 53px;
-    margin-right: 100px;
-    margin-left: 100px;
-    
-}
-
-.content nav{
-    margin-bottom: 53px;
-    margin-right: 100px;
-    margin-left: 100px;
-}
-
-.productDisplayContainer{
-    margin-bottom: 53px;
-
-}
-
-.informationContainer{
-    margin-bottom: 53px;
-}
-
-.mapContainer{
-    margin-bottom: 53px;
-}
-
-.reviewsContainer{
-    margin-bottom: 53px;
-}
-.popularRestaurantsContainer{
-    margin-bottom: 53px;
-    display: flex;
-    justify-content: center;
-
+.headerDesktopContainer{
+    margin:0px 100px;
 }

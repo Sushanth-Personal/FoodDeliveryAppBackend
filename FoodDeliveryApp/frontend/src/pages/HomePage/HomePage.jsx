@@ -58,7 +58,7 @@ const HomePage = () => {
         <div className={styles.advertisementContainer}>
           <Advertisement />
         </div>
-        <div className={styles.signUpContainer}></div>
+      
         <div className={styles.knowAboutUsContainer}>
           <KnowAboutUs />
         </div>
