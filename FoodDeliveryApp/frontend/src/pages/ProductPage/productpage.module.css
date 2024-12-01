@@ -10,9 +10,24 @@ html {
     margin: 0px 10rem;
 }
 
+@media screen and (max-width:1100px) {
+    .restaurantBannerContainer{
+        margin-bottom: 53px;
+        height: 684px;
+    }
+
+}
+
 @media screen and (max-width:950px) {
     .navBarContainer{
         margin:0;
         
+    }
+}
+
+@media screen and (max-width:660px) {
+    .restaurantBannerContainer{
+
+        height: 644px;
     }
 }
