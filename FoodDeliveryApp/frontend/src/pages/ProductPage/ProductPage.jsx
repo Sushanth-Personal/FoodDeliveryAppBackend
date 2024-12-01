@@ -25,9 +25,6 @@ const ProductPage = () => {
   const restaurantName = searchParams.get("restaurantName");
   const {setLastRoute, isLoggedIn} = useUserContext();
 
-
-
-
   useEffect(() => {
     setLastRoute("/product");
     if(!restaurantId){
@@ -35,7 +32,6 @@ const ProductPage = () => {
     }
   }, []);
 
-  // const restaurantName = searchParams.get("restaurantName");
   return (
     <>
     {isLoggedIn &&(

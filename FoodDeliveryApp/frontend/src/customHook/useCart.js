@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../Contexts/UserContext";
 
 const useCart = () => {
-  const { userId, setCartItems, setCartTotal } = useUserContext();
+  const { userId, setCartItems, setCartTotal, setUserId} = useUserContext();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
@@ -10,9 +10,10 @@ const useCart = () => {
   useEffect(() => {
 
    
-    let id=userId.userId;
+    let id=userId;
     if (!id){
       id=localStorage.getItem("userId");
+      setUserId(id);
     }
 
     const fetchCartData = async () => {

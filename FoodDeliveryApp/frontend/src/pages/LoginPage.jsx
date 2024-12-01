@@ -11,7 +11,7 @@ import { useUserContext } from "../Contexts/UserContext";
 const LoginPage = () => {
 
   // context
-  const { setUserData } = useUserContext();
+  const { setUserData, setIsLoggedIn } = useUserContext();
 
   // hooks
   const [userData, setUserDataState] = useState({
@@ -67,7 +67,7 @@ const LoginPage = () => {
             ...response.user, 
             userId:userId, // Add userId to the user data
           };
-
+          setIsLoggedIn(true);
           // Set complete user data in context
           setUserData(completeUserData);
 
