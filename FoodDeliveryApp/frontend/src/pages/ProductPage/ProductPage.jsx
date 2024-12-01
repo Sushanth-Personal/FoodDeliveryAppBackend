@@ -34,23 +34,30 @@ const ProductPage = () => {
 
   return (
     <>
-    {isLoggedIn &&(
+  
       <section className={styles.productPage}>
       <div className={styles.content}>
-        <header>
-          {(screenType === "desktop" || screenType === "tablet") && (
-            <HeaderDesktop />
-          )}
-        </header>
-        <nav>
-          {screenType === "desktop" && <NavBar />}
-          {(screenType === "tablet" || screenType === "mobile") && (
-            <NavBarMobile />
-          )}
-        </nav>
+        
+          <div className = {styles.headerDesktopContainer}>
+            {(screenType === "desktop" || screenType === "tablet") && (
+              <HeaderDesktop />
+            )}
+          </div>
+  
+       <div className = {styles.navBarContainer}>
+         
+            {screenType === "desktop" && <NavBar />}
+            {(screenType === "tablet" || screenType === "mobile") && (
+              <NavBarMobile />
+            )}
+       </div>
+      
+         
         <div className={styles.restaurantBannerContainer}>
           <RestaurantBanner restaurantId={restaurantId} />
         </div>
+
+        {/*
         <div className={styles.productDisplayContainer}>
           <ProductDisplay 
           restaurantId={restaurantId}
@@ -64,10 +71,10 @@ const ProductPage = () => {
         <div className = {styles.popularRestaurantsContainer}><PopularRestaurants/></div>
         <footer>
           <FooterComponent />
-        </footer>
+        </footer> */}
       </div>
     </section>
-    )}
+    
    </>
   );
 };

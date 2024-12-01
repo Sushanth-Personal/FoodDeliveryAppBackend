@@ -3,5 +3,16 @@ html {
   }
 
 .headerDesktopContainer{
-    margin:0px 100px;
+    margin:0px 10rem;
+}
+
+.navBarContainer{
+    margin: 0px 10rem;
+}
+
+@media screen and (max-width:950px) {
+    .navBarContainer{
+        margin:0;
+        
+    }
 }
