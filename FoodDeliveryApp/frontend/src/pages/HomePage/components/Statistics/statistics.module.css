@@ -31,3 +31,41 @@
   flex: 1;
   border-right: 1px solid #d9d9d9;
 }
+
+@media screen and (max-width: 1350px) {
+    .statistics h1{
+        font-size: 5.4rem;
+    }
+    .statistics p{
+        font-size: 2rem;
+    }
+}
+
+@media screen and (max-width: 1080px) {
+    .statistics h1{
+        font-size: 4.4rem;
+    }
+    .statistics p{
+        font-size: 1.8rem;
+    }
+}
+
+@media screen and (max-width: 950px) {
+    .statistics{
+        flex-direction: column;   
+        height: 100%;
+    }
+
+    .statistics .col{
+        border-right: none;
+        border-bottom: 1px solid #d9d9d9;
+        padding:36px;
+    }
+
+    .statistics h1{
+        font-size: 6.4rem;
+    }
+    .statistics p{
+        font-size: 2.4rem;
+    }
+}
