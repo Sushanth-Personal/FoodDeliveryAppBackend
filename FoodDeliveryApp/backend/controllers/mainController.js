@@ -6,6 +6,119 @@ const User = require("../models/userModel");
 const Review = require("../models/reviewModel");
 const Restaurant = require("../models/restaurantModel");
 const Product = require("../models/productModel");
+const Card = require("../models/cardModel");
+
+
+// GET cards for a user
+const getCards = async (req, res) => {
+  try {
+    const { id } = req.params; // Extract userId from request params
+    const userId = mongoose.Types.ObjectId.isValid(id)
+      ? new mongoose.Types.ObjectId(id)
+      : null;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ message: "Invalid userId format" });
+    }
+
+    const cards = await Card.find({ userId }); // Find cards by userId
+
+    if (cards.length === 0) {
+      return res
+        .status(404)
+        .json({ message: "No cards found for this user." });
+    }
+
+    res.status(200).json(cards); // Return the cards
+  } catch (error) {
+    res.status(500).json({ error: error.message }); // Handle errors
+  }
+};
+
+const addCards = async (req, res) => {
+  try {
+    const { cardNumber, expiry, cvv, nameOnCard } = req.body;
+    const { id } = req.params;
+ 
+    const userId = mongoose.Types.ObjectId.isValid(id)
+      ?  new mongoose.Types.ObjectId(id)
+      : null;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ message: "Invalid userId format" });
+    }
+    // Validate required fields
+    if (!userId || !cardNumber || !expiry || !cvv || !nameOnCard) {
+      return res
+        .status(400)
+        .json({ message: "All fields are required." });
+    }
+    console.log(userId, cardNumber, expiry, cvv, nameOnCard);
+    // Create a new card
+    const newCard = new Card({
+      userId,
+      cardNumber,
+      expiry,
+      cvv,
+      nameOnCard,
+    });
+
+    // Save the card to the database
+    const savedCard = await newCard.save();
+
+    res.status(201).json(savedCard); // Return the saved card
+  } catch (error) {
+    console.error(error); 
+    res.status(500).json({ error: error.message }); // Handle errors
+  }
+};
+
+const deleteCard = async (req, res) => {
+  try {
+    const { id, cardId } = req.params;
+
+    // Validate and convert userId
+    const userId = mongoose.Types.ObjectId.isValid(id)
+      ? new mongoose.Types.ObjectId(id)
+      : null;
+
+    if (!userId) {
+      return res.status(400).json({ message: "Invalid userId format" });
+    }
+
+    // Validate and convert cardId
+    const cardObjectId = mongoose.Types.ObjectId.isValid(cardId)
+      ? new mongoose.Types.ObjectId(cardId)
+      : null;
+
+    if (!cardObjectId) {
+      return res.status(400).json({ message: "Invalid cardId format" });
+    }
+
+    // Attempt to delete the card
+    const deletedCard = await Card.findOneAndDelete({
+      _id: cardObjectId,
+      userId,
+    });
+
+    if (!deletedCard) {
+      return res
+        .status(404)
+        .json({ message: "Card not found or does not belong to this user" });
+    }
+
+    res.status(200).json({ message: "Card deleted successfully" });
+  } catch (error) {
+    console.error(error);
+    res.status(500).json({ error: error.message });
+  }
+};
+
+
 const getCart = async (req, res) => {
   const { userId } = req.params;
 
@@ -125,12 +238,10 @@ const updateUser = async (req, res) => {
     });
   } catch (error) {
     console.error("Error updating user:", error);
-    res
-      .status(500)
-      .json({
-        message: "An error occurred while updating the user",
-        error,
-      });
+    res.status(500).json({
+      message: "An error occurred while updating the user",
+      error,
+    });
   }
 };
 
@@ -193,11 +304,9 @@ const getImage = async (req, res) => {
 
         // Check if we got the products, if not return an error
         if (products.length === 0) {
-          return res
-            .status(404)
-            .json({
-              error: "No products found for the given product IDs.",
-            });
+          return res.status(404).json({
+            error: "No products found for the given product IDs.",
+          });
         }
 
         // Extract productImageIds from the products
@@ -212,12 +321,9 @@ const getImage = async (req, res) => {
         console.log(images);
         // If no images are found, return a 404 error
         if (images.length === 0) {
-          return res
-            .status(404)
-            .json({
-              error:
-                "No images found for the given product image IDs.",
-            });
+          return res.status(404).json({
+            error: "No images found for the given product image IDs.",
+          });
         }
 
         return res
@@ -228,11 +334,9 @@ const getImage = async (req, res) => {
           "Error fetching images by product IDs:",
           error.message
         );
-        return res
-          .status(500)
-          .json({
-            error: "An error occurred while fetching images.",
-          });
+        return res.status(500).json({
+          error: "An error occurred while fetching images.",
+        });
       }
     }
 
@@ -249,12 +353,9 @@ const getImage = async (req, res) => {
           "Error fetching image by imageId:",
           error.message
         );
-        return res
-          .status(500)
-          .json({
-            error:
-              "An error occurred while fetching image by imageId.",
-          });
+        return res.status(500).json({
+          error: "An error occurred while fetching image by imageId.",
+        });
       }
     } else if (altText) {
       try {
@@ -268,12 +369,9 @@ const getImage = async (req, res) => {
           "Error fetching image by altText:",
           error.message
         );
-        return res
-          .status(500)
-          .json({
-            error:
-              "An error occurred while fetching image by altText.",
-          });
+        return res.status(500).json({
+          error: "An error occurred while fetching image by altText.",
+        });
       }
     } else if (container) {
       try {
@@ -287,12 +385,10 @@ const getImage = async (req, res) => {
           "Error fetching image by container:",
           error.message
         );
-        return res
-          .status(500)
-          .json({
-            error:
-              "An error occurred while fetching image by container.",
-          });
+        return res.status(500).json({
+          error:
+            "An error occurred while fetching image by container.",
+        });
       }
     } else if (page) {
       try {
@@ -303,27 +399,20 @@ const getImage = async (req, res) => {
         return res.status(200).json(image);
       } catch (error) {
         console.error("Error fetching image by page:", error.message);
-        return res
-          .status(500)
-          .json({
-            error: "An error occurred while fetching image by page.",
-          });
+        return res.status(500).json({
+          error: "An error occurred while fetching image by page.",
+        });
       }
     } else {
-      return res
-        .status(400)
-        .json({
-          error: "Invalid request. No valid parameters provided.",
-        });
+      return res.status(400).json({
+        error: "Invalid request. No valid parameters provided.",
+      });
     }
   } catch (error) {
     console.error("Error processing image request:", error.message);
-    return res
-      .status(500)
-      .json({
-        error:
-          "An error occurred while processing the image request.",
-      });
+    return res.status(500).json({
+      error: "An error occurred while processing the image request.",
+    });
   }
 };
 
@@ -342,11 +431,9 @@ const postImage = async (req, res) => {
     for (const image of images) {
       const { imageId, imageURL, altText, page, container } = image;
       if (!imageURL || !altText || !page) {
-        return res
-          .status(400)
-          .json({
-            error: "Missing required fields in one or more images.",
-          });
+        return res.status(400).json({
+          error: "Missing required fields in one or more images.",
+        });
       }
 
       const newImage = new Image({
@@ -396,11 +483,9 @@ const addRestaurant = async (req, res) => {
 
   // Validate required fields
   if (!restaurantName) {
-    return res
-      .status(400)
-      .json({
-        message: "Restaurant name and banner image are required.",
-      });
+    return res.status(400).json({
+      message: "Restaurant name and banner image are required.",
+    });
   }
 
   try {
@@ -587,4 +672,7 @@ module.exports = {
   addToCart,
   deleteFromCart,
   updateUser,
+  getCards,
+  addCards,
+  deleteCard
 };

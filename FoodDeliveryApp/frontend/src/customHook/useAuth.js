@@ -4,7 +4,7 @@ import { useUserContext } from "../Contexts/UserContext";
 import { fetchUserData } from "../api/api"; // Assuming fetchUserData is implemented to get user details by ID
 
 const useAuth = () => {
-  const { setUserData, setUserId } = useUserContext();
+  const { setUserData, setUserId, setIsLoggedIn } = useUserContext();
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -22,13 +22,12 @@ const useAuth = () => {
         const userResponse = await fetchUserData(storedUserId);
         console.log("userResponse", userResponse);
         if (userResponse) {
-          setUserId({
-            userId: userResponse._id,
-          }); // Set userId in context
+          setUserId(userResponse._id); // Set userId in context
           setUserData({
             ...userResponse,
             userId: userResponse._id,
           }); // Set full userData in context
+          setIsLoggedIn(true);
         } else {
           // Handle case where user data is not found
           console.error("User data not found");

@@ -11,9 +11,15 @@ const {
   getMenu,
   addToCart,
   deleteFromCart,
-  updateUser
+  updateUser,
+  getCards,
+  addCards,
+  deleteCard
 } = require("../controllers/mainController.js");
 
+router.delete("/cards/:id/:cardId", deleteCard);
+router.post("/cards/:id", addCards);
+router.get("/cards/:id", getCards);
 router.get("/cart/:userId", getCart);
 router.get("/review/restaurantId", getReview);
 router.get("/user/:id", getUser);

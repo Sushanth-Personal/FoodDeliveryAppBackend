@@ -71,6 +71,7 @@ api.interceptors.response.use(
   }
 );
 
+
 export const checkAuthentication = async () => {
   try {
     const response = await api.get("/protected/");
@@ -136,6 +137,36 @@ export const fetchUserData = async (userId) => {
     return response.data;
   } catch (error) {
     console.error("Error fetching user data:", error);
+  }
+}
+
+const getCards = async (userId) => {
+  try {
+    const response = await api.get(`/protected/cards/${userId}`);
+    console.log("getCards", response)
+    return response.data;
+  } catch (error) {
+    console.error("Error fetching cards:", error);
+  }
+};
+
+const deleteCard = async (userId,cardId) => {
+  try {
+    const response = await api.delete(`/protected/cards/${userId}/${cardId}`);
+    console.log("deleteCards", response)
+    return response;
+  } catch (error) {
+    console.error("Error deleting cards:", error);
+  }
+}
+const addCards = async (card,userId) => {
+  try {
+    console.log("card", card, userId);
+    const response = await api.post(`/protected/cards/${userId}`, card);
+    console.log("addCards", response)
+    return response.data;
+  } catch (error) {
+    console.error("Error adding cards:", error);
   }
 }
 const getImageById = async (imageId) => {
@@ -212,5 +243,8 @@ export {
   getImageByAltText,
   getImageByPage,
   getImageByProductIdArray,
-  editUserData
+  editUserData,
+  addCards,
+  getCards,
+  deleteCard
 };

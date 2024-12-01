@@ -11,14 +11,15 @@
 
 }
 
-header{
+.content header{
  
     margin-bottom: 53px;
     margin-right: 100px;
     margin-left: 100px;
+    
 }
 
-nav{
+.content nav{
     margin-bottom: 53px;
     margin-right: 100px;
     margin-left: 100px;

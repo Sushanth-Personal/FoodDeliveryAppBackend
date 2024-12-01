@@ -9,15 +9,18 @@ const useCart = () => {
 
   useEffect(() => {
 
-    console.log("UseCart useEffect", userId);
-    if (!userId) return;
+   
+    let id=userId.userId;
+    if (!id){
+      id=localStorage.getItem("userId");
+    }
 
     const fetchCartData = async () => {
       try {
         
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:5000/cart/${userId}`);
+        const response = await fetch(`http://localhost:5000/cart/${id}`);
         if (!response.ok) {
           throw new Error(`Error fetching cart data: ${response.statusText}`);
         }
@@ -26,6 +29,7 @@ const useCart = () => {
         sumTotal = parseFloat(sumTotal.toFixed(2));
         setCartTotal(sumTotal);
         setCartData(data.cartItems || []);
+        console.log("cartData", data.cartItems);
       } catch (err) {
         setError(err.message);
       } finally {
