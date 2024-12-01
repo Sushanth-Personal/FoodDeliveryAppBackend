@@ -14,6 +14,7 @@ import PopularRestaurant from "../../components/PopularRestaurants/PopularRestau
 import Advertisement from "./components/Advertisement/Advertisement";
 import { useUserContext } from "../../Contexts/UserContext";
 import KnowAboutUs from "./components/KnowAboutUs/KnowAboutUs";
+import Statistics from "./components/Statistics/Statistics";
 
 const HomePage = () => {
 
@@ -61,7 +62,9 @@ const HomePage = () => {
         <div className={styles.knowAboutUsContainer}>
           <KnowAboutUs />
         </div>
-        <div className={styles.statisticsContainer}></div>
+        <div className={styles.statisticsContainer}>
+          <Statistics />
+        </div>
         <footer>
           <FooterComponent />
         </footer>
