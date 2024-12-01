@@ -13,24 +13,33 @@ import Map from "./components/MapComponent/Map";
 import CustomerReviews from "./components/CustomerReviews/CustomerReviews";
 import PopularRestaurants from "../../components/PopularRestaurants/PopularRestaurants";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import useAuth from "../../customHook/useAuth";
 const ProductPage = () => {
+
+  useAuth();
+  const navigate = useNavigate();
   const screenType = useScreenType();
   const [searchParams] = useSearchParams();
   const restaurantId = searchParams.get("id");
   const restaurantName = searchParams.get("restaurantName");
-  const {userId,setUserId,setLastRoute} = useUserContext();
+  const {setLastRoute, isLoggedIn} = useUserContext();
 
-  if(!userId){
-    setUserId(localStorage.getItem("userId"));
-  }
+
+
 
   useEffect(() => {
     setLastRoute("/product");
+    if(!restaurantId){
+        navigate("/error");
+    }
   }, []);
 
   // const restaurantName = searchParams.get("restaurantName");
   return (
-    <section className={styles.productPage}>
+    <>
+    {isLoggedIn &&(
+      <section className={styles.productPage}>
       <div className={styles.content}>
         <header>
           {(screenType === "desktop" || screenType === "tablet") && (
@@ -62,6 +71,8 @@ const ProductPage = () => {
         </footer>
       </div>
     </section>
+    )}
+   </>
   );
 };
 

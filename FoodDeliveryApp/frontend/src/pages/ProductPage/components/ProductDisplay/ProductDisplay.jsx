@@ -11,6 +11,7 @@ import { handleAddToCart } from "../../../../utility/handleAddToCart";
 import PropTypes from "prop-types"; // Import PropTypes
 
 const ProductDisplay = ({ restaurantId, restaurantName }) => {
+  
   // State variables
   const [product, setProduct] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("Burgers");

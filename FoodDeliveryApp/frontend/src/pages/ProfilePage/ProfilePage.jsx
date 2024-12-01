@@ -4,46 +4,101 @@ import HeaderDesktop from "../../components/HeaderDesktop/HeaderDesktop";
 import NavBar from "../../components/NavBar/NavBar";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import { useUserContext } from "../../contexts/UserContext";
-import { editUserData, checkAuthentication } from "../../api/api";
+import { editUserData } from "../../api/api";
+import { getCards, addCards, deleteCard } from "../../api/api"; // Import API functions
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../customHook/useAuth";
+
 const ProfilePage = () => {
   useAuth();
-
-  const { userData, setUserData, userId, setUserId } =
-    useUserContext(); // Assuming these are provided by the context
-  const [isEditing, setIsEditing] = useState(false);
   const navigate = useNavigate();
+  const { userData, setUserData, userId,setUserId } = useUserContext(); // Assuming these are provided by the context
+  const [isEditing, setIsEditing] = useState(false);
+  const [cards, setCards] = useState([]); // State to store saved cards
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [currentCard, setCurrentCard] = useState({
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+    nameOnCard: "",
+  });
 
   useEffect(() => {
-    // Check if the user is authenticated and set userId from localStorage
-    checkAuthentication().then((response) => {
-      if (!response) {
-        navigate("/login"); // Redirect to login if not authenticated
-      } else {
-        const storedUserId = localStorage.getItem("userId");
-        setUserId(storedUserId); // Set userId from localStorage
+    let id = userId;
+    if (!id) {
+      id = localStorage.getItem("userId");
+      setUserId(id);
+      if (!id) {
+        navigate("/login");
       }
-    });
-  }, [navigate, setUserId]); // Added dependencies for useEffect
+    }
+    fetchCards(id);
+  }, []);
+
+  // Fetch cards from the backend
+  const fetchCards = async (userId) => {
+    try {
+      console.log("userId", userId);
+      const fetchedCards = await getCards(userId);
+      setCards(fetchedCards || []);
+    } catch (error) {
+      console.error("Error fetching cards:", error);
+    }
+  };
+
+  // Save card to backend
+  const handleSaveCard = async () => {
+    try {
+      // Add the card to the backend
+      const savedCard = await addCards(currentCard, userId);
+      console.log("savedCard", savedCard);
+      // Update the state with the new card
+      setCards((prevCards) => [...prevCards, savedCard]);
+
+      // Reset modal state
+      setCurrentCard({
+        cardNumber: "",
+        expiry: "",
+        cvv: "",
+        nameOnCard: "",
+      });
+      setIsModalOpen(false);
+      setIsEditing(false);
+    } catch (error) {
+      console.error("Error adding card:", error);
+    }
+  };
+
+  const handleDeleteCard = async (card) => {
+    try {
+      const response = await deleteCard(userId,card._id);
+      if(response){
+        setCurrentCard({
+          cardNumber: "",
+          expiry: "",
+          cvv: "",
+          nameOnCard: "",
+        })
+      }
+      setIsModalOpen(false);
+      fetchCards(userId);
+    } catch (error) {
+      console.error("Error deleting card:", error);
+    }
+  };
 
   const handleEditClick = async () => {
     if (isEditing) {
       try {
-        // Update userData with userId
         const updatedUserData = { ...userData, userId };
-
-        // Save to backend
         const response = await editUserData(updatedUserData);
         console.log("Saved successfully:", response.data);
-
-        // Optionally update state with the updated data
         setUserData(updatedUserData);
       } catch (error) {
         console.error("Error saving user data:", error);
       }
     }
-    setIsEditing(!isEditing); // Toggle the editing state
+    setIsEditing(!isEditing);
   };
 
   const handleInputChange = (e) => {
@@ -52,6 +107,31 @@ const ProfilePage = () => {
       ...prevData,
       [name]: value,
     }));
+  };
+
+  const handleCardInputChange = (e) => {
+    const { name, value } = e.target;
+    setCurrentCard((prevCard) => ({
+      ...prevCard,
+      [name]: value,
+    }));
+  };
+
+  const handleCancel = () => {
+    setCurrentCard({
+      cardNumber: "",
+      expiry: "",
+      cvv: "",
+      nameOnCard: "",
+    });
+    setIsModalOpen(false);
+    setIsEditing(false);
+  };
+
+  const handleCardEdit = (card) => {
+    setIsEditing(true);
+    setCurrentCard(card);
+    setIsModalOpen(true);
   };
 
   return (
@@ -67,7 +147,7 @@ const ProfilePage = () => {
         <header>
           <img
             role="button"
-            onClick={() => window.history.back()}
+            onClick={() => window.history.back() || navigate("/")}
             src="/backarrow.png"
             alt="backarrow"
           />
@@ -131,22 +211,104 @@ const ProfilePage = () => {
       <section className={styles.paymentMethods}>
         <header>Saved Payment Methods</header>
         <div className={styles.paymentMethodsContainer}>
-          <div className={styles.paymentMethod}>
-            <div>
-              <img src="/cardicon.png" alt="cardicon" />
-              <h1>
-                xxxx xxxx xxxx 1234
-                <p>{userData.name || "John Doe"}</p>
-              </h1>
+          {cards.map((card, index) => (
+            <div key={index} className={styles.paymentMethod}>
+              <div>
+                <img src="/cardicon.png" alt="cardicon" />
+                <h1>
+                  xxxx xxxx xxxx {card.cardNumber.slice(-4)}
+                  <p>{card.nameOnCard}</p>
+                </h1>
+              </div>
+              <img
+                src="/editicon.png"
+                alt="editicon"
+                onClick={() => {
+                  handleCardEdit(card);
+                }}
+              />
             </div>
-            <img src="/editicon.png" alt="editicon" />
-          </div>
-          <div className={styles.addCard}>
+          ))}
+          <div
+            className={styles.addCard}
+            onClick={() => setIsModalOpen(true)}
+          >
             <img src="/add.png" alt="addcard" />
             <h1>Add New Card</h1>
           </div>
         </div>
       </section>
+
+      {isModalOpen && (
+        <div className={styles.modal}>
+          <div className={styles.modalContent}>
+            <h2>Edit Payment Method</h2>
+            <div className={styles.modalFields}>
+              <div>
+                <label>Card Number</label>
+                <input
+                  type="text"
+                  name="cardNumber"
+                  value={
+                    isEditing && currentCard.cardNumber
+                      ? `xxxx xxxx xxxx ${currentCard.cardNumber.slice(
+                          -4
+                        )}`
+                      : currentCard.cardNumber || ""
+                  }
+                  onChange={handleCardInputChange}
+                />
+              </div>
+              <div>
+                <label>Expiry</label>
+                <input
+                  type="text"
+                  name="expiry"
+                  value={currentCard.expiry}
+                  onChange={handleCardInputChange}
+                />
+              </div>
+              <div>
+                <label>CVV</label>
+                <input
+                  type="password"
+                  name="cvv"
+                  value={currentCard.cvv}
+                  onChange={handleCardInputChange}
+                />
+              </div>
+              <div>
+                <label>Name on Card</label>
+                <input
+                  type="text"
+                  name="nameOnCard"
+                  value={currentCard.nameOnCard}
+                  onChange={handleCardInputChange}
+                />
+              </div>
+            </div>
+            <div className={styles.modalActions}>
+              <button 
+              onClick={() =>{ handleDeleteCard(currentCard)}}
+              className={styles.leftButton}>Remove</button>
+              <div className={styles.rightButtons}>
+                <button
+                  className={styles.cancelButton}
+                  onClick={handleCancel}
+                >
+                  Cancel
+                </button>
+                <button
+                  className={styles.saveButton}
+                  onClick={handleSaveCard}
+                >
+                  Save Changes
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className={styles.footerContainer}>
         <FooterComponent />
