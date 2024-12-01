@@ -24,6 +24,21 @@ html{
     margin-bottom:53px;
 }
 
+.advertisementContainer{
+    margin-bottom:53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.knowAboutUsContainer{
+    margin-bottom:53px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
 @media screen and (max-width: 1250px) {
     html{
         font-size: 62.5%;

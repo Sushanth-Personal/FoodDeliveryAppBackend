@@ -11,30 +11,19 @@ import ExclusiveDeals from "./components/ExclusiveDeals/ExclusiveDeals";
 import PopularCategory from "./components/PopularCategory/PopularCategory";
 import DownloadApp from "./components/DownloadApp/DownloadApp";
 import PopularRestaurant from "../../components/PopularRestaurants/PopularRestaurants";
-import {useUserContext} from "../../Contexts/UserContext";
-import {checkAuthentication} from "../../api/api";
-import {useNavigate} from "react-router-dom";
+import Advertisement from "./components/Advertisement/Advertisement";
+import { useUserContext } from "../../Contexts/UserContext";
+import KnowAboutUs from "./components/KnowAboutUs/KnowAboutUs";
+
 const HomePage = () => {
-  const navigate = useNavigate();
-const {setUserId,setLastRoute, setIsLoggedIn} = useUserContext();
+
+  const {  setLastRoute, } = useUserContext();
   const screenType = useScreenType();
-  useEffect(
-    ()=>{
-      setLastRoute("/");
-    },
-  []);
-
   useEffect(() => {
-    checkAuthentication().then((response) => {
-      if (!response) {
-        navigate("/login");
-      }else{
-        setUserId(localStorage.getItem("userId"));
-        setIsLoggedIn(true);
-      }
-    })
-  },[]);
+    setLastRoute("/");
+  }, []);
 
+  
 
   return (
     <section className={styles.homePage}>
@@ -65,8 +54,13 @@ const {setUserId,setLastRoute, setIsLoggedIn} = useUserContext();
         <div className={styles.downloadApp}>
           <DownloadApp />
         </div>
+        <div className={styles.advertisementContainer}>
+          <Advertisement />
+        </div>
         <div className={styles.signUpContainer}></div>
-        <div className={styles.aboutUsContainer}></div>
+        <div className={styles.knowAboutUsContainer}>
+          <KnowAboutUs />
+        </div>
         <div className={styles.statisticsContainer}></div>
         <footer>
           <FooterComponent />

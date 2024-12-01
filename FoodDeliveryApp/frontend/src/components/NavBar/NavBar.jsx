@@ -3,9 +3,9 @@ import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
 import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../Contexts/UserContext";
-import useAuth from "../../customHook/useAuth";
+
 const NavBar = () => {
-  useAuth();
+
   const navigate = useNavigate();
   const { isLoggedIn, userData } = useUserContext();
   const imageURLs = useImage("page", "navbar");
