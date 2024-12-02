@@ -3,63 +3,102 @@ import { useState, useEffect, useRef } from "react";
 import useImage from "../../../../customHook/useImage";
 import useRestaurant from "../../../../customHook/useRestaurant";
 import { displayImage } from "../../../../utility/imageProcess";
-import useDragToScroll from "../../../../customHook/useDragToScroll"; // Import the custom hook
+import useDragToScroll from "../../../../customHook/useDragToScroll";
 import { useUserContext } from "../../../../Contexts/UserContext";
 import Cart from "../../../../components/Cart/Cart";
 import useCart from "../../../../customHook/useCart";
 import { handleAddToCart } from "../../../../utility/handleAddToCart";
-import PropTypes from "prop-types"; // Import PropTypes
+import PropTypes from "prop-types";
+import useScreenSize from "../../../../customHook/useScreenSize";
 
 const ProductDisplay = ({ restaurantId, restaurantName }) => {
-  
   // State variables
-  const [product, setProduct] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("Burgers");
-  const { isCartClicked ,setIsCartClicked } = useUserContext();
+  const [searchQuery, setSearchQuery] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [filteredProducts, setFilteredProducts] = useState([]);
+
+  const { isCartClicked, setIsCartClicked } = useUserContext();
+  const isSmallScreen = useScreenSize(1180);
 
   // Custom hooks
-  const { addToCart } = useCart();
+  const { addToCart, cartData } = useCart();
   const restURLs = useImage("page", restaurantName);
   const imageURLs = useImage("page", "productdisplay");
-  const { data} = useRestaurant(restaurantId);
+  let restId = restaurantId;
+  useEffect(() => {
+    if (!restId) {
+      restId = cartData[0].restaurantId;
+    }
+  }, [cartData]);
+
+  const { data } = useRestaurant(restId);
+
   const {
     listRef,
     handleMouseDown,
     handleMouseUp,
     handleMouseMove,
     handleMouseLeave,
-  } = useDragToScroll(); // Use the custom hook
+  } = useDragToScroll();
 
   // Refs
-  const filterDisplaySectionRef = useRef(null); // Reference for filterDisplaySection
+  const filterDisplaySectionRef = useRef(null);
 
-  // Functions
-  const handleChange = (e) => {
-    setProduct(e.target.value);
-  };
+  useEffect(() => {
+    // Set filtered products based on category and search query
+    if (data && data.menu) {
+      let products = data.menu;
 
-  const handleKeyPress = (e) => {
-    if (e.key === "Enter") {
-      setProduct(e.target.value);
+      if (selectedCategory) {
+        products = products.filter(
+          (item) => item.productCategory === selectedCategory
+        );
+      }
+
+      if (searchQuery) {
+        products = products.filter(
+          (item) =>
+            item.productName
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase()) ||
+            item.productDescription
+              .toLowerCase()
+              .includes(searchQuery.toLowerCase())
+        );
+      }
+
+      setFilteredProducts(products);
     }
-  };
+  }, [data, selectedCategory, searchQuery]);
 
-  // Handle category selection
-  const handleCategoryClick = (category) => {
+  const handleCategoryClick = (category) =>
     setSelectedCategory(category);
+  const handleSearch = (e) => setSearchQuery(e.target.value);
+  const handleSearchEnter = (e) => {
+    if (e.key === "Enter") {
+      setFilteredProducts(filteredProducts); // Trigger filter update
+    }
   };
 
   const handleAddToCartClick = (product) => {
     setIsCartClicked(true);
-    addToCart(product); // Add product to cart using the custom hook
+    addToCart(product);
   };
+
+  const closeCart = () => setIsCartClicked(false);
 
   // Scroll to filterDisplaySection when cart is clicked
   useEffect(() => {
-    if (isCartClicked && filterDisplaySectionRef.current) {
-      filterDisplaySectionRef.current.scrollIntoView({ behavior: "smooth" });
+    if (
+      isCartClicked &&
+      filterDisplaySectionRef.current &&
+      !isSmallScreen
+    ) {
+      filterDisplaySectionRef.current.scrollIntoView({
+        behavior: "smooth",
+      });
     }
-  }, [isCartClicked]);
+  }, [isCartClicked, isSmallScreen]);
 
   return (
     <section className={styles.productDisplay}>
@@ -77,10 +116,9 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
           <input
             type="text"
             placeholder="Search from menu..."
-            name="product"
-            value={product}
-            onChange={handleChange}
-            onKeyDown={handleKeyPress}
+            value={searchQuery}
+            onChange={handleSearch}
+            onKeyDown={handleSearchEnter}
           />
         </div>
       </div>
@@ -91,8 +129,16 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseMove={handleMouseMove}
-          onMouseLeave={handleMouseLeave} // Reset when mouse leaves the list
+          onMouseLeave={handleMouseLeave}
         >
+          <li
+            className={
+              selectedCategory === "" ? styles.selectedCategory : ""
+            }
+            onClick={() => handleCategoryClick("")}
+          >
+            All
+          </li>
           {data && data.menu && data.menu.length > 0 ? (
             [
               ...new Set(
@@ -117,15 +163,20 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
         </ul>
       </div>
 
-      <div ref={filterDisplaySectionRef} className={styles.filterDisplaySection}>
+      <div
+        ref={filterDisplaySectionRef}
+        className={styles.filterDisplaySection}
+      >
         <div className={styles.productFilter}>
-          <h1>{selectedCategory}</h1>
+          <h1>{selectedCategory || "All Products"}</h1>
           <div className={styles.tilesContainer}>
-            {data && data.menu ? (
-              data.menu
-                .filter((item) => item.productCategory === selectedCategory)
-                .map((product) => (
-                  <div className={styles.productTile} key={product._id}>
+            {filteredProducts.length > 0 ? (
+              selectedCategory ? (
+                filteredProducts.map((product) => (
+                  <div
+                    className={styles.productTile}
+                    key={product._id}
+                  >
                     <div className={styles.content}>
                       <div className={styles.leftContent}>
                         <h1>{product.productName}</h1>
@@ -144,7 +195,9 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                         <img
                           id="productdisplay-producttile-plus-1"
                           role="button"
-                          onClick={() => handleAddToCartClick(product)} // Pass product as argument
+                          onClick={() =>
+                            handleAddToCartClick(product)
+                          }
                           className={styles.plus}
                           src={displayImage(
                             imageURLs,
@@ -152,29 +205,102 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                           )}
                           alt="plus"
                         />
-                        <img
-                          id="productdisplay-producttile-addbutton-1"
-                          role="button"
-                          onClick={() => handleAddToCart(product)} // Pass product as argument
-                          className={styles.addButton}
-                          src={displayImage(imageURLs,"productdisplay-producttile-addbutton-1")}
-                          alt="addbutton"
-                        />
                       </div>
                     </div>
                   </div>
                 ))
+              ) : (
+                [
+                  ...new Set(
+                    filteredProducts.map(
+                      (product) => product.productCategory
+                    )
+                  ),
+                ].map((category) => (
+                  <div 
+                  className = {styles.categoryTileContainer}
+                  key={category}>
+                    <h2>{category}</h2>
+                    <div className = {styles.categoryTile}>
+                      {filteredProducts
+                        .filter(
+                          (product) =>
+                            product.productCategory === category
+                        )
+                        .map((product) => (
+                          <div
+                            className={styles.productTile}
+                            key={product._id}
+                          >
+                            <div className={styles.content}>
+                              <div className={styles.leftContent}>
+                                <h1>{product.productName}</h1>
+                                <p>{product.productDescription}</p>
+                                <h3>£{product.productPrice}</h3>
+                              </div>
+                              <div className={styles.rightContent}>
+                                <img
+                                  className={styles.productImage}
+                                  src={displayImage(
+                                    restURLs,
+                                    product.productImageId
+                                  )}
+                                  alt={product.productName}
+                                />
+                                <img
+                                  id="productdisplay-producttile-plus-1"
+                                  role="button"
+                                  onClick={() =>
+                                    handleAddToCartClick(product)
+                                  }
+                                  className={styles.plus}
+                                  src={displayImage(
+                                    imageURLs,
+                                    "productdisplay-producttile-plus-1"
+                                  )}
+                                  alt="plus"
+                                />
+                                <img
+                                  id="productdisplay-producttile-addbutton-1"
+                                  role="button"
+                                  onClick={() =>
+                                    handleAddToCart(product)
+                                  }
+                                  className={styles.addButton}
+                                  src={displayImage(
+                                    imageURLs,
+                                    "productdisplay-producttile-addbutton-1"
+                                  )}
+                                  alt="addbutton"
+                                />
+                              </div>
+                            </div>
+                          </div>
+                        ))}
+                    </div>
+                  </div>
+                ))
+              )
             ) : (
               <p>No products available</p>
             )}
           </div>
         </div>
+
+        {/* Render cart conditionally */}
         {isCartClicked && (
-          <div className={styles.cart}>
-            <Cart />
-          </div>
+          <>
+            {isSmallScreen ? (
+              <div className={styles.overlay} onClick={closeCart}>
+                <Cart />
+              </div>
+            ) : (
+              <div className={styles.cart}>
+                <Cart />
+              </div>
+            )}
+          </>
         )}
-   
       </div>
     </section>
   );

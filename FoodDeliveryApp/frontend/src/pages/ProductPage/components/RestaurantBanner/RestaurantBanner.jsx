@@ -5,7 +5,7 @@ import useScreenSize from "../../../../customHook/useScreenSize";
 const RestaurantBanner = () => {
   
   const imageURLs = useImage("page", "restaurantbanner");
-  const isScreenTarget = useScreenSize(1100);
+  const isScreenTarget = useScreenSize(1300);
   return (
     <section className={styles.restaurantBanner}>
       <div className={styles.backgroundLayer}>

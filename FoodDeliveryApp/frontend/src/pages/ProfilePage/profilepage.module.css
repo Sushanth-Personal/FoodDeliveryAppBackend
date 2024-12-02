@@ -52,7 +52,7 @@ header h1 {
   margin-bottom: 32px;
 }
 
-.userHeading button {
+.editSaveButton {
   width: 87px;
   height: 41px;
   display: flex;
@@ -228,6 +228,19 @@ header h1 {
   margin-bottom: 47px;
 }
 
+.modalContent .heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalContent .heading img{
+  cursor: pointer;
+  margin-right: 31px;
+  width:40px;
+  height: 40px;
+}
+
 .modalContent h2 {
   font-size: 4rem;
   margin-bottom: 34px;
@@ -306,25 +319,25 @@ header h1 {
   margin-right: 33px;
 }
 
-.modalActions .rightButtons{
+.modalActions .rightButtons {
   display: flex;
   justify-content: flex-end;
 }
 
 .modalActions .cancelButton {
-  all:unset;
+  all: unset;
   background-color: transparent;
-  color:white;
-  padding:24px;
+  color: white;
+  padding: 24px;
   font-size: 2.4rem;
   font-weight: 500;
 }
 
-.modalActions .leftButton{
+.modalActions .leftButton {
   margin-left: 29px;
-  width: 175px; 
+  width: 175px;
   height: 80px;
-  border:none;
+  border: none;
   border-radius: 12px;
   background-color: #663700;
   display: flex;
@@ -332,6 +345,127 @@ header h1 {
   align-items: center;
   font-size: 2.4rem;
   font-weight: 500;
-  color:white;
+  color: white;
 }
 
+@media screen and (max-width: 1080px) {
+
+  .modalContent{
+    margin:0px 12px;
+    border-radius: 12px;
+  }
+  .firstRow {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-bottom: 18px;
+  }
+
+  .firstRow .logo {
+    flex: 1;
+    margin: 27px 0px 27px 16px;
+  }
+
+  .firstRow .menu {
+    padding: 20px;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .firstRow .menu button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+  }
+
+  .modalContent label {
+    min-width: 200px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .footerContainer {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header div {
+    display: flex;
+    align-items: center;
+  }
+
+  header h1 {
+    font-size: 2.4rem;
+  }
+  .firstRow {
+    margin-bottom: 36px;
+  }
+  .profilePage {
+    margin: 0px 12px;
+  }
+  .userDetailsContainer {
+    margin: 0;
+  }
+
+  .paymentMethodsContainer {
+    flex-direction: column;
+  }
+
+
+}
+
+@media screen and (max-width: 600px) {
+  
+  .modalActions .saveButton, .modalActions .leftButton{
+    min-width: 179px;
+    height: 44px;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  .modalActions .saveButton{
+    background-color:#fc8a06;
+    color:white;
+  }
+
+  .modalActions{
+    background-color: transparent;
+  }
+
+  .modalContent{
+    box-shadow: 4px 4px 40.8px rgba(0, 0, 0, 0.25);
+  }
+
+.modalContent h2{
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+.modalContent label{
+  font-size: 1.6rem;
+  
+}
+.modalFields{
+  margin-bottom: 0px;
+}
+
+.modalActions{
+  height: auto;
+  margin-bottom: 16px;
+}
+.modalContent input{
+  height: 48px;
+  font-size: 1.5rem;
+}
+
+
+}
+@media screen and (max-width: 500px) {
+  header {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

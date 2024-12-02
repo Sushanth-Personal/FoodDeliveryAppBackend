@@ -6,8 +6,10 @@ import useDragToScroll from "../../customHook/useDragToScroll";
 import { displayImage } from "../../utility/imageProcess";
 import useImage from "../../customHook/useImage";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../../customHook/useAuth";
 import { useState } from "react";
 const Cart = () => {
+  useAuth();
   const navigate = useNavigate();
   const { loading, error, deleteFromCart } = useCart();
   const { cartItems, cartTotal, userId, setUserId, baseURL } =

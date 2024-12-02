@@ -2,26 +2,22 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../Contexts/UserContext";
 
 const useCart = () => {
-  const { userId, setCartItems, setCartTotal, setUserId} = useUserContext();
+  const { userId, setCartItems, setCartTotal } = useUserContext();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
   useEffect(() => {
 
-   
-    let id=userId;
-    if (!id){
-      id=localStorage.getItem("userId");
-      setUserId(id);
-    }
+    console.log("UseCart useEffect", userId);
+    if (!userId) return;
 
     const fetchCartData = async () => {
       try {
         
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:5000/cart/${id}`);
+        const response = await fetch(`http://localhost:5000/cart/${userId}`);
         if (!response.ok) {
           throw new Error(`Error fetching cart data: ${response.statusText}`);
         }
@@ -30,7 +26,6 @@ const useCart = () => {
         sumTotal = parseFloat(sumTotal.toFixed(2));
         setCartTotal(sumTotal);
         setCartData(data.cartItems || []);
-        console.log("cartData", data.cartItems);
       } catch (err) {
         setError(err.message);
       } finally {

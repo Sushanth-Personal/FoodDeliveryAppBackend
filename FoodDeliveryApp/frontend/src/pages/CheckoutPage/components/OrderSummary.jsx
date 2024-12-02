@@ -3,63 +3,67 @@ import { useState, useEffect } from "react";
 import useCart from "../../../customHook/useCart";
 import { getImageByProductIdArray } from "../../../api/api";
 import useImage from "../../../customHook/useImage";
-import { useUserContext } from "../../../Contexts/UserContext";
-import { useNavigate } from "react-router-dom";
+import useScreenSize from "../../../customHook/useScreenSize";
+import { useNavigate } from 'react-router-dom';
+import { useUserContext } from "../../../Contexts/UserContext"; // Import setCartTotal
 
 const OrderSummary = () => {
   const navigate = useNavigate();
-  const { setIsAddressChangeClicked, setTotalSum ,totalSum} = useUserContext();
+  const isMobile = useScreenSize(768);
   const { cartData: cartItems, loading, error } = useCart();
   const [productImageURLs, setProductImageURLs] = useState({});
- 
   const placeholder = useImage("id", "popularrestaurants-content-mcdonalds-1");
+  const { setCartTotal } = useUserContext(); // Access setCartTotal
 
   useEffect(() => {
     const fetchImages = async () => {
       if (cartItems.length === 0) return;
-
       const productIds = cartItems.map((item) => item.productId);
-
       try {
         const response = await getImageByProductIdArray(productIds);
-        console.log("response", response);
-
+        console.log("responseOrdersummary", response);
         setProductImageURLs(response);
       } catch (err) {
         console.error("Error fetching images:", err);
       }
     };
-
     fetchImages();
   }, [cartItems]);
 
+  // Calculate cart total
   useEffect(() => {
-    // Calculate the total sum (items + tax)
-    const itemsTotal = cartItems.reduce(
-      (sum, item) => sum + item.price * item.quantity,
-      0
-    );
-    const salesTax = itemsTotal * 0.1; // Assuming 10% sales tax
-    const total = itemsTotal + salesTax;
-
-    // Update the state with the total sum
-    setTotalSum(total);
-  }, [cartItems]);
+    const cartTotal = cartItems
+      .reduce((sum, item) => sum + item.price * item.quantity, 0) * 1.1; // Add 10% sales tax
+    setCartTotal(cartTotal.toFixed(2)); // Set the cart total
+  }, [cartItems, setCartTotal]);
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
   return (
     <section className={styles.orderSummary}>
-      <div className={styles.header}>
-        <img
-          role="button"
-          onClick={() => window.history.back()}
-          src="/backarrow.png"
-          alt="backarrow"
-        />
-        <h1>Your Order Details</h1>
-      </div>
+      {!isMobile ? (
+        <div className={styles.header}>
+          <img
+            role="button"
+            onClick={() => window.history.back()}
+            src="/backarrow.png"
+            alt="backarrow"
+          />
+          <h1>Your Order Details</h1>
+        </div>
+      ) : (
+        <div className={styles.header}>
+          <img
+            role="button"
+            onClick={() => window.history.back()}
+            src="/colorback.png"
+            alt="colorback"
+          />
+          <h1>Checkout</h1>
+        </div>
+      )}
+
       <div className={styles.mainContent}>
         <div className={styles.leftContent}>
           <ul>
@@ -87,13 +91,9 @@ const OrderSummary = () => {
             <input type="text" placeholder="Add order notes" />
           </div>
         </div>
-
         <div className={styles.rightContent}>
-          <div
-            role="button"
-            onClick={() => setIsAddressChangeClicked(true)}
-            className={styles.address}
-          >
+          {isMobile && <h3>Deliver Address</h3>}
+          <div className={styles.address}>
             <div>
               <img
                 className={styles.locationImage}
@@ -143,12 +143,16 @@ const OrderSummary = () => {
           <span className={styles.subTotal}>
             <h1>Subtotal ({cartItems.length} items)</h1>
             <p className={styles.amount}>
-              ₹{totalSum.toFixed(2)} {/* Displaying the total sum */}
+              ₹
+              {cartItems
+                .reduce(
+                  (sum, item) => sum + item.price * item.quantity * 1.1,
+                  0
+                )
+                .toFixed(2)}
             </p>
           </span>
-          <button onClick={() => navigate("/payment")}>
-            Choose Payment Method
-          </button>
+          <button onClick={() => navigate("/payment")}>Choose Payment Method</button>
         </div>
       </div>
     </section>

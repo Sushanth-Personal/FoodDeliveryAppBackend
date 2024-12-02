@@ -4,7 +4,9 @@ body {
 
 }
 
-
+body.overlay-active {
+  overflow: hidden; /* Prevent scrolling */
+}
 
 * {
   box-sizing: border-box;

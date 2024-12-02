@@ -331,3 +331,9 @@
 .checkout:hover .toolTip{
   opacity: 1;
 }
+
+@media screen and (max-width: 1180px) {
+  .mainContainer{
+    margin-right: 0px;
+  }
+}
