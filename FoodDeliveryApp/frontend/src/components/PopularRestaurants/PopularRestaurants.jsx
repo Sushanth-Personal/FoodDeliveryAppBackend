@@ -1,7 +1,7 @@
 import styles from "./popularrestaurants.module.css";
 import {useNavigate} from 'react-router-dom';
 import useImage from "../../customHook/useImage";
-import {displayImage} from "../../utility/ImageProcess";
+import {displayImage} from "../../utility/imageProcess";
 import { useEffect, useState } from "react";
 import {useUserContext} from "../../Contexts/UserContext";
 const PopularRestaurants = () => {
