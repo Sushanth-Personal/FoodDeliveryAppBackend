@@ -66,7 +66,7 @@ const ProductPage = () => {
         <div className = {styles.mapContainer}><Map/></div>
         
         <div className = {styles.reviewContainer}><CustomerReviews/></div>
-        <div className = {styles.similarRestaurantsContainer}><SimilarRestaurants/></div>
+          <div className = {styles.similarRestaurantsContainer}><SimilarRestaurants/></div>
         <footer>
           <FooterComponent />
         </footer>
