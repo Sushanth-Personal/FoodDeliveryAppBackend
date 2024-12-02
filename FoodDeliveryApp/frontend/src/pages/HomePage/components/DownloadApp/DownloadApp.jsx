@@ -1,7 +1,7 @@
 import styles from "./downloadapp.module.css";
 import useScreenSize from "../../../../customHook/useScreenSize";
 import useImage from "../../../../customHook/useImage";
-import { displayImage } from "../../../../utility/ImageProcess";
+import { displayImage } from "../../../../utility/imageProcess";
 const DownloadApp = () => {
   const isMobile = useScreenSize(1350);
   const imageURLs = useImage("page", "downloadapp");
