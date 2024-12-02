@@ -30,7 +30,7 @@ const ProfilePage = () => {
   const isMobile = useScreenSize(768);
   const isSmallDevice = useScreenSize(500);
   const navURLs = useImage("page", "navbar");
-  const imageURLs = useImage("page", "profilepage");
+  // const imageURLs = useImage("page", "profilepage");
 
   useEffect(() => {
     let id = userId;
