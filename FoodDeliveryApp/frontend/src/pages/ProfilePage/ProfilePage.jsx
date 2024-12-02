@@ -3,7 +3,7 @@ import styles from "./profilepage.module.css";
 import HeaderDesktop from "../../components/HeaderDesktop/HeaderDesktop";
 import NavBar from "../../components/NavBar/NavBar";
 import FooterComponent from "../../components/FooterComponent/FooterComponent";
-import { useUserContext } from "../../contexts/UserContext";
+import { useUserContext } from "../../Contexts/UserContext";
 import { editUserData } from "../../api/api";
 import { getCards, addCards, deleteCard } from "../../api/api"; // Import API functions
 import { useNavigate } from "react-router-dom";
