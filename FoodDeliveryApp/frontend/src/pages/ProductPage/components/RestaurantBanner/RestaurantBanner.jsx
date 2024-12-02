@@ -1,6 +1,6 @@
 import styles from "./restaurantbanner.module.css";
 import useImage from "../../../../customHook/useImage";
-import { displayImage } from "../../../../utility/ImageProcess";
+import { displayImage } from "../../../../utility/imageProcess";
 import useScreenSize from "../../../../customHook/useScreenSize";
 const RestaurantBanner = () => {
   

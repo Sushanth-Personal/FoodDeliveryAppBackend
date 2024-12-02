@@ -1,7 +1,7 @@
 import styles from "./similarrestaurants.module.css";
 import {useNavigate} from 'react-router-dom';
 import useImage from "../../../../customHook/useImage";
-import {displayImage} from "../../../../utility/ImageProcess";
+import {displayImage} from "../../../../utility/imageProcess";
 
 const SimilarRestaurants = () => {
   const navigate = useNavigate();
