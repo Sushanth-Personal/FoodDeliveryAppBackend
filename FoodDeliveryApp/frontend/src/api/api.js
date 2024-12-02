@@ -1,7 +1,8 @@
 import axios from "axios";
 import { jwtDecode } from "jwt-decode"; // Ensure you're using the correct import here
 
-const baseURL = "http://localhost:5000";
+// const baseURL = "http://localhost:5000";
+const baseURL = "https://food-delivery-app-backend-murex.vercel.app";
 
 const api = axios.create({
   baseURL: `${baseURL}`,

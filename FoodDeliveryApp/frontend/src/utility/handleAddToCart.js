@@ -1,6 +1,8 @@
 export const handleAddToCart = async (product, userId) => {
+  // const baseURL = "http://localhost:5000";
+  const baseURL = "https://food-delivery-app-backend-murex.vercel.app";
     const productId = product._id;
-    const endpoint = `http://localhost:5000/cart/${userId}?productId=${productId}`;
+    const endpoint = `${baseURL}/cart/${userId}?productId=${productId}`;
   
     try {
       const response = await fetch(endpoint, {

@@ -2,6 +2,8 @@ import { useState, useEffect } from "react";
 import { useUserContext } from "../Contexts/UserContext";
 
 const useCart = () => {
+  // const baseURL = "http://localhost:5000";
+  const baseURL= "https://food-delivery-app-backend-murex.vercel.app"
   const { userId, setCartItems, setCartTotal } = useUserContext();
   const [cartData, setCartData] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -17,7 +19,7 @@ const useCart = () => {
         
         setLoading(true);
         setError(null);
-        const response = await fetch(`http://localhost:5000/cart/${userId}`);
+        const response = await fetch(`${baseURL}/cart/${userId}`);
         if (!response.ok) {
           throw new Error(`Error fetching cart data: ${response.statusText}`);
         }
@@ -44,7 +46,7 @@ const useCart = () => {
   const addToCart = async (product) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/cart/${userId}?productId=${product._id}`,
+        `${baseURL}/cart/${userId}?productId=${product._id}`,
         {
           method: "POST",
           body: JSON.stringify(product),
@@ -70,7 +72,7 @@ const useCart = () => {
   const deleteFromCart = async (product) => {
     try {
       const response = await fetch(
-        `http://localhost:5000/cart/${userId}?productId=${product.productId}`,
+        `${baseURL}/cart/${userId}?productId=${product.productId}`,
         {
           method: "DELETE",
           headers: { "Content-Type": "application/json" },
