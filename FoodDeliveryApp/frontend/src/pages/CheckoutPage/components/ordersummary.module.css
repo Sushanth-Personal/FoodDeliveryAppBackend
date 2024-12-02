@@ -15,7 +15,7 @@
 .header img {
   width: 39px;
   height: 39px;
-  margin-right: 4.5px;
+  margin-right: 12px;
 }
 
 .header h1 {
@@ -122,8 +122,15 @@
   flex: 1;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items:flex-start;
   padding-left: 34px;
+}
+
+.rightContent h3{
+
+  font-size: 1.8rem;
+  font-weight: 500;
+  margin-bottom: 14px;
 }
 
 .address {
@@ -198,4 +205,25 @@
   color: #ffffff;
   font-size: 1.6rem;
   font-weight: 600;
+}
+
+
+@media screen and (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .leftContent {
+    width: 100%;
+    margin-right: 0;
+    margin-bottom: 32px;
+  }
+
+  .rightContent {
+    width: 100%;
+    padding-left: 0;
+  }
+
 }

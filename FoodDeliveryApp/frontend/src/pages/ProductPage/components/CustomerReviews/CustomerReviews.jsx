@@ -2,6 +2,7 @@ import { useRef } from "react";
 import styles from "./customerreviews.module.css";
 import { displayImage } from "../../../../utility/imageProcess";
 import useImage from "../../../../customHook/useImage";
+import useScreenSize from "../../../../customHook/useScreenSize";
 const CustomerReviews = () => {
   const cardsViewPortRef = useRef(null);
 
@@ -15,6 +16,7 @@ const CustomerReviews = () => {
     }
   };
 
+  const isSmallDevice = useScreenSize(850);
   const scrollRight = () => {
     if (cardsViewPortRef.current) {
       cardsViewPortRef.current.scrollBy({
@@ -36,7 +38,7 @@ const CustomerReviews = () => {
         <div className={styles.mainContent}>
           <div className={styles.header}>
             <h1>Customer Reviews</h1>
-            <div>
+            {!isSmallDevice && (  <div>
               <img
                 id="customerreviews-pagingbutton-leftbutton-1"
                 className={styles.pagingButton}
@@ -51,7 +53,8 @@ const CustomerReviews = () => {
                 alt="Scroll Right"
                 onClick={scrollRight}
               />
-            </div>
+            </div>)}
+          
           </div>
           <div className={styles.cardsViewPort} ref={cardsViewPortRef}>
             <ul>
@@ -136,6 +139,24 @@ const CustomerReviews = () => {
               ))}
             </ul>
           </div>
+          {isSmallDevice && (
+              <div className = {styles.pagingButtonContainer}>
+              <img
+                id="customerreviews-pagingbutton-leftbutton-1"
+                className={styles.pagingButton}
+                src={displayImage(imageURLs, "customerreviews-pagingbutton-leftbutton-1")}
+                alt="Scroll Left"
+                onClick={scrollLeft}
+              />
+              <img
+                id="customerreviews-pagingbutton-rightbutton-1"
+                className={styles.pagingButton}
+                src={displayImage(imageURLs, "customerreviews-pagingbutton-rightbutton-1")}
+                alt="Scroll Right"
+                onClick={scrollRight}
+              />
+            </div>
+          )}
         </div>
       </div>
     </section>

@@ -145,7 +145,7 @@
   left: 0px;
 }
 
-@media screen and (max-width: 1450px) {
+@media screen and (max-width: 1650px) {
   .content .description {
     width: 500px;
   }
@@ -155,7 +155,7 @@
   }
 }
 
-@media screen and (max-width: 1250px) {
+@media screen and (max-width: 1450px) {
   .rightContent {
     width: 490px;
   }
@@ -171,7 +171,7 @@
   }
 }
 
-@media screen and (max-width: 1100px) {
+@media screen and (max-width: 1300px) {
   .timing {
     display: none;
   }
@@ -237,7 +237,7 @@
 
   .content .description {
     align-items: flex-start;
-    width: 374px;
+
   }
 
   .description h1 {
@@ -262,4 +262,9 @@
   .upperContent {
     padding: 12px 12px 0px 12px;
   }
+}
+
+
+@media screen and (max-width: 500px) {
+  
 }

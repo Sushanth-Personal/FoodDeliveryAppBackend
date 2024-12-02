@@ -8,11 +8,14 @@ import { editUserData } from "../../api/api";
 import { getCards, addCards, deleteCard } from "../../api/api"; // Import API functions
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../customHook/useAuth";
-
+import useImage from "../../customHook/useImage";
+import { displayImage } from "../../utility/imageProcess";
+import useScreenSize from "../../customHook/useScreenSize";
 const ProfilePage = () => {
   useAuth();
   const navigate = useNavigate();
-  const { userData, setUserData, userId,setUserId } = useUserContext(); // Assuming these are provided by the context
+  const { userData, setUserData, userId, setUserId } =
+    useUserContext(); // Assuming these are provided by the context
   const [isEditing, setIsEditing] = useState(false);
   const [cards, setCards] = useState([]); // State to store saved cards
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -22,6 +25,12 @@ const ProfilePage = () => {
     cvv: "",
     nameOnCard: "",
   });
+
+  const isTablet = useScreenSize(1080);
+  const isMobile = useScreenSize(768);
+  const isSmallDevice = useScreenSize(500);
+  const navURLs = useImage("page", "navbar");
+  const imageURLs = useImage("page", "profilepage");
 
   useEffect(() => {
     let id = userId;
@@ -71,14 +80,14 @@ const ProfilePage = () => {
 
   const handleDeleteCard = async (card) => {
     try {
-      const response = await deleteCard(userId,card._id);
-      if(response){
+      const response = await deleteCard(userId, card._id);
+      if (response) {
         setCurrentCard({
           cardNumber: "",
           expiry: "",
           cvv: "",
           nameOnCard: "",
-        })
+        });
       }
       setIsModalOpen(false);
       fetchCards(userId);
@@ -136,31 +145,83 @@ const ProfilePage = () => {
 
   return (
     <section className={styles.profilePage}>
-      <div className={styles.headerDesktopContainer}>
-        <HeaderDesktop />
-      </div>
-      <div className={styles.navBarContainer}>
-        <NavBar />
-      </div>
+      {(isTablet) && (
+        <div className={styles.firstRow}>
+          <div className={styles.logo}>
+            <img
+              src={displayImage(navURLs, "navbar-logo-logo-1")}
+              className={styles.logoURL}
+              alt="logo"
+              id="navbar-logo-logo-1"
+            />
+          </div>
+          <div className={styles.menu}>
+            <button>
+              <img
+                src={displayImage(navURLs, "navbar-menu-menu-1")}
+                alt="menu"
+                id="navbar-menu-menu-1"
+              />
+            </button>
+          </div>
+        </div>
+      )}
+
+      {!(isTablet) && (
+        <>
+          <div className={styles.headerDesktopContainer}>
+            <HeaderDesktop />
+          </div>
+          <div className={styles.navBarContainer}>
+            <NavBar />
+          </div>
+        </>
+      )}
 
       <section className={styles.userProfile}>
         <header>
-          <img
-            role="button"
-            onClick={() => window.history.back() || navigate("/")}
-            src="/backarrow.png"
-            alt="backarrow"
-          />
-          <h1>My Profile</h1>
+          <div>
+            {isSmallDevice ? (
+              <img
+                role="button"
+                onClick={() => window.history.back() || navigate("/")}
+                src="/colorback.png"
+                alt="colorback"
+              />
+            ) : (
+              <img
+                role="button"
+                onClick={() => window.history.back() || navigate("/")}
+                src="/backarrow.png"
+                alt="backarrow"
+              />
+            )}
+            <h1>My Profile</h1>
+          </div>
+          {isSmallDevice && (
+            <button
+              className={styles.editSaveButton}
+              onClick={handleEditClick}
+            >
+              {isEditing ? "Save" : "Edit"}
+            </button>
+          )}
         </header>
         <div className={styles.userHeading}>
-          <div>
-            <img src="/userphoto.png" alt="userphoto" />
-            <h1>{userData.userName || "John Doe"}</h1>
-          </div>
-          <button onClick={handleEditClick}>
-            {isEditing ? "Save" : "Edit"}
-          </button>
+          {!isSmallDevice && (
+            <div>
+              <img src="/userphoto.png" alt="userphoto" />
+              <h1>{userData.userName || "John Doe"}</h1>
+            </div>
+          )}
+          {!isSmallDevice && (
+            <button
+              className={styles.editSaveButton}
+              onClick={handleEditClick}
+            >
+              {isEditing ? "Save" : "Edit"}
+            </button>
+          )}
         </div>
         <div className={styles.row}>
           <div className={styles.userDetailsContainer}>
@@ -242,7 +303,13 @@ const ProfilePage = () => {
       {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <h2>Edit Payment Method</h2>
+            <div className = {styles.heading}>
+              <h2>Edit Payment Method</h2>
+              {isMobile && (<img 
+              role="button"
+              onClick={() => setIsModalOpen(false)}
+              src="/closeicon.png" alt="closeicon" />)}
+            </div>
             <div className={styles.modalFields}>
               <div>
                 <label>Card Number</label>
@@ -288,16 +355,21 @@ const ProfilePage = () => {
               </div>
             </div>
             <div className={styles.modalActions}>
-              <button 
-              onClick={() =>{ handleDeleteCard(currentCard)}}
-              className={styles.leftButton}>Remove</button>
+              <button
+                onClick={() => {
+                  handleDeleteCard(currentCard);
+                }}
+                className={styles.leftButton}
+              >
+                {isTablet?"Delete":"Remove"}
+              </button>
               <div className={styles.rightButtons}>
-                <button
+                {!isMobile && (<button
                   className={styles.cancelButton}
                   onClick={handleCancel}
                 >
                   Cancel
-                </button>
+                </button>)}
                 <button
                   className={styles.saveButton}
                   onClick={handleSaveCard}

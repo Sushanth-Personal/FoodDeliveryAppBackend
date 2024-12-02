@@ -52,3 +52,31 @@
     position: relative;
     z-index: 1000;
 }
+
+@media screen and (max-width: 900px) {
+  .information{
+    width:382px;
+    height: 322px;
+    top:100px;
+  }
+
+  .mapContainer{
+    height: 522px;
+    margin:95px 10px 173px 10px;
+  }
+
+  .information h1{
+    margin-top: 42px;
+  }
+ 
+  .information img{
+    width: 300px;
+    height: 150px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .information{
+    left:12px;
+  }
+}
