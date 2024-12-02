@@ -1,4 +1,4 @@
-import styles from "./productdisplay.module.css";
+import styles from "./productDisplay.module.css";
 import { useState, useEffect, useRef } from "react";
 import useImage from "../../../../customHook/useImage";
 import useRestaurant from "../../../../customHook/useRestaurant";
