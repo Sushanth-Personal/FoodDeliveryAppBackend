@@ -7,14 +7,14 @@ import { displayImage } from "../../utility/imageProcess";
 import useImage from "../../customHook/useImage";
 import { useNavigate } from "react-router-dom";
 import useAuth from "../../customHook/useAuth";
-import { useState } from "react";
+
 const Cart = () => {
   useAuth();
   const navigate = useNavigate();
   const { loading, error, deleteFromCart } = useCart();
-  const { cartItems, cartTotal, userId, setUserId, baseURL } =
+  const { cartItems, cartTotal, userId, setUserId } =
     useUserContext();
-  const [link, setLink] = useState("");
+  
   const {
     listRef,
     handleMouseDown,
@@ -31,20 +31,19 @@ const Cart = () => {
     console.log(cartTotal);
   }, [cartTotal]);
 
-  useEffect(() => {
-    if (!userId) {
-      const id = localStorage.getItem("userId");
-      if (!id) {
-        navigate("/login");
-      } else {
-        setUserId(id);
-        setLink(baseURL + "checkout/" + id);
-      }
+ useEffect(() => {
+  if (!userId) {
+    const id = localStorage.getItem("userId");
+    if (!id) {
+      navigate("/login");
+    } else {
+      setUserId(id);
+      navigate(`/checkout/${id}`); // Navigate directly to the checkout page
     }
-    
-    setLink(baseURL + "checkout/" + userId);
-
-  }, [userId]);
+  } else {
+    navigate(`/checkout/${userId}`); // Navigate directly to the checkout page
+  }
+}, [userId, navigate]);
 
   if (loading) return <p>Loading cart data...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -56,7 +55,8 @@ const Cart = () => {
 
    // Function to copy link to clipboard
    const copyLinkToClipboard = () => {
-    navigator.clipboard.writeText(link).then(
+    const currentURL = window.location.href;  // Get the full URL of the current page
+    navigator.clipboard.writeText(currentURL).then(
       () => {
         alert("Link copied to clipboard!");
       },
@@ -65,6 +65,7 @@ const Cart = () => {
       }
     );
   };
+  
 
   return (
     <section ref={cartRef} className={styles.cart}>
