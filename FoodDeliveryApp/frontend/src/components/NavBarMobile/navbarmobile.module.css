@@ -38,7 +38,7 @@ html {
   flex: 1;
 }
 
-.secondRow .loginSign button {
+.secondRow .loginButton{
   width: 100%;
   background-color: #03081f;
   display: flex;
@@ -53,6 +53,25 @@ html {
 .secondRow .loginSign button img {
   margin-right: 10px;
 }
+
+.loggedInButton{
+  width: 100%;
+  background-color: #FC8A06;
+  display: flex;
+  align-items: center;
+  justify-self: center;
+  font-size: 1.4rem;
+  font-weight: 600;
+  color: black;
+  padding: 25px;
+}
+
+.loggedInButton img{
+  margin-right: 11px;
+  width:44px; 
+  height: 44px;
+}
+
 
 .secondRow .cart {
   flex: 1;
@@ -90,3 +109,4 @@ html {
 .thirdRow .location img{
     margin-right: 10px;
 }
+
