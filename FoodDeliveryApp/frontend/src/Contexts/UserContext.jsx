@@ -14,7 +14,7 @@ export const UserProvider = ({ children }) => {
   const [cartItems, setCartItems] = useState([]);
   const [cartTotal, setCartTotal] = useState(0);
   const [lastRoute, setLastRoute] = useState(null);
-
+  const [baseURL, setBaseURL] = useState("https://fooddeliveryappbackend-1.onrender.com/");
   const [isAddressChangeClicked, setIsAddressChangeClicked] = useState(false);
   const [totalSum, setTotalSum] = useState(0); // State to store the total sum
   const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -31,6 +31,8 @@ export const UserProvider = ({ children }) => {
       setLastRoute,
       cartTotal,
       setCartTotal,
+      baseURL,
+      setBaseURL,
       isAddressChangeClicked,
       setIsAddressChangeClicked,
       totalSum,
@@ -51,6 +53,8 @@ export const UserProvider = ({ children }) => {
       setLastRoute,
       cartTotal,
       setCartTotal,
+      baseURL,
+      setBaseURL,
       isAddressChangeClicked,
       setIsAddressChangeClicked,
       totalSum,
