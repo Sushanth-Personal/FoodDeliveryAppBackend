@@ -48,15 +48,22 @@
   height: 210px;
   display: flex;
   flex-direction: column;
-  justify-content: flex-start;
+  justify-content: space-between;
   align-items: flex-start;
   border: 1px solid #afafaf;
   border-radius: 12px;
   margin-right: 32px;
   padding: 16px;
- 
 }
 
+.address .topContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:flex-start;
+  width: 100%;
+  margin-bottom: 16px;
+}
 .address span {
   display: flex;
   align-items: center;
@@ -93,10 +100,9 @@ address {
   display: flex;
   justify-content: flex-start;
   align-items: center;
-  
 }
 
-.editContainer button{
+.editContainer button {
   all: unset;
   font-size: 1.4rem;
   font-weight: 400;
@@ -104,7 +110,7 @@ address {
   cursor: pointer;
 }
 
-.editContainer .remove{
+.editContainer .remove {
   border-left: 1px solid #afafaf;
   padding-left: 8px;
   margin-left: 8px;
@@ -123,7 +129,17 @@ address {
   z-index: 1000;
 }
 
+.modal .cancelButton {
+  position: absolute;
+  cursor: pointer;
+  z-index: 5000;
+  width: 50px;
+  height: 50px;
+  transform-origin: 100vw,0;
+  transform: translate(-10px, -80px);
+}
 .modal {
+  position: relative;
   background: white;
   border-radius: 8px;
   padding: 20px;
@@ -132,17 +148,16 @@ address {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.modal .heading h2{
-  margin:0;
+.modal .heading h2 {
+  margin: 0;
 }
 
-.modal .heading .locationMarker{
-  width:20px;
+.modal .heading .locationMarker {
+  width: 20px;
   height: 20px;
-
 }
 
- .modal .heading{
+.modal .heading {
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -158,17 +173,16 @@ address {
   border-radius: 4px;
 }
 
-.modalContent{
+.modalContent {
   display: flex;
   flex-direction: column;
-  align-items:flex-start;
+  align-items: flex-start;
 }
 
-.modalContent .inputContainer{
+.modalContent .inputContainer {
   width: 100%;
   display: flex;
   align-items: center;
-  
 }
 
 .modalContent textarea {
@@ -178,7 +192,7 @@ address {
 
 .modalButton {
   display: flex;
-  justify-content:flex-end;
+  justify-content: flex-end;
   width: 100%;
 }
 
@@ -189,8 +203,8 @@ address {
   cursor: pointer;
   width: 147px;
   height: 48px;
-  color:white;
-  background-color: #FC8A06;
+  color: white;
+  background-color: #fc8a06;
   border-radius: 8px;
 }
 
@@ -202,4 +216,38 @@ address {
 .modalButtons button:last-child {
   background-color: #f5f5f5;
   color: black;
+}
+
+@media screen and (max-width: 768px) {
+  .mainContent {
+    flex-direction: column;
+  }
+
+  .addAddress{
+    height: 50px;
+    width: 100%;
+  }
+
+  .address {
+    width: 100%;
+    margin-top: 16px;
+  }
+.addressChange .header img{
+  margin-right: 19px;
+}
+  .address h1{
+    font-size: 1.6rem;
+  }
+
+  address{
+    font-size: 1.4rem;
+  }
+
+  .modalContent .inputContainer {
+    flex-direction: column;
+  }
+
+  .modalButton button{
+    width: 100%;
+  }
 }

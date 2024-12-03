@@ -1,12 +1,17 @@
 import { useState } from "react";
 import styles from "./addresschange.module.css";
-import {useUserContext} from "../../../../Contexts/UserContext";
+import { useUserContext } from "../../../../Contexts/UserContext";
+import useImage from "../../../../customHook/useImage";
+import { displayImage } from "../../../../utility/imageProcess";
+import useScreenSize from "../../../../customHook/useScreenSize";
 const AddressChange = () => {
-  const {setIsAddressChangeClicked} = useUserContext();
+  const imageURLs = useImage("page", "addresschange");
+  const { setIsAddressChangeClicked } = useUserContext();
   const [showModal, setShowModal] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const [defaultAddressIndex, setDefaultAddressIndex] = useState(null);
-
+  const [defaultAddressIndex, setDefaultAddressIndex] =
+    useState(null);
+  const isMobile = useScreenSize(768);
   const [formData, setFormData] = useState({
     state: "",
     city: "",
@@ -67,41 +72,87 @@ const AddressChange = () => {
   return (
     <section className={styles.addressChange}>
       <div className={styles.header}>
-        <img
-        
-          role="button"
-          onClick={() =>setIsAddressChangeClicked(false)}
-          src="/backarrow.png"
-          alt="backarrow"
-        />
+        <>
+          {!isMobile ? (
+            <img
+              id="addresschange-header-backarrow-1"
+              role="button"
+              onClick={() => setIsAddressChangeClicked(false)}
+              src={displayImage(
+                imageURLs,
+                "addresschange-header-backarrow-1"
+              )}
+              alt="backarrow"
+            />
+          ) : (
+            <img
+              id="addresschange-header-colorback-1"
+              role="button"
+              onClick={() => setIsAddressChangeClicked(false)}
+              src={displayImage(
+                imageURLs,
+                "addresschange-header-colorback-1"
+              )}
+              alt="colorback"
+            />
+          )}
+        </>
+
         <h1>Your Addresses</h1>
       </div>
       <div className={styles.mainContent}>
-        <div className={styles.addAddress} onClick={() => setShowModal(true)}>
-          <img src="/addAddress.png" alt="addaddress" />
+        <div
+          className={styles.addAddress}
+          onClick={() => setShowModal(true)}
+        >
+          <>
+            {!isMobile ? (
+              <img
+                id="addresschange-addaddress-addaddress-1"
+                src={displayImage(
+                  imageURLs,
+                  "addresschange-addaddress-addaddress-1"
+                )}
+                alt="addaddress"
+              />
+            ) : (
+              <img
+                id="addresschange-addaddress-addaddressmobile-1"
+                src={displayImage(
+                  imageURLs,
+                  "addresschange-addaddress-addaddressmobile-1"
+                )}
+                alt="addaddressmobile"
+              />
+            )}
+          </>
         </div>
 
         {addresses.map((address, index) => (
           <div
             key={index}
             className={`${styles.address} ${
-              index === defaultAddressIndex ? styles.defaultAddress : ""
+              index === defaultAddressIndex
+                ? styles.defaultAddress
+                : ""
             }`}
             onClick={() => handleSetDefault(index)}
           >
-            <span>
-              <h1>New Address</h1>
-              {index === defaultAddressIndex && (
-                <div className={styles.default}>Default</div>
-              )}
-            </span>
-            <address>
-              {address.fullAddress}
-              <br />
-              {address.city}, {address.state}, {address.pinCode}
-              <br />
-              Phone Number: {address.phoneNumber}
-            </address>
+            <div className={styles.topContent}>
+              <span>
+                <h1>New Address</h1>
+                {index === defaultAddressIndex && (
+                  <div className={styles.default}>Default</div>
+                )}
+              </span>
+              <address>
+                {address.fullAddress}
+                <br />
+                {address.city}, {address.state}, {address.pinCode}
+                <br />
+                Phone Number: {address.phoneNumber}
+              </address>
+            </div>
             <div className={styles.editContainer}>
               <button
                 className={styles.edit}
@@ -128,14 +179,29 @@ const AddressChange = () => {
         {showModal && (
           <div className={styles.modalOverlay}>
             <div className={styles.modal}>
-              <div className = {styles.heading}>
+            <img 
+                id="addresschange-overlay-cancelbutton-1"
+                onClick = {() => setShowModal(false)}                className = {styles.cancelButton}
+                src={displayImage(imageURLs, "addresschange-overlay-cancelbutton-1")}
+                alt="cancelbutton" />
+              <div className={styles.heading}>
                 <img
-                className = {styles.locationMarker}
-                src="/locationMarker.png" alt="locationmarker" />
-                <h2>{editIndex !== null ? "Edit Address" : "Add Address"}</h2>
+                  id="addresschange-modal-locationmarker-1"
+                  className={styles.locationMarker}
+                  src={displayImage(
+                    imageURLs,
+                    "addresschange-modal-locationmarker-1"
+                  )}
+                  alt="locationmarker"
+                />
+                <h2>
+                  {editIndex !== null
+                    ? "Edit Address"
+                    : "Add Address"}
+                </h2>
               </div>
               <div className={styles.modalContent}>
-                <div className = {styles.inputContainer}>
+                <div className={styles.inputContainer}>
                   <input
                     type="text"
                     name="state"
@@ -173,7 +239,6 @@ const AddressChange = () => {
                 />
                 <div className={styles.modalButton}>
                   <button onClick={handleSave}>Save</button>
-                
                 </div>
               </div>
             </div>

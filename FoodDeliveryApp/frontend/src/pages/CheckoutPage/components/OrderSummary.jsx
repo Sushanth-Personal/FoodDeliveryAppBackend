@@ -16,7 +16,7 @@ const OrderSummary = () => {
   const { cartData: cartItems, loading, error } = useCart();
   const [productImageURLs, setProductImageURLs] = useState({});
   const placeholder = useImage("id", "popularrestaurants-content-mcdonalds-1").imageURL;
-  const { setCartTotal } = useUserContext(); // Access setCartTotal
+  const { setCartTotal,setIsAddressChangeClicked } = useUserContext(); // Access setCartTotal
 
   useEffect(() => {
     const fetchImages = async () => {
@@ -101,7 +101,10 @@ const OrderSummary = () => {
         </div>
         <div className={styles.rightContent}>
           {isMobile && <h3>Deliver Address</h3>}
-          <div className={styles.address}>
+          <div 
+          role="button"
+          onClick={() => setIsAddressChangeClicked(true)}
+          className={styles.address}>
             <div>
               <img
                 id="ordersummary-address-location-1"
