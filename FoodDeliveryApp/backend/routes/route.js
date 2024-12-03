@@ -14,9 +14,17 @@ const {
   updateUser,
   getCards,
   addCards,
-  deleteCard
+  deleteCard,
+  addAddress,
+  getAddress,
+  deleteAddress,
+  editAddress
 } = require("../controllers/mainController.js");
 
+router.post("/address/:id", addAddress);
+router.get("/address/:id", getAddress);
+router.put("/address/:userId/:addressId", editAddress);
+router.delete("/address/:userId/:addressId", deleteAddress);
 router.delete("/cards/:id/:cardId", deleteCard);
 router.post("/cards/:id", addCards);
 router.get("/cards/:id", getCards);

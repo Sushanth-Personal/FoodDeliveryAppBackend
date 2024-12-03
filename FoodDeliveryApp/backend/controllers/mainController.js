@@ -7,7 +7,132 @@ const Review = require("../models/reviewModel");
 const Restaurant = require("../models/restaurantModel");
 const Product = require("../models/productModel");
 const Card = require("../models/cardModel");
+const Address = require("../models/addressModel");
 
+const addAddress = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const userId = mongoose.Types.ObjectId.isValid(id)
+    ? new mongoose.Types.ObjectId(id)
+    : null;
+
+  if (!userId) {
+    return res
+      .status(400)
+      .json({ message: "Invalid userId format" });
+  }
+    const { state, city, pinCode, phoneNumber, fullAddress } = req.body;
+  console.log(state, city, pinCode, phoneNumber, fullAddress);
+    // Create new address for the user
+    const newAddress = new Address({
+      userId: userId,
+      state,
+      city,
+      pinCode,
+      phoneNumber,
+      fullAddress,
+    });
+
+    await newAddress.save();
+    return res.status(201).json(newAddress);
+  } catch (err) {
+    return res.status(500).json({ message: "Server error", error: err.message });
+  }
+}
+
+
+const getAddress = async (req, res) => {
+  try {
+    const { id } = req.params; 
+    const userId = mongoose.Types.ObjectId.isValid(id)
+      ? new mongoose.Types.ObjectId(id)
+      : null;
+
+    if (!userId) {
+      return res
+        .status(400)
+        .json({ message: "Invalid userId format" });
+    }
+
+    // Find all addresses for the user
+    const addresses = await Address.find({ userId: userId });
+
+    if (!addresses || addresses.length === 0) {
+      return res.status(404).json({ message: "No addresses found for this user" });
+    }
+
+    return res.status(200).json(addresses);
+  } catch (err) {
+    return res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+const deleteAddress = async (req, res) => {
+  try {
+    const { userId, addressId } = req.params;
+
+    const validUserId = mongoose.Types.ObjectId.isValid(userId)
+      ? new mongoose.Types.ObjectId(userId)
+      : null;
+
+    if (!validUserId) {
+      return res.status(400).json({ message: "Invalid userId format" });
+    }
+
+    const validAddressId = mongoose.Types.ObjectId.isValid(addressId)
+      ? new mongoose.Types.ObjectId(addressId)
+      : null;
+
+    if (!validAddressId) {
+      return res.status(400).json({ message: "Invalid addressId format" });
+    }
+
+    // Find the address by ID and ensure it's owned by the given user
+    const address = await Address.findOneAndDelete({
+      _id: validAddressId,
+      userId: validUserId,
+    });
+
+    if (!address) {
+      return res.status(404).json({ message: "Address not found or does not belong to this user" });
+    }
+
+    return res.status(200).json({ message: "Address successfully deleted" });
+  } catch (err) {
+    return res.status(500).json({ message: "Server error", error: err.message });
+  }
+};
+
+const editAddress = async (req, res) => {
+  const { userId, addressId } = req.params;
+  const { state, city, pinCode, phoneNumber, fullAddress, isDefault } = req.body;
+
+  // Find the address by ID and ensure it's owned by the given user
+  const address = await Address.findOne({ _id: addressId, userId });
+  if (!address) {
+    return res.status(404).json({ message: "Address not found" });
+  }
+
+  // If the isDefault is changed, update other addresses to set isDefault: false
+  if (isDefault && !address.isDefault) {
+    await Address.updateMany({ userId, isDefault: true }, { isDefault: false });
+  }
+
+  // Update the address fields
+  address.state = state || address.state;
+  address.city = city || address.city;
+  address.pinCode = pinCode || address.pinCode;
+  address.phoneNumber = phoneNumber || address.phoneNumber;
+  address.fullAddress = fullAddress || address.fullAddress;
+  address.isDefault = isDefault;
+
+  try {
+    const updatedAddress = await address.save();
+    return res.status(200).json(updatedAddress);
+  } catch (error) {
+    return res.status(500).json({ message: "Error updating address", error: error.message });
+  }
+};
 
 // GET cards for a user
 const getCards = async (req, res) => {
@@ -674,5 +799,9 @@ module.exports = {
   updateUser,
   getCards,
   addCards,
-  deleteCard
+  deleteCard,
+  addAddress,
+  getAddress,
+  deleteAddress,
+  editAddress
 };
