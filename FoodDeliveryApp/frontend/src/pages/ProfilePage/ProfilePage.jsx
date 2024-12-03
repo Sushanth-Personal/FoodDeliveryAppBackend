@@ -30,7 +30,7 @@ const ProfilePage = () => {
   const isMobile = useScreenSize(768);
   const isSmallDevice = useScreenSize(500);
   const navURLs = useImage("page", "navbar");
-  // const imageURLs = useImage("page", "profilepage");
+  const imageURLs = useImage("page", "profilepage");
 
   useEffect(() => {
     let id = userId;
@@ -145,7 +145,7 @@ const ProfilePage = () => {
 
   return (
     <section className={styles.profilePage}>
-      {(isTablet) && (
+      {isTablet && (
         <div className={styles.firstRow}>
           <div className={styles.logo}>
             <img
@@ -167,7 +167,7 @@ const ProfilePage = () => {
         </div>
       )}
 
-      {!(isTablet) && (
+      {!isTablet && (
         <>
           <div className={styles.headerDesktopContainer}>
             <HeaderDesktop />
@@ -183,16 +183,24 @@ const ProfilePage = () => {
           <div>
             {isSmallDevice ? (
               <img
+                id="profilepage-colorback-colorback-1"
+                src={displayImage(
+                  imageURLs,
+                  "profilepage-colorback-colorback-1"
+                )}
                 role="button"
                 onClick={() => window.history.back() || navigate("/")}
-                src="/colorback.png"
                 alt="colorback"
               />
             ) : (
               <img
+                id="profilepage-backarrow-backarrow-1"
+                src={displayImage(
+                  imageURLs,
+                  "profilepage-backarrow-backarrow-1"
+                )}
                 role="button"
                 onClick={() => window.history.back() || navigate("/")}
-                src="/backarrow.png"
                 alt="backarrow"
               />
             )}
@@ -210,7 +218,14 @@ const ProfilePage = () => {
         <div className={styles.userHeading}>
           {!isSmallDevice && (
             <div>
-              <img src="/userphoto.png" alt="userphoto" />
+              <img
+                id="profilepage-userphoto-userphoto-1"
+                src={displayImage(
+                  imageURLs,
+                  "profilepage-userphoto-userphoto-1"
+                )}
+                alt="userphoto"
+              />
               <h1>{userData.userName || "John Doe"}</h1>
             </div>
           )}
@@ -275,18 +290,27 @@ const ProfilePage = () => {
           {cards.map((card, index) => (
             <div key={index} className={styles.paymentMethod}>
               <div>
-                <img src="/cardicon.png" alt="cardicon" />
+                <img
+                  id="profilepage-cardicon-cardicon-1"
+                  src={displayImage(
+                    imageURLs,
+                    "profilepage-cardicon-cardicon-1"
+                  )}
+                  alt="cardicon"
+                />
                 <h1>
                   xxxx xxxx xxxx {card.cardNumber.slice(-4)}
                   <p>{card.nameOnCard}</p>
                 </h1>
               </div>
               <img
-                src="/editicon.png"
+                id="profilepage-editicon-editicon-1"
+                src={displayImage(
+                  imageURLs,
+                  "profilepage-editicon-editicon-1"
+                )}
                 alt="editicon"
-                onClick={() => {
-                  handleCardEdit(card);
-                }}
+                onClick={() => handleCardEdit(card)}
               />
             </div>
           ))}
@@ -294,7 +318,14 @@ const ProfilePage = () => {
             className={styles.addCard}
             onClick={() => setIsModalOpen(true)}
           >
-            <img src="/add.png" alt="addcard" />
+            <img
+              id="profilepage-add-addcard-1"
+              src={displayImage(
+                imageURLs,
+                "profilepage-add-addcard-1"
+              )}
+              alt="addcard"
+            />
             <h1>Add New Card</h1>
           </div>
         </div>
@@ -303,12 +334,20 @@ const ProfilePage = () => {
       {isModalOpen && (
         <div className={styles.modal}>
           <div className={styles.modalContent}>
-            <div className = {styles.heading}>
+            <div className={styles.heading}>
               <h2>Edit Payment Method</h2>
-              {isMobile && (<img 
-              role="button"
-              onClick={() => setIsModalOpen(false)}
-              src="/closeicon.png" alt="closeicon" />)}
+              {isMobile && (
+                <img
+                  id="profilepage-closeicon-closeicon-1"
+                  src={displayImage(
+                    imageURLs,
+                    "profilepage-closeicon-closeicon-1"
+                  )}
+                  alt="closeicon"
+                  role="button"
+                  onClick={() => setIsModalOpen(false)}
+                />
+              )}
             </div>
             <div className={styles.modalFields}>
               <div>
@@ -361,15 +400,17 @@ const ProfilePage = () => {
                 }}
                 className={styles.leftButton}
               >
-                {isTablet?"Delete":"Remove"}
+                {isTablet ? "Delete" : "Remove"}
               </button>
               <div className={styles.rightButtons}>
-                {!isMobile && (<button
-                  className={styles.cancelButton}
-                  onClick={handleCancel}
-                >
-                  Cancel
-                </button>)}
+                {!isMobile && (
+                  <button
+                    className={styles.cancelButton}
+                    onClick={handleCancel}
+                  >
+                    Cancel
+                  </button>
+                )}
                 <button
                   className={styles.saveButton}
                   onClick={handleSaveCard}
