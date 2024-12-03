@@ -9,10 +9,13 @@ import ErrorPage from "../ErrorPage/ErrorPage"; // Import the ErrorPage componen
 import { useUserContext } from "../../Contexts/UserContext";
 import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
+import Cart from "../../components/Cart/Cart";
 const CheckoutPage = () => {
   const imageURLs = useImage("page", "navbar");
   const { userId } = useParams();
-  const { setUserId } = useUserContext();
+  const { setUserId, isCartClicked, setIsCartClicked } = useUserContext();
+  const closeCart = () => setIsCartClicked(false);
+  const cartImage = useImage("id","cart-overlay-cancelbutton-1");
   // If userId is not present, redirect to ErrorPage
   if (!userId) {
     return <ErrorPage />;
@@ -55,6 +58,17 @@ const CheckoutPage = () => {
       <footer className={styles.footerContainer}>
         <FooterComponent />
       </footer>
+      {isCartClicked && (
+        <div className={styles.overlay} onClick={closeCart}>
+          <Cart />
+          <img 
+                id="cart-overlay-cancelbutton-1"
+                onClick = {closeCart}
+                className = {styles.cancelButton}
+                src={cartImage.imageURL}
+                alt="cancelbutton" />
+        </div>
+      )}
     </section>
   );
 };

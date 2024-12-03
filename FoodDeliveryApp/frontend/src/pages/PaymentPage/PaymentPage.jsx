@@ -9,11 +9,13 @@ import { checkAuthentication } from "../../api/api";
 import { useUserContext } from "../../Contexts/UserContext";
 import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
-
+import Cart from "../../components/Cart/Cart";
 const PaymentPage = () => {
   const navigate = useNavigate();
-  const { setUserId } = useUserContext();
+  const { setUserId, isCartClicked, setIsCartClicked } = useUserContext();
   const imageURLs = useImage("page", "navbar");
+  const closeCart = () => setIsCartClicked(false);
+  const cartImage = useImage("id","cart-overlay-cancelbutton-1");
   useEffect(() => {
     checkAuthentication().then((response) => {
       if (!response) {
@@ -59,6 +61,17 @@ const PaymentPage = () => {
       <footer>
         <FooterComponent />
       </footer>
+      {isCartClicked && (
+        <div className={styles.overlay} onClick={closeCart}>
+          <Cart />
+          <img 
+                id="cart-overlay-cancelbutton-1"
+                onClick = {closeCart}
+                className = {styles.cancelButton}
+                src={cartImage.imageURL}
+                alt="cancelbutton" />
+        </div>
+      )}
     </section>
   );
 };

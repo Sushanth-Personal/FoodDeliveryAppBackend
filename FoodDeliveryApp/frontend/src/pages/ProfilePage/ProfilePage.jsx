@@ -11,10 +11,11 @@ import useAuth from "../../customHook/useAuth";
 import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
 import useScreenSize from "../../customHook/useScreenSize";
+import Cart from "../../components/Cart/Cart";
 const ProfilePage = () => {
   useAuth();
   const navigate = useNavigate();
-  const { userData, setUserData, userId, setUserId } =
+  const { userData, setUserData, userId, setUserId , setIsCartClicked, isCartClicked} =
     useUserContext(); // Assuming these are provided by the context
   const [isEditing, setIsEditing] = useState(false);
   const [cards, setCards] = useState([]); // State to store saved cards
@@ -25,7 +26,8 @@ const ProfilePage = () => {
     cvv: "",
     nameOnCard: "",
   });
-
+  const closeCart = () => setIsCartClicked(false);
+  const cartImage = useImage("id","cart-overlay-cancelbutton-1");
   const isTablet = useScreenSize(1080);
   const isMobile = useScreenSize(768);
   const isSmallDevice = useScreenSize(500);
@@ -426,6 +428,17 @@ const ProfilePage = () => {
       <div className={styles.footerContainer}>
         <FooterComponent />
       </div>
+      {isCartClicked && (
+        <div className={styles.overlay} onClick={closeCart}>
+          <Cart />
+          <img 
+                id="cart-overlay-cancelbutton-1"
+                onClick = {closeCart}
+                className = {styles.cancelButton}
+                src={cartImage.imageURL}
+                alt="cancelbutton" />
+        </div>
+      )}
     </section>
   );
 };
