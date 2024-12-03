@@ -29,11 +29,13 @@ const HomePage = () => {
   return (
     <section className={styles.homePage}>
       <div className={styles.content}>
-        <header>
-          {(screenType === "desktop" || screenType === "tablet") && (
-            <HeaderDesktop />
-          )}
-        </header>
+       
+          <div className = {styles.headerDesktopContainer}>
+            {(screenType === "desktop" || screenType === "tablet") && (
+              <HeaderDesktop />
+            )}
+          </div>
+     
         <nav>
           {screenType === "desktop" && <NavBar />}
           {(screenType === "tablet" || screenType === "mobile") && (

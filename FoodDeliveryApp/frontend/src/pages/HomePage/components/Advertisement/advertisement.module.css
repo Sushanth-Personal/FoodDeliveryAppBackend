@@ -140,15 +140,16 @@
     max-width: 600px;
     height: 338px;
   }
+  .rightContent img{
+    max-width: 600px;
+    height: 338px;
+  }
 
-  .leftGradient {
+  .leftContent img{
     max-width: 600px;
     height: 338px;
   }
-  .rightGradient {
-    max-width: 600px;
-    height: 338px;
-  }
+
 }
 
 @media screen and (max-width: 1200px) {
@@ -177,13 +178,20 @@
   .rightContent {
     max-width: 754px;
     height: 426px;
-    top: 250px;
+    top: 30px;
     left: -10px;
   }
 
-  .content {
-    bottom: -150px;
+  .leftContent img{
+    max-width: 754px;
+    height: 426px;
   }
+
+  .rightContent img{
+    max-width: 754px;
+    height: 426px;
+  }
+
 
   .content h3 {
     margin-bottom: 20px;
@@ -202,9 +210,9 @@
 @media screen and (max-width: 650px) {
   .advertisement {
     flex-direction: column;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-    height: 300px;
+
   }
 
   .leftBackground {
@@ -225,13 +233,23 @@
   .rightContent {
     width: 391px;
     height: 223px;
-    top: 100px;
+    top: 30px;
     padding-bottom: 17px;
     left:2px;
   }
 
+  .leftContent img{
+    width: 391px;
+    height: 223px;
+  }
+
+  .rightContent img{
+    width: 391px;
+    height: 223px;
+  }
+
   .content {
-    bottom: 0px;
+    bottom: 24px;
     margin-left: 36px;
   }
   .caption{

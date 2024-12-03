@@ -223,6 +223,7 @@
 
 @media screen and (max-width: 768px) {
   .knowAboutUs{
-    padding-top:55px;
+    padding-top:0px;
   }
 }
+

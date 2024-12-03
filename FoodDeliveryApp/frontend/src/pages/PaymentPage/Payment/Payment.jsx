@@ -2,12 +2,17 @@ import styles from "./payment.module.css";
 import OrderPlaced from "./OrderPlaced";
 import { useState, useEffect } from "react";
 import { useUserContext } from "../../../Contexts/UserContext";
+import useImage from "../../../customHook/useImage";
+import { displayImage } from "../../../utility/imageProcess";
+import useScreenSize from "../../../customHook/useScreenSize";
 
 const Payment = () => {
   const [orderPlaced, setOrderPlaced] = useState(false);
-  const { cartTotal} = useUserContext();
+  const { cartTotal } = useUserContext();
   const [selectedCard, setSelectedCard] = useState("");
   const [customCards, setCustomCards] = useState([]);
+  const isMobile = useScreenSize(950);
+  const imageURLs = useImage("page", "payment");
 
   // Load cards from sessionStorage
   useEffect(() => {
@@ -18,14 +23,11 @@ const Payment = () => {
 
   // Save cards to sessionStorage
   useEffect(() => {
-    sessionStorage.setItem(
-      "customCards",
-      JSON.stringify(customCards)
-    );
+    sessionStorage.setItem("customCards", JSON.stringify(customCards));
   }, [customCards]);
 
   const handleOrderPlaced = () => {
-    if(!selectedCard){
+    if (!selectedCard) {
       alert("Please select a card");
       return;
     }
@@ -46,22 +48,38 @@ const Payment = () => {
       setCustomCards([newCard, ...customCards]);
     }
   };
-useEffect(() => {
-  console.log("orderPlaced", orderPlaced);
-}, [orderPlaced]);
+
+  useEffect(() => {
+    console.log("orderPlaced", orderPlaced);
+  }, [orderPlaced]);
+
   return orderPlaced ? (
     <OrderPlaced />
   ) : (
     <section className={styles.payment}>
-      <div className={styles.header}>
-        <img
-          role="button"
-          onClick={() => window.history.back()}
-          src="/backarrow.png"
-          alt="backarrow"
-        />
-        <h1>Choose and Pay</h1>
-      </div>
+      {!isMobile ? (
+        <div className={styles.header}>
+          <img
+            id="payment-header-backarrow-1"
+            role="button"
+            onClick={() => window.history.back()}
+            src={displayImage(imageURLs, "payment-header-backarrow-1")}
+            alt="backarrow"
+          />
+          <h1>Your Order Details</h1>
+        </div>
+      ) : (
+        <div className={styles.header}>
+          <img
+            id="payment-header-colorback-1"
+            role="button"
+            onClick={() => window.history.back()}
+            src={displayImage(imageURLs, "payment-header-colorback-1")}
+            alt="colorback"
+          />
+          <h1>Checkout</h1>
+        </div>
+      )}
       <div className={styles.mainContent}>
         <div className={styles.leftContent}>
           {/* Wallet Section */}
@@ -69,7 +87,11 @@ useEffect(() => {
             <div className={styles.wallet}>
               <div className={styles.leftCardContent}>
                 <div className={styles.iconBackground}>
-                  <img src="/wallet.png" alt="wallet" />
+                  <img
+                    id="payment-wallet-wallet-1"
+                    src={displayImage(imageURLs, "payment-wallet-wallet-1")}
+                    alt="wallet"
+                  />
                 </div>
                 <div className={styles.content}>
                   <h1>Wallet</h1>
@@ -77,7 +99,11 @@ useEffect(() => {
                 </div>
               </div>
               <div>
-                <img src="/rightarrow.png" alt="rightarrow" />
+                <img
+                  id="payment-wallet-rightarrow-1"
+                  src={displayImage(imageURLs, "payment-wallet-rightarrow-1")}
+                  alt="rightarrow"
+                />
               </div>
             </div>
           </div>
@@ -115,7 +141,11 @@ useEffect(() => {
           >
             <div className={styles.leftCardContent}>
               <div className={styles.iconBackground}>
-                <img src="/Maestro.png" alt="maestro" />
+                <img
+                  id="payment-cardtype-maestro-1"
+                  src={displayImage(imageURLs, "payment-cardtype-maestro-1")}
+                  alt="maestro"
+                />
               </div>
               <div className={styles.content}>
                 <h1>MaestroCard</h1>
@@ -138,7 +168,11 @@ useEffect(() => {
           >
             <div className={styles.leftCardContent}>
               <div className={styles.iconBackground}>
-                <img src="/Paypal.png" alt="paypal" />
+                <img
+                  id="payment-cardtype-paypal-1"
+                  src={displayImage(imageURLs, "payment-cardtype-paypal-1")}
+                  alt="paypal"
+                />
               </div>
               <div className={styles.content}>
                 <h1>PayPal</h1>
@@ -157,7 +191,11 @@ useEffect(() => {
           {/* Add Debit Card */}
           <div className={styles.cardType} onClick={addNewCard}>
             <div className={styles.leftCardContent}>
-              <img src="/addCard.png" alt="addcard" />
+              <img
+                id="payment-cardtype-addcard-1"
+                src={displayImage(imageURLs, "payment-cardtype-addcard-1")}
+                alt="addcard"
+              />
               <div className={styles.content}>
                 <h1>Add Debit Card</h1>
               </div>
@@ -171,11 +209,7 @@ useEffect(() => {
               <h2>Amount to be paid</h2>
               <p>₹{cartTotal}</p>
             </div>
-            <button
-              onClick={handleOrderPlaced}
-            >
-              Proceed Payment
-            </button>
+            <button onClick={handleOrderPlaced}>Proceed Payment</button>
           </div>
         </div>
       </div>

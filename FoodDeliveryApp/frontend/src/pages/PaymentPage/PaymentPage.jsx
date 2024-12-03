@@ -5,35 +5,53 @@ import FooterComponent from "../../components/FooterComponent/FooterComponent";
 import Payment from "./Payment/Payment";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {checkAuthentication} from "../../api/api";
-import {useUserContext} from "../../Contexts/UserContext";
+import { checkAuthentication } from "../../api/api";
+import { useUserContext } from "../../Contexts/UserContext";
+import useImage from "../../customHook/useImage";
+import { displayImage } from "../../utility/imageProcess";
+
 const PaymentPage = () => {
-
   const navigate = useNavigate();
-  const {setUserId} = useUserContext();
-
+  const { setUserId } = useUserContext();
+  const imageURLs = useImage("page", "navbar");
   useEffect(() => {
     checkAuthentication().then((response) => {
       if (!response) {
         navigate("/login");
-      }else{
+      } else {
         setUserId(localStorage.getItem("userId"));
       }
-    })
-  },[]);
-
-
-
+    });
+  }, []);
 
   return (
     <section className={styles.paymentPage}>
       <div className={styles.headerDesktopContainer}>
         <HeaderDesktop />
       </div>
-
-      <div className={styles.navBarContainer}>
-        <NavBar />
+      <div className={styles.firstRow}>
+        <div className={styles.logo}>
+          <img
+            src={displayImage(imageURLs, "navbar-logo-logo-1")}
+            className={styles.logoURL}
+            alt="logo"
+            id="navbar-logo-logo-1"
+          />
+        </div>
+        <div className={styles.menu}>
+          <button>
+            <img
+              src={displayImage(imageURLs, "navbar-menu-menu-1")}
+              alt="menu"
+              id="navbar-menu-menu-1"
+            />
+          </button>
+        </div>
       </div>
+      <div className={styles.navBarContainer}>
+       <NavBar />
+      </div>
+
       <div className={styles.paymentContainer}>
         <Payment />
       </div>
