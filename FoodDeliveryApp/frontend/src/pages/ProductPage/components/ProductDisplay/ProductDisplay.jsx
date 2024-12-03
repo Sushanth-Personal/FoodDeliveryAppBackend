@@ -24,6 +24,7 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
   const { addToCart, cartData } = useCart();
   const restURLs = useImage("page", restaurantName);
   const imageURLs = useImage("page", "productdisplay");
+  const cartImage = useImage("id","cart-overlay-cancelbutton-1");
   let restId = restaurantId;
   useEffect(() => {
     if (!restId) {
@@ -307,7 +308,14 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
           <>
             {isSmallScreen ? (
               <div className={styles.overlay} onClick={closeCart}>
+                {console.log("cartImage", cartImage)}
                 <Cart />
+                <img 
+                id="cart-overlay-cancelbutton-1"
+                onClick = {closeCart}
+                className = {styles.cancelButton}
+                src={cartImage.imageURL}
+                alt="cancelbutton" />
               </div>
             ) : (
               <div className={styles.cart}>

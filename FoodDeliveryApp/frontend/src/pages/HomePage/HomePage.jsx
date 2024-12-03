@@ -16,6 +16,7 @@ import { useUserContext } from "../../Contexts/UserContext";
 import KnowAboutUs from "./components/KnowAboutUs/KnowAboutUs";
 import Statistics from "./components/Statistics/Statistics";
 import Cart from "../../components/Cart/Cart";
+import useImage from "../../customHook/useImage";
 const HomePage = () => {
   const { setLastRoute, isCartClicked, setIsCartClicked } = useUserContext();
   const screenType = useScreenType();
@@ -24,7 +25,7 @@ const HomePage = () => {
   }, []);
 
   const closeCart = () => setIsCartClicked(false);
-
+  const cartImage = useImage("id","cart-overlay-cancelbutton-1");
   return (
     <section className={styles.homePage}>
       <div className={styles.content}>
@@ -72,6 +73,12 @@ const HomePage = () => {
       {isCartClicked && (
         <div className={styles.overlay} onClick={closeCart}>
           <Cart />
+          <img 
+                id="cart-overlay-cancelbutton-1"
+                onClick = {closeCart}
+                className = {styles.cancelButton}
+                src={cartImage.imageURL}
+                alt="cancelbutton" />
         </div>
       )}
     </section>
