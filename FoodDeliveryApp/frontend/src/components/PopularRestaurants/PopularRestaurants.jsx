@@ -37,7 +37,10 @@ const PopularRestaurants = () => {
               <div className={styles.text}>McDonald’s London</div>
             </div>
           </li>
-          <li>
+          <li
+           role="button"
+           onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}
+          >
             <img
               id="popularrestaurants-content-kfc-1"
               src={displayImage(imageURLs,"popularrestaurants-content-kfc-1")}
@@ -47,7 +50,9 @@ const PopularRestaurants = () => {
               <div className={styles.text}>KFC West London</div>
             </div>
           </li>
-          <li>
+          <li
+           role="button"
+           onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}>
             <img
               id="popularrestaurants-content-texas-1"
               src={displayImage(imageURLs,"popularrestaurants-content-texas-1")}
@@ -57,7 +62,9 @@ const PopularRestaurants = () => {
               <div className={styles.text}>Texas Chicken</div>
             </div>
           </li>
-          <li>
+          <li
+           role="button"
+           onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}>
             <img
               id="popularrestaurants-content-burgerking-1"
               src={displayImage(imageURLs,"popularrestaurants-content-burgerking-1")}
@@ -67,7 +74,9 @@ const PopularRestaurants = () => {
               <div className={styles.text}>Burger King</div>
             </div>
           </li>
-          <li>
+          <li
+           role="button"
+           onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}>
             <img
               id="popularrestaurants-content-shaurma-1"
               src={displayImage(imageURLs,"popularrestaurants-content-shaurma-1")}
@@ -75,7 +84,9 @@ const PopularRestaurants = () => {
             />
             <div className={styles.lowerTileContent}><div className = {styles.text}>Shaurma 1</div></div>
           </li>
-          <li>
+          <li
+           role="button"
+           onClick={() => navigate('/product/?id=6746f6c5f215ba9397391196&restaurantName=mcdonalds')}>
             <img
               id="popularrestaurants-content-papajohns-1"
               src={displayImage(imageURLs,"popularrestaurants-content-papajohns-1")}
