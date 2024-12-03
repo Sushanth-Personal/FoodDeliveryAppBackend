@@ -11,7 +11,7 @@ const HeaderDesktop = () => {
 
   const handleCartClick = useCallback(() => {
     setIsCartClicked(!isCartClicked);
-    navigate("/product");
+    // navigate("/product");
   }, [isCartClicked, setIsCartClicked]); // Added setIsCartClicked as a dependency for better practice
 
 

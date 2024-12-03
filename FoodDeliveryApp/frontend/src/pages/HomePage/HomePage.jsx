@@ -15,27 +15,25 @@ import Advertisement from "./components/Advertisement/Advertisement";
 import { useUserContext } from "../../Contexts/UserContext";
 import KnowAboutUs from "./components/KnowAboutUs/KnowAboutUs";
 import Statistics from "./components/Statistics/Statistics";
-
+import Cart from "../../components/Cart/Cart";
 const HomePage = () => {
-
-  const {  setLastRoute, } = useUserContext();
+  const { setLastRoute, isCartClicked, setIsCartClicked } = useUserContext();
   const screenType = useScreenType();
   useEffect(() => {
     setLastRoute("/");
   }, []);
 
-  
+  const closeCart = () => setIsCartClicked(false);
 
   return (
     <section className={styles.homePage}>
       <div className={styles.content}>
-       
-          <div className = {styles.headerDesktopContainer}>
-            {(screenType === "desktop" || screenType === "tablet") && (
-              <HeaderDesktop />
-            )}
-          </div>
-     
+        <div className={styles.headerDesktopContainer}>
+          {(screenType === "desktop" || screenType === "tablet") && (
+            <HeaderDesktop />
+          )}
+        </div>
+
         <nav>
           {screenType === "desktop" && <NavBar />}
           {(screenType === "tablet" || screenType === "mobile") && (
@@ -60,7 +58,7 @@ const HomePage = () => {
         <div className={styles.advertisementContainer}>
           <Advertisement />
         </div>
-      
+
         <div className={styles.knowAboutUsContainer}>
           <KnowAboutUs />
         </div>
@@ -71,6 +69,11 @@ const HomePage = () => {
           <FooterComponent />
         </footer>
       </div>
+      {isCartClicked && (
+        <div className={styles.overlay} onClick={closeCart}>
+          <Cart />
+        </div>
+      )}
     </section>
   );
 };

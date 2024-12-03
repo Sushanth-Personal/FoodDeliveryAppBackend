@@ -37,6 +37,33 @@ html {
   align-items: center;
 }
 
+.cart {
+  position: relative;
+  margin: 50px auto;
+  width: 90%;
+  text-align: center;
+  z-index: 5000;
+}
+
+.cart h1,
+.cart p {
+  font-size: 1.8rem;
+  color: white;
+}
+
+.overlay {
+  display: flex;
+  justify-content: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 1200%;
+  background-color: rgba(0, 0, 0, 0.7); /* Dark transparent background */
+  z-index: 1500;
+}
+
+
 @media screen and (max-width: 1250px) {
   html {
     font-size: 62.5%;

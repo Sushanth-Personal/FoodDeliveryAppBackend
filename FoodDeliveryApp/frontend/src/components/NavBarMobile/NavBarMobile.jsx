@@ -14,7 +14,7 @@ const NavBarMobile = () => {
 
   const handleCartClick = useCallback(() => {
     setIsCartClicked(!isCartClicked);
-    navigate("/product");
+    // navigate("/product");
   }, [isCartClicked, setIsCartClicked, navigate]);
 
   return (
