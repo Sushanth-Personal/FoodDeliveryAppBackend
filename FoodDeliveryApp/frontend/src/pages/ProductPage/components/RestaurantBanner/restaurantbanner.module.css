@@ -1,0 +1,270 @@
+.restaurantBanner {
+  height: 506px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.timing {
+  height: 61px;
+  width: 335px;
+  background-color: #fc8a06;
+  border-radius: 0px 12px 12px 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.timing p {
+  color: white;
+  font-size: 1.6rem;
+  font-weight: 600;
+  line-height: 66px;
+  margin-left: 13px;
+}
+
+.timing img {
+  width: 29px;
+  height: 29px;
+}
+
+.backgroundLayer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 477px;
+  z-index: 0;
+}
+
+.topLayer {
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  width: 100%;
+  height: 506px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  z-index: 5;
+}
+
+.backgroundLayer img {
+  width: 100%;
+  height: 477px;
+}
+
+.upperContent {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: 57px 62px 0px 57px;
+}
+
+.content {
+  display: flex;
+  justify-content: space-between;
+  height: 100%;
+}
+
+.content .description {
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+.description h4 {
+  color: #ffffff;
+  margin-bottom: 0px;
+  font-weight: 400;
+  font-size: 2rem;
+  line-height: 66px;
+}
+
+.description h1 {
+  color: #ffffff;
+  margin-bottom: 30px;
+  font-weight: 600;
+  font-size: 5.4rem;
+  line-height: 66px;
+}
+
+.description .line3 {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  margin-bottom: 57px;
+}
+
+.description .line3 .button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: transparent;
+  width: 330px;
+  height: 63px;
+  margin-right: 16px;
+  border: 1px solid white;
+  border-radius: 120px;
+}
+
+.line3 .button p {
+  color: #ffffff;
+  margin-bottom: 0px;
+  font-weight: 400;
+  font-size: 1.8rem;
+  /* line-height: 66px; */
+  margin-left: 17px;
+}
+
+.rightContent {
+  width: 637px;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  position: relative;
+}
+
+.rightContent .banner {
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  border-radius: 12px;
+  align-self: flex-end;
+}
+
+.rightContent .rating {
+  align-self: flex-start;
+  position: absolute;
+  bottom: 0px;
+  left: 0px;
+}
+
+@media screen and (max-width: 1650px) {
+  .content .description {
+    width: 500px;
+  }
+
+  .line3 .button {
+    padding: 12px;
+  }
+}
+
+@media screen and (max-width: 1450px) {
+  .rightContent {
+    width: 490px;
+  }
+  .rightContent .banner {
+    width: 450px;
+    bottom: 50px;
+  }
+
+  .rightContent .rating {
+    bottom: 0px;
+    left: 0px;
+    transform: scale(0.8);
+  }
+}
+
+@media screen and (max-width: 1300px) {
+  .timing {
+    display: none;
+  }
+
+  .content {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .backgroundLayer {
+    height: 100%;
+  }
+
+  .content .description {
+    align-items: center;
+    width: 100%;
+  }
+
+  .backgroundLayer img {
+    height: 100%;
+  }
+
+  .description .line3 {
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .topLayer {
+    height: 700px;
+  }
+
+  .rightContent .rating {
+    left: -20px;
+    bottom: -20px;
+  }
+
+  .backgroundLayer {
+    height: 700px;
+  }
+}
+
+@media screen and (max-width: 800px) {
+  .description h1 {
+    font-size: 4rem;
+  }
+}
+
+@media screen and (max-width: 650px) {
+  .rightContent {
+    width: 374px;
+  }
+  .rightContent .banner {
+    width: 374px;
+    left: 0px;
+  }
+
+  .rightContent .rating {
+    width: 70px;
+    height: 82px;
+    left: 20px;
+    bottom: 10px;
+  }
+
+  .content .description {
+    align-items: flex-start;
+
+  }
+
+  .description h1 {
+    font-size: 3rem;
+    line-height: 36px;
+  }
+
+  .description h4 {
+    font-size: 1.5rem;
+  }
+
+  .topLayer {
+    height: 639px;
+  }
+  .backgroundLayer {
+    height: 639px;
+  }
+
+  .description .line3 {
+    margin-bottom: 71px;
+  }
+  .upperContent {
+    padding: 12px 12px 0px 12px;
+  }
+}
+
+
+@media screen and (max-width: 500px) {
+  
+}

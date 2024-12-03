@@ -1,0 +1,471 @@
+.profilePage {
+  display: flex;
+  flex-direction: column;
+  margin-left: 100px;
+  margin-right: 100px;
+}
+
+.headerDesktopContainer {
+  margin-bottom: 53px;
+}
+
+.navBarContainer {
+  margin-bottom: 53px;
+}
+
+header {
+  all: unset;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 31px;
+}
+
+header img {
+  width: 39px;
+  height: 39px;
+  margin-right: 4.5px;
+}
+
+header h1 {
+  margin: 0;
+  font-size: 3.2rem;
+  font-weight: 600;
+  line-height: 48px;
+}
+
+.userProfile {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  padding-bottom: 44px;
+  border-bottom: 1px solid black;
+  margin-bottom: 27px;
+}
+
+.userHeading {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 32px;
+}
+
+.editSaveButton {
+  width: 87px;
+  height: 41px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fc8a06;
+  border-radius: 7.5px;
+  color: white;
+  border: none;
+}
+
+.userHeading div {
+  display: flex;
+  align-items: center;
+}
+
+.userHeading img {
+  width: 94px;
+  height: 94px;
+  border-radius: 50%;
+  margin-right: 16px;
+}
+
+.userHeading h1 {
+  all: unset;
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 48px;
+  margin: 0;
+}
+
+.userDetailsContainer {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+  margin-right: 37px;
+}
+
+.userDetailsContainer label {
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 22px;
+  margin-bottom: 12px;
+}
+
+.userDetailsContainer input {
+  width: 100%;
+  height: 48px;
+  border-radius: 7.5px;
+  margin-bottom: 16px;
+  padding: 13px 0px 13px 23px;
+  font-size: 1.5rem;
+  font-weight: 400;
+  line-height: 22px;
+  border: none;
+  background-color: #f9f9f9;
+}
+.userDetailsContainer input:disabled {
+  background-color: #f1f1f1;
+  cursor: not-allowed;
+}
+
+.row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.paymentMethods {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  width: 100%;
+}
+
+.paymentMethods header {
+  all: unset;
+  font-size: 2.4rem;
+  font-weight: 500;
+  line-height: 36px;
+  margin: 0;
+  margin-bottom: 24px;
+}
+
+.paymentMethodsContainer {
+  display: flex;
+  justify-content: flex-start;
+  width: 100%;
+  flex-wrap: wrap;
+  margin-bottom: 174px;
+  gap: 32px;
+}
+
+.paymentMethod {
+  display: flex;
+  justify-content: space-between;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  align-items: center;
+  width: 312px;
+  height: 74px;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.paymentMethod h1 {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-left: 24px;
+}
+.paymentMethod div {
+  display: flex;
+  align-items: center;
+}
+.paymentMethod p {
+  font-size: 1.5rem;
+  font-weight: 400;
+}
+
+.addCard {
+  display: flex;
+  justify-content: space-between;
+  border: 0.5px solid rgba(0, 0, 0, 0.5);
+  align-items: center;
+  width: 234px;
+  height: 74px;
+  border-radius: 12px;
+  padding: 12px;
+}
+
+.addCard h1 {
+  all: unset;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  font-size: 2rem;
+  font-weight: 400;
+  margin-left: 24px;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.modalContent {
+  background: white;
+  width: 100%;
+  max-width: 986px;
+}
+
+.modalFields {
+  padding: 31px;
+  border-radius: 8px;
+  max-width: 986px;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  margin-bottom: 47px;
+}
+
+.modalContent .heading{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.modalContent .heading img{
+  cursor: pointer;
+  margin-right: 31px;
+  width:40px;
+  height: 40px;
+}
+
+.modalContent h2 {
+  font-size: 4rem;
+  margin-bottom: 34px;
+  margin-left: 31px;
+  margin-top: 17px;
+}
+
+.modalContent label {
+  font-size: 2.4rem;
+  font-weight: 400;
+}
+.modalContent div {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+}
+.modalContent input {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 2.4rem;
+  font-weight: 400;
+  width: 100%;
+  height: 64px;
+  max-width: 705px;
+}
+
+.modalButtons {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 15px;
+}
+
+.modalButtons button {
+  padding: 10px 15px;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+}
+
+.modalButtons button:first-child {
+  background-color: #ccc;
+}
+
+.modalButtons button:nth-child(2) {
+  background-color: #28a745;
+  color: white;
+}
+
+.modalButtons button:nth-child(3) {
+  background-color: #dc3545;
+  color: white;
+}
+
+.modalActions {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+  height: 138px;
+  background-color: #fc8a06;
+}
+
+.modalActions .saveButton {
+  width: 246px;
+  height: 80px;
+  background-color: white;
+  border-radius: 12px;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.4rem;
+  font-weight: 500;
+  margin-right: 33px;
+}
+
+.modalActions .rightButtons {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.modalActions .cancelButton {
+  all: unset;
+  background-color: transparent;
+  color: white;
+  padding: 24px;
+  font-size: 2.4rem;
+  font-weight: 500;
+}
+
+.modalActions .leftButton {
+  margin-left: 29px;
+  width: 175px;
+  height: 80px;
+  border: none;
+  border-radius: 12px;
+  background-color: #663700;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 2.4rem;
+  font-weight: 500;
+  color: white;
+}
+
+@media screen and (max-width: 1080px) {
+
+  .modalContent{
+    margin:0px 12px;
+    border-radius: 12px;
+  }
+  .firstRow {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.3);
+    margin-bottom: 18px;
+  }
+
+  .firstRow .logo {
+    flex: 1;
+    margin: 27px 0px 27px 16px;
+  }
+
+  .firstRow .menu {
+    padding: 20px;
+    border-left: 1px solid rgba(0, 0, 0, 0.3);
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+  }
+
+  .firstRow .menu button {
+    background-color: rgba(255, 255, 255, 0);
+    border: none;
+  }
+
+  .modalContent label {
+    min-width: 200px;
+  }
+
+  .row {
+    flex-direction: column;
+  }
+
+  .footerContainer {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 768px) {
+  header div {
+    display: flex;
+    align-items: center;
+  }
+
+  header h1 {
+    font-size: 2.4rem;
+  }
+  .firstRow {
+    margin-bottom: 36px;
+  }
+  .profilePage {
+    margin: 0px 12px;
+  }
+  .userDetailsContainer {
+    margin: 0;
+  }
+
+  .paymentMethodsContainer {
+    flex-direction: column;
+  }
+
+
+}
+
+@media screen and (max-width: 600px) {
+  
+  .modalActions .saveButton, .modalActions .leftButton{
+    min-width: 179px;
+    height: 44px;
+    font-size: 1.6rem;
+    font-weight: 500;
+  }
+  .modalActions .saveButton{
+    background-color:#fc8a06;
+    color:white;
+  }
+
+  .modalActions{
+    background-color: transparent;
+  }
+
+  .modalContent{
+    box-shadow: 4px 4px 40.8px rgba(0, 0, 0, 0.25);
+  }
+
+.modalContent h2{
+  font-size: 2rem;
+  margin-bottom: 24px;
+}
+
+.modalContent label{
+  font-size: 1.6rem;
+  
+}
+.modalFields{
+  margin-bottom: 0px;
+}
+
+.modalActions{
+  height: auto;
+  margin-bottom: 16px;
+}
+.modalContent input{
+  height: 48px;
+  font-size: 1.5rem;
+}
+
+
+}
+@media screen and (max-width: 500px) {
+  header {
+    justify-content: space-between;
+    width: 100%;
+  }
+}

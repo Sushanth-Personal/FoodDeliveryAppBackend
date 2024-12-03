@@ -1,61 +1,96 @@
-html{
-    font-size: 62.5%;
+html {
+  font-size: 62.5%;
 }
-.homePage{
-    padding:0 10rem;
+.homePage {
+  padding: 0 10rem;
 }
-.downloadApp{
-    margin-bottom:53px;;
-}
-
-.searchContainer{
-    margin-bottom:53px;
-
-}
-.exclusiveDealsContainer{
-    margin-bottom:53px;
+.downloadApp {
+  margin-bottom: 53px;
 }
 
-.categoryContainer{
-    margin-bottom:53px;
+.searchContainer {
+  margin-bottom: 53px;
+}
+.exclusiveDealsContainer {
+  margin-bottom: 53px;
 }
 
-.popularRestaurants{
-    margin-bottom:53px;
+.categoryContainer {
+  margin-bottom: 53px;
+}
+
+.popularRestaurants {
+  margin-bottom: 53px;
+}
+
+.advertisementContainer {
+  margin-bottom: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+}
+
+.knowAboutUsContainer {
+  margin-bottom: 53px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
 @media screen and (max-width: 1250px) {
-    html{
-        font-size: 62.5%;
-    }
+  html {
+    font-size: 62.5%;
+  }
+}
 
+@media screen and (max-width: 1200px) {
+  .advertisementContainer {
+    height: 800px;
+    margin-top: 80px;
+  }
 }
 
 @media screen and (max-width: 1150px) {
-    .homePage{
-        padding: 0 5rem;
-    }
+  .homePage {
+    padding: 0 5rem;
+  }
+
+  .headerDesktopContainer {
+    display: none;
+  }
 }
 
 @media screen and (max-width: 950px) {
-    .homePage{
-        padding:0;
-        overflow: hidden;
-    }
+  .homePage {
+    padding: 0;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+  }
 }
 
 @media screen and (max-width: 768px) {
-  .exclusiveDealsContainer{
+  .exclusiveDealsContainer {
     margin-bottom: 30px;
     height: 250px;
   }
-  .searchContainer{
-    margin-bottom:30px;
-}
-.downloadApp{
-    margin-bottom:30px;
-}
-.popularRestaurants{
-    margin-bottom:30px;
-}
+  .searchContainer {
+    margin-bottom: 30px;
+  }
+  .downloadApp {
+    margin-bottom: 30px;
+  }
+  .popularRestaurants {
+    margin-bottom: 30px;
+  }
+  .advertisementContainer {
+    height: 476px;
+    margin-top: 55px;
+    margin-bottom: 44px;
+  }
+
+  .knowAboutUsContainer{
+    align-items: flex-start;
+  }
 }

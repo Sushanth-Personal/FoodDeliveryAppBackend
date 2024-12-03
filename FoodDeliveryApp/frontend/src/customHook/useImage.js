@@ -4,7 +4,7 @@ import {
   getImageByContainer,
   getImageByAltText,
   getImageById,
-} from "../api/imageAPI";
+} from "../api/api";
 
 const useImage = (type, value, security) => {
   const [imageURLs, setImageURLs] = useState([]); // State to store image URLs
@@ -17,6 +17,7 @@ const useImage = (type, value, security) => {
         let images = [];
         switch (type) {
           case "page":
+            console.log("page", value);
             images = await getImageByPage(value, security);
             break;
           case "container":

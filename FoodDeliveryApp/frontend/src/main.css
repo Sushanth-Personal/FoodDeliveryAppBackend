@@ -1,11 +1,12 @@
 body {
   width: 100vw;
-  height: 100vh;
   overflow: scroll;
 
 }
 
-
+body.overlay-active {
+  overflow: hidden; /* Prevent scrolling */
+}
 
 * {
   box-sizing: border-box;

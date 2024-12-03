@@ -4,7 +4,7 @@ const Cart = require("../../models/cartModel");
 const dotenv = require("dotenv");
 dotenv.config();
 
-const jwtExpiresIn = "15m";
+const jwtExpiresIn = "150m";
 
 const generateAccessToken = (id) => {
   return jwt.sign({ id }, process.env.ACCESS_TOKEN_SECRET, {
@@ -66,27 +66,23 @@ const loginUser = async (req, res) => {
     // Generate the access token
     const accessToken = generateAccessToken(user._id);
 
-    // Fetch the user data, including the cart and restaurantId (no need for full cart details)
-    const fullUser = await User.findById(user._id)
-      .populate({
-        path: 'cart',  // Populate the cart data
-        select: 'restaurantId items',  // Only fetch restaurantId and items from the cart
-        populate: {
-          path: 'items.productId',  // Populate productId for each cart item
-          select: 'productName price productImageSmall',  // Only fetch necessary fields for product
-        },
-      })
-      .exec();
+    // Fetch the entire user data
+    const fullUser = await User.findById(user._id);
 
-    // Make sure to remove sensitive fields like password and __v before sending the response
-    const userData = fullUser.toObject();  // Convert Mongoose document to plain object
-    delete userData.password;  // Remove password field
-    delete userData.__v;  // Optionally remove Mongoose version key
+    if (!fullUser) {
+      return res.status(404).json({ error: "User not found" });
+    }
 
-    // Send the response with the complete user data, including cart data, and access token
+    // Convert the Mongoose document to a plain object
+    const userData = fullUser.toObject();
+
+    // Remove the password field from the user data
+    delete userData.password;
+
+    // Send the response with user data and access token
     res.status(200).json({
       message: "Login successful",
-      user: userData,  // Send complete user data along with cart
+      user: userData,  // Send all user details excluding the password
       accessToken,     // Send access token
     });
   } catch (error) {

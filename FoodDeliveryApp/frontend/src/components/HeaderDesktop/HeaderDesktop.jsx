@@ -1,8 +1,20 @@
 import styles from "./headerdesktop.module.css";
 import useImage from "../../customHook/useImage";
 import { displayImage } from "../../utility/imageProcess";
+import {useUserContext} from "../../Contexts/UserContext";
+import {useCallback} from "react";
+import {useNavigate} from "react-router-dom";
 const HeaderDesktop = () => {
+  const navigate = useNavigate();
   const imageURLs = useImage("page", "headerdesktop");
+  const {isCartClicked,setIsCartClicked} = useUserContext();
+
+  const handleCartClick = useCallback(() => {
+    setIsCartClicked(!isCartClicked);
+    navigate("/product");
+  }, [isCartClicked, setIsCartClicked]); // Added setIsCartClicked as a dependency for better practice
+
+
   return (
     <div className={styles.header}>
       <div className={styles.promo}>
@@ -21,7 +33,9 @@ const HeaderDesktop = () => {
         <a>Change Location</a>
       </div>
       <div className={styles.cart}>
-        <button>
+        <button
+        onClick={handleCartClick}
+        >
           <div className={styles.leftSide}>
             <img
               src={displayImage(imageURLs, "headerdesktop-cart-cart-1")}

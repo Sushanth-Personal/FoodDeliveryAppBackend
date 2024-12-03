@@ -6,25 +6,20 @@ const Restaurant = require("./restaurantModel");
 const cartSchema = mongoose.Schema({
   userId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    required: true,
   },
-  restaurantId:{
+  restaurantId: {
     type: mongoose.Schema.Types.ObjectId,
-    ref: "Restaurant",
+    required: true,
   },
-  items: [
-    {
-      productId: {
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Product",
-      },
-      productName: { type: String, default: "" },
-      quantity: { type: Number, default: 1 },
-      price: { type: Number, default: 0 },
-    },
-  ],
+  productId: {
+    type: mongoose.Schema.Types.ObjectId,
+  },
+  productName: { type: String, default: "" },
+  quantity: { type: Number, default: 1 },
+  price: { type: Number, default: 0 },
 });
 
-const Cart = mongoose.model('Cart', cartSchema);
+const Cart = mongoose.model("Cart", cartSchema);
 
 module.exports = Cart;

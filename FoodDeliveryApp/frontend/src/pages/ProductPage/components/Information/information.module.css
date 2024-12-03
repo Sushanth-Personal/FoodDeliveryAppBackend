@@ -1,0 +1,179 @@
+.information {
+  box-shadow: 5px 5px 14px rgba(0, 0, 0, 0.25);
+  border-radius: 12px;
+  background-color: #fbfbfb;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0px 0px 0px 56px;
+  margin: 0px 100px 0px 100px;
+}
+
+.content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.deliveryInformation {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-top: 129px;
+  margin-bottom: 103px;
+  position: relative;
+}
+
+.deliveryInformation .tracking {
+  position: absolute;
+  top: 0;
+  left: 0px;
+}
+
+.contactInformation {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  margin-top: 129px;
+  margin-bottom: 103px;
+  position: relative;
+}
+
+.contactInformation img{
+    position:absolute;
+    left: 0px;
+    top:0px;
+}
+
+.contactInformation h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: #03081f;
+  margin: 0;
+  margin-bottom: 20px;
+  margin-left: 60px;
+  padding: 0;
+}
+
+.contactInformation p {
+  font-size: 1.8rem;
+  font-weight: 400;
+  margin-bottom: 20px;
+  width: 340px;
+  text-wrap: wrap;
+  line-height: 26px;
+}
+
+.contactInformation .description {
+  line-height: 36px;
+}
+
+.operationalInformation {
+  /* flex: 1; */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background-color: #03081f;
+  padding-top: 129px;
+  border-radius: 0px 12px 12px 0px;
+  position: relative;
+}
+
+.operationalInformation .clock{
+  position: absolute;
+  top: 132px;
+  left: 0px;
+}
+
+.operationalInformation h1 {
+  font-size: 3.2rem;
+  font-weight: 700;
+  color: white;
+  margin-left: 123px;
+  margin-bottom: 45px;
+  margin-right: 50px;
+}
+
+.operationalInformation img {
+  margin-left: 63px;
+}
+
+
+@media screen and (max-width: 1475px) {
+  .deliveryInformation{
+    transform: scale(0.8,0.8);
+  }
+
+  .contactInformation{
+    margin-top:165px;
+  }
+
+  .contactInformation p{
+    margin-bottom: 10px;
+    font-size: 1.6rem;
+  }
+
+  .contactInformation h1{
+    font-size: 2.5rem;
+  }
+
+  .operationalInformation h1{
+    font-size: 2.5rem;
+  }
+  }
+
+  @media screen and (max-width: 1345px) {
+
+
+    .information{
+      padding-left:20px;
+    }
+
+    .information{
+      margin:0px 50px 0px 50px;
+    }
+
+    .deliveryInformation{ 
+      transform: scale(0.6,0.6);
+      margin-top: 0px;
+      margin-bottom: 90px;
+    }
+
+    .contactInformation{
+      transform: scale(0.8,0.8);
+      margin-top: 30px;
+      margin-bottom: 90px;
+    }
+
+    .operationalInformation h1{
+      font-size: 2rem;
+      margin-bottom: 10px;
+    }
+
+    .operationalInformation img{
+      transform: scale(0.8,0.8);
+    }
+    .operationalInformation{
+      padding-top:70px;
+    }
+
+    .operationalInformation .clock{
+      top:75px;
+    }
+  }
+
+  @media screen and (max-width: 1160px) {
+    .information{
+      margin:0px 10px 0px 10px;
+    }
+  }
+
+  @media screen and (max-width: 1100px) {
+    .information{
+      display: none;
+    }
+  }

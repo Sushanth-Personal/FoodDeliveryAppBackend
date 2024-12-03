@@ -1,9 +1,5 @@
-.popularRestaurants::-webkit-scrollbar {
-  display: none;
-}
 
 .popularRestaurants {
-  height: 365px;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -17,10 +13,10 @@
   font-weight: 700;
   display: flex;
   justify-content: flex-start;
+  margin-bottom: 51px;
 }
 
 .content {
-  height: 266px;
   width: 100%;
 }
 
@@ -30,21 +26,22 @@
   width: 100%;
   padding: 0;
   margin: 0;
-  overflow-x: scroll;
-  overflow-y: hidden;
-  flex-wrap: nowrap;
+  flex-wrap: wrap; /* Allow wrapping to the next line */
+  justify-content: flex-start; /* Distribute space between items */
 }
 
 .content ul li {
   width: 238px; /* Each card's width */
   height: 266px;
-  margin-right: 20px;
+  margin-bottom: 20px; /* Add space between rows */
   border: none;
   border-radius: 12px;
   display: flex;
   flex-direction: column;
+margin-right: 20px;
   position: relative;
 }
+
 
 .content ul li img {
   height: 203px;
@@ -73,19 +70,23 @@
 }
 
 @media screen and (max-width: 768px) {
+
+  .content ul{
+    justify-content: center;
+  }
   .content ul li {
-    height: 156px;
-    width: 122px;
+    height: 207px;
+    width: 185px;
   }
 
   .content ul li img {
-    height: 104px;
-    width: 122px;
+    height: 207px;
+    width: 185px;
   }
 
   .content ul li .lowerTileContent {
     height: 52px;
-    width: 122px;
+    width: 185px;
     
     display: flex;
     justify-content: center;
@@ -94,16 +95,22 @@
 
   }
 .lowerTileContent .text{
-    font-size: 1.3rem;
+    font-size: 1.4rem;
     font-weight: 700;
     text-wrap: wrap; 
 
 }
   .popularRestaurants {
     padding-left: 14px;
+    height: auto;
   }
 
+  .content{
+   height: auto;
+  }
   .popularRestaurants .heading{
-    margin-left: 35px;
+    margin-left: 16px;
+    font-size:2.4rem;
+    margin-bottom: 29px;
   }
 }
