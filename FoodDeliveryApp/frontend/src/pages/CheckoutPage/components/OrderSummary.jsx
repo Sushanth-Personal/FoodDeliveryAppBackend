@@ -4,15 +4,18 @@ import useCart from "../../../customHook/useCart";
 import { getImageByProductIdArray } from "../../../api/api";
 import useImage from "../../../customHook/useImage";
 import useScreenSize from "../../../customHook/useScreenSize";
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from "react-router-dom";
 import { useUserContext } from "../../../Contexts/UserContext"; // Import setCartTotal
+import { displayImage } from "../../../utility/imageProcess";
 
 const OrderSummary = () => {
+  const imageURLs = useImage("page", "ordersummary");
+
   const navigate = useNavigate();
   const isMobile = useScreenSize(768);
   const { cartData: cartItems, loading, error } = useCart();
   const [productImageURLs, setProductImageURLs] = useState({});
-  const placeholder = useImage("id", "popularrestaurants-content-mcdonalds-1");
+  const placeholder = useImage("id", "popularrestaurants-content-mcdonalds-1").imageURL;
   const { setCartTotal } = useUserContext(); // Access setCartTotal
 
   useEffect(() => {
@@ -41,13 +44,15 @@ const OrderSummary = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    
     <section className={styles.orderSummary}>
       {!isMobile ? (
         <div className={styles.header}>
           <img
+            id="ordersummary-header-backarrow-1"
             role="button"
             onClick={() => window.history.back()}
-            src="/backarrow.png"
+            src={displayImage(imageURLs, "ordersummary-header-backarrow-1")}
             alt="backarrow"
           />
           <h1>Your Order Details</h1>
@@ -55,9 +60,10 @@ const OrderSummary = () => {
       ) : (
         <div className={styles.header}>
           <img
+            id="ordersummary-header-colorback-1"
             role="button"
             onClick={() => window.history.back()}
-            src="/colorback.png"
+            src={displayImage(imageURLs, "ordersummary-header-colorback-1") }
             alt="colorback"
           />
           <h1>Checkout</h1>
@@ -69,10 +75,12 @@ const OrderSummary = () => {
           <ul>
             {cartItems.map((item, index) => (
               <li key={item.productId}>
-                {console.log("item", item)}
                 <div className={styles.item}>
                   <img
-                    src={productImageURLs[index] || placeholder.imageURL}
+                    id={`ordersummary-item-${item.productName.toLowerCase()}-1`}
+                    src={
+                      productImageURLs[index] || placeholder
+                    }
                     alt={item.productName}
                   />
                   <h1>
@@ -96,20 +104,29 @@ const OrderSummary = () => {
           <div className={styles.address}>
             <div>
               <img
+                id="ordersummary-address-location-1"
                 className={styles.locationImage}
-                src="/location.png"
+                src={displayImage(
+                  imageURLs,
+                  "ordersummary-address-location-1"
+                ) }
                 alt="location"
               />
               <img
+                id="ordersummary-address-address-1"
                 className={styles.addressImage}
-                src="/address.png"
+                src={displayImage(imageURLs, "ordersummary-address-address-1") }
                 alt="address"
               />
             </div>
             <div>
               <img
+                id="ordersummary-address-rightarrow-1"
                 className={styles.arrowImage}
-                src="/rightarrow.png"
+                src={displayImage(
+                  imageURLs,
+                  "ordersummary-address-rightarrow-1"
+                )}
                 alt="rightarrow"
               />
             </div>
@@ -152,7 +169,9 @@ const OrderSummary = () => {
                 .toFixed(2)}
             </p>
           </span>
-          <button onClick={() => navigate("/payment")}>Choose Payment Method</button>
+          <button onClick={() => navigate("/payment")}>
+            Choose Payment Method
+          </button>
         </div>
       </div>
     </section>

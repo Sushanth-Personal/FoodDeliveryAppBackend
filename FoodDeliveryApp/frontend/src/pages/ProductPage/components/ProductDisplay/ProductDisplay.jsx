@@ -102,6 +102,7 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
 
   return (
     <section className={styles.productDisplay}>
+      {console.log("data", data)}
       <div className={styles.searchNavBar}>
         <h1>All Offers from McDonald’s East London</h1>
         <div className={styles.searchBox}>
@@ -205,6 +206,19 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                           )}
                           alt="plus"
                         />
+                         <img
+                                  id="productdisplay-producttile-addbutton-1"
+                                  role="button"
+                                  onClick={() =>
+                                    handleAddToCart(product)
+                                  }
+                                  className={styles.addButton}
+                                  src={displayImage(
+                                    imageURLs,
+                                    "productdisplay-producttile-addbutton-1"
+                                  )}
+                                  alt="addbutton"
+                                />
                       </div>
                     </div>
                   </div>
@@ -217,11 +231,12 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
                     )
                   ),
                 ].map((category) => (
-                  <div 
-                  className = {styles.categoryTileContainer}
-                  key={category}>
+                  <div
+                    className={styles.categoryTileContainer}
+                    key={category}
+                  >
                     <h2>{category}</h2>
-                    <div className = {styles.categoryTile}>
+                    <div className={styles.categoryTile}>
                       {filteredProducts
                         .filter(
                           (product) =>
