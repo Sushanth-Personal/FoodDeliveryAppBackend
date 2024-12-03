@@ -1,6 +1,6 @@
 export const handleAddToCart = async (product, userId) => {
   // const baseURL = "http://localhost:5000";
-  const baseURL = "https://food-delivery-app-backend-murex.vercel.app";
+  const baseURL = "https://fooddeliveryappbackend-01av.onrender.com";
     const productId = product._id;
     const endpoint = `${baseURL}/cart/${userId}?productId=${productId}`;
   

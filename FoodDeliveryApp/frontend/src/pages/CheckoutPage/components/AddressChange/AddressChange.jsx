@@ -9,12 +9,14 @@ import useAuth from "../../../../customHook/useAuth";
 
 const AddressChange = () => {
   useAuth();
-  const baseURL = "http://localhost:5000";
+  // const baseURL = "http://localhost:5000";
+  const baseURL = "https://fooddeliveryappbackend-01av.onrender.com";
   const imageURLs = useImage("page", "addresschange");
   const { setIsAddressChangeClicked, userId } = useUserContext();
   const [showModal, setShowModal] = useState(false);
   const [addresses, setAddresses] = useState([]);
-  const [defaultAddressIndex, setDefaultAddressIndex] = useState(null);
+  const [defaultAddressIndex, setDefaultAddressIndex] =
+    useState(null);
   const isMobile = useScreenSize(768);
   const [formData, setFormData] = useState({
     state: "",
@@ -36,11 +38,15 @@ const AddressChange = () => {
 
   const fetchAddresses = async (userId) => {
     try {
-      const response = await axios.get(`${baseURL}/address/${userId}`);
+      const response = await axios.get(
+        `${baseURL}/address/${userId}`
+      );
       setAddresses(response.data);
-      
+
       // Check if any address has isDefault set to true
-      const defaultAddress = response.data.find((address) => address.isDefault);
+      const defaultAddress = response.data.find(
+        (address) => address.isDefault
+      );
       if (defaultAddress) {
         setDefaultAddressIndex(response.data.indexOf(defaultAddress)); // Set the default address index
       }
@@ -58,8 +64,14 @@ const AddressChange = () => {
     if (editIndex !== null) {
       // Update the existing address
       try {
-        const updatedData = { ...formData, isDefault: defaultAddressIndex === editIndex };
-        const response = await axios.put(`${baseURL}/address/${userId}/${addresses[editIndex]._id}`, updatedData);
+        const updatedData = {
+          ...formData,
+          isDefault: defaultAddressIndex === editIndex,
+        };
+        const response = await axios.put(
+          `${baseURL}/address/${userId}/${addresses[editIndex]._id}`,
+          updatedData
+        );
         const updatedAddresses = addresses.map((address, index) =>
           index === editIndex ? response.data : address
         );
@@ -70,8 +82,14 @@ const AddressChange = () => {
     } else {
       // Add a new address
       try {
-        const updatedData = { ...formData, isDefault: defaultAddressIndex === addresses.length }; // Set as default if it's the first address
-        const response = await axios.post(`${baseURL}/address/${userId}`, updatedData);
+        const updatedData = {
+          ...formData,
+          isDefault: defaultAddressIndex === addresses.length,
+        }; // Set as default if it's the first address
+        const response = await axios.post(
+          `${baseURL}/address/${userId}`,
+          updatedData
+        );
         setAddresses((prev) => [...prev, response.data]);
       } catch (error) {
         console.error("Error adding address:", error);
@@ -103,7 +121,9 @@ const AddressChange = () => {
     }
 
     try {
-      await axios.delete(`${baseURL}/address/${userId}/${addresses[index]._id}`);
+      await axios.delete(
+        `${baseURL}/address/${userId}/${addresses[index]._id}`
+      );
       setAddresses((prev) => prev.filter((_, i) => i !== index)); // Remove the selected address
     } catch (error) {
       console.error("Error removing address:", error);
@@ -140,13 +160,16 @@ const AddressChange = () => {
   return (
     <section className={styles.addressChange}>
       <div className={styles.header}>
-      <>
+        <>
           {!isMobile ? (
             <img
               id="addresschange-header-backarrow-1"
               role="button"
               onClick={() => setIsAddressChangeClicked(false)}
-              src={displayImage(imageURLs, "addresschange-header-backarrow-1")}
+              src={displayImage(
+                imageURLs,
+                "addresschange-header-backarrow-1"
+              )}
               alt="backarrow"
             />
           ) : (
@@ -154,7 +177,10 @@ const AddressChange = () => {
               id="addresschange-header-colorback-1"
               role="button"
               onClick={() => setIsAddressChangeClicked(false)}
-              src={displayImage(imageURLs, "addresschange-header-colorback-1")}
+              src={displayImage(
+                imageURLs,
+                "addresschange-header-colorback-1"
+              )}
               alt="colorback"
             />
           )}
@@ -162,18 +188,27 @@ const AddressChange = () => {
         <h1>Your Addresses</h1>
       </div>
       <div className={styles.mainContent}>
-        <div className={styles.addAddress} onClick={() => setShowModal(true)}>
-        <>
+        <div
+          className={styles.addAddress}
+          onClick={() => setShowModal(true)}
+        >
+          <>
             {!isMobile ? (
               <img
                 id="addresschange-addaddress-addaddress-1"
-                src={displayImage(imageURLs, "addresschange-addaddress-addaddress-1")}
+                src={displayImage(
+                  imageURLs,
+                  "addresschange-addaddress-addaddress-1"
+                )}
                 alt="addaddress"
               />
             ) : (
               <img
                 id="addresschange-addaddress-addaddressmobile-1"
-                src={displayImage(imageURLs, "addresschange-addaddress-addaddressmobile-1")}
+                src={displayImage(
+                  imageURLs,
+                  "addresschange-addaddress-addaddressmobile-1"
+                )}
                 alt="addaddressmobile"
               />
             )}
@@ -183,13 +218,19 @@ const AddressChange = () => {
         {addresses.map((address, index) => (
           <div
             key={index}
-            className={`${styles.address} ${index === defaultAddressIndex ? styles.defaultAddress : ""}`}
+            className={`${styles.address} ${
+              index === defaultAddressIndex
+                ? styles.defaultAddress
+                : ""
+            }`}
             onClick={() => handleSetDefault(index)}
           >
             <div className={styles.topContent}>
               <span>
                 <h1>New Address</h1>
-                {index === defaultAddressIndex && <div className={styles.default}>Default</div>}
+                {index === defaultAddressIndex && (
+                  <div className={styles.default}>Default</div>
+                )}
               </span>
               <address>
                 {address.fullAddress}
@@ -228,11 +269,18 @@ const AddressChange = () => {
               <img
                 onClick={() => setShowModal(false)}
                 className={styles.cancelButton}
-                src={displayImage(imageURLs, "addresschange-overlay-cancelbutton-1")}
+                src={displayImage(
+                  imageURLs,
+                  "addresschange-overlay-cancelbutton-1"
+                )}
                 alt="cancelbutton"
               />
               <div className={styles.heading}>
-                <h2>{editIndex !== null ? "Edit Address" : "Add Address"}</h2>
+                <h2>
+                  {editIndex !== null
+                    ? "Edit Address"
+                    : "Add Address"}
+                </h2>
               </div>
               <div className={styles.modalContent}>
                 <div className={styles.inputContainer}>
