@@ -307,12 +307,15 @@ const ProductDisplay = ({ restaurantId, restaurantName }) => {
         {isCartClicked && (
           <>
             {isSmallScreen ? (
-              <div className={styles.overlay} onClick={closeCart}>
+              <div className={styles.overlay} >
                 {console.log("cartImage", cartImage)}
                 <Cart />
                 <img 
                 id="cart-overlay-cancelbutton-1"
-                onClick = {closeCart}
+                onClick={(e) => {
+                  e.stopPropagation(); // Prevent overlay click from triggering close
+                  closeCart();
+                }}
                 className = {styles.cancelButton}
                 src={cartImage.imageURL}
                 alt="cancelbutton" />

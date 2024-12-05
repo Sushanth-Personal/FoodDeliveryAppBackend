@@ -62,7 +62,7 @@ const PaymentPage = () => {
         <FooterComponent />
       </footer>
       {isCartClicked && (
-        <div className={styles.overlay} onClick={closeCart}>
+        <div className={styles.overlay} >
           <Cart />
           <img 
                 id="cart-overlay-cancelbutton-1"
