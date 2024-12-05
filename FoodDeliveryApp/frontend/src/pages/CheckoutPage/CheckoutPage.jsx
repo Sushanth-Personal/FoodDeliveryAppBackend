@@ -75,7 +75,7 @@ const CheckoutPage = () => {
         <FooterComponent />
       </footer>
       {isCartClicked && (
-        <div className={styles.overlay}>
+        <div className={styles.overlay} onClick={closeCart}>
           <Cart />
           <img
             id="cart-overlay-cancelbutton-1"
